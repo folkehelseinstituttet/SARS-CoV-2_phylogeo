@@ -1,0 +1,261 @@
+---
+title: "Resultater - B.1.351, “Sør Afrika variant”"
+author: "Magnus Nygård Osnes"
+date: "4/8/2021"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning =F)
+```
+
+
+
+# Resultater - B.1.1.7, “UK variant”
+
+Fylogeografisk transisjonsmatrise
+
+Estimated transition matrix for the build 07.04.2021:
+Q = 
+
+Import og lokal smitte over tid
+
+Vi har sett nærmere antall sekvenser over tid som estimeres å være resultat av import relativt til tilfeller som er resultat av smitte i Norge (Fig. 1). Hvis man for eksempel har en import til Norge som resulterer i videre smitte og ytterligere to tilfeller, vil disse telles som ett tilfelle av import og to tilfeller av lokal transmisjon. Det er viktig å huske på at disse estimatene er basert kun på sekvenserte tilfeller. De absolutte tallene på importer og lokale transmisjoner vil derfor være underestimerte, men kan anses som minimumsestimater. 
+
+
+Fig. 1 Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
+
+De absolutte tallene presentert over vil generelt være underestimerte, men antall importer per uke ser ut til å ha vært høyest i slutten av januar. Den relative andelen av nye sekvenser som estimeres å være resultat av import og lokal transmisjon blir ikke påvirket av dette, og er derfor kanskje den mest informative måten å studere dette på. Forholdet mellom import og lokal transmisjon er  presentert i Fig. 2.
+
+
+
+Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.1.7 over tid i Norge.  Lokal transmisjon har blitt relativt viktigere for epidemiologien av B.1.1.7 i Norge over tid. 
+
+
+
+Importklynger
+
+Videre kan vi se på størrelsen på utbrudd/klynger i Norge som en funksjon estimert importtidspunkt. Dette er framstilt i Fig. 3 under. Figuren illustrerer at de færreste importer resulterer i større smitteklynger/utbrudd i Norge. De aller fleste større utbrudd og smitteklynger med UK variant i Norge er resultat av importer fra slutten av desember og fram til slutten av januar. Likevel ser vi at importer også i februar har gitt opphav til smitteklynger i Norge.
+
+
+
+Fig. 3. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7. “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. 
+
+
+
+
+```{r remedy001, include=FALSE}
+library(ggplot2)
+library(phytools)
+library(ape)
+library(castor)
+library(ips)
+#   ____________________________________________________________________________
+#   Note section                                                            ####
+
+path_to_results = "~/Dropbox/Covid/UK_03_24/Results/"
+
+
+tree = read.tree("~/Dropbox/Covid/UK_03_24/nextstrain_groups_niph_ncov_UK-centric-2021-04-07_timetree.nwk")
+#Extract the most recent branches
+plot.phylo(tree,show.tip.label = F)
+nodelabels(cex=0.5)
+tree = extract.clade(tree, node=4992)
+Locations = grepl("Norway",tree$tip.label)
+Locations[Locations=="TRUE"]="Norway"
+Locations[Locations=="FALSE"]="RoW"
+table(Locations)
+names(Locations)=tree$tip.label
+
+#Expand zero length branches
+set.seed(100)
+tree = multi2di(tree)
+tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+tree=ladderize(tree)#reorder.phylo(tree)
+
+
+#Transiton matrix that has been fitted separately.
+transition_matrix = rbind(c(-0.1119083 ,0.1119083),c(1.1190826,-1.1190826))
+fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
+transition_matrix = summary(fit_given)$Q
+
+#USE the castor approch as this is much faster.
+locations_for_castor = as.numeric(as.factor(Locations))
+names(locations_for_castor)=names(Locations)
+
+castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,transition_matrix=transition_matrix,include_ancestral_likelihoods = T)
+
+library(data.table)
+library(lubridate)
+metadat = fread("~/Dropbox/Covid/UK_03_24/nextstrain_groups_niph_ncov_UK-centric-2021-04-07_metadata.tsv")
+
+#Extract the most recent dates.
+mrsd = max(metadat$`Collection Data`)
+dec_date = decimal_date(max(metadat$`Collection Data`))
+start_date = dec_date-max(tipHeights(tree))
+
+#Find the labels of the taxa that are observed in Norway. 
+Norwegian_tips = names(Locations[Locations=="Norway"])
+#Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
+
+source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
+#multi_counts = replicate(10, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file="~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
+
+load("~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
+```
+
+```{r, echo=FALSE, fig.width=13, fig.height=20}
+library(ips)
+cols<-setNames( c("#B3E2CD","#FDCDAC"),unique(Locations))
+plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
+axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4,cex=5)
+nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
+tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
+#abline(v=seq(0,382,10), lty=2, col="grey")
+legend("bottomleft",c("Norway", "RoW"), col = c("#66C2A5","#FC8D62"), pch=20, cex = 5, pt.cex=5, bty="n")
+```
+
+```{r,  include=F}
+library(data.table)
+library(lubridate)
+metadat = fread("~/Dropbox/Covid/UK_03_24/nextstrain_groups_niph_ncov_UK-centric-2021-04-07_metadata.tsv")
+
+#Extract the most recent dates.
+mrsd = max(metadat$`Collection Data`)
+dec_date = decimal_date(max(metadat$`Collection Data`))
+start_date = dec_date-max(tipHeights(tree))
+
+#Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+#save(Result,file="~/Dropbox/Covid/UK_03_24/Data/count_once_UK.Rdata")
+load("~/Dropbox/Covid/UK_03_24/Data/count_once_UK.Rdata")
+
+# library(lubridate)
+# all_lineages = Result[[2]]
+# #Plot lineages:
+# 
+# library(treemap)
+# library(RColorBrewer)
+# library(ggtree)
+# #Treemap lineages.
+# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+# treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+
+
+#   ____________________________________________________________________________
+#   Read the metadata for this section                                      ####
+library(ggtree)
+library(treedater)
+library(lubridate)
+most_recent_date = ymd(mrsd)
+most_recent_date = decimal_date(most_recent_date)
+start_time = most_recent_date-max(nodeHeights(tree))
+time_end = most_recent_date-start_time
+
+#   ____________________________________________________________________________
+#   Import export estimates                                                 ####
+source("/Users/magnusnygardosnes/Dropbox/Rfunctions/Import_export_ace_output.R")
+library(viridis)
+#Result2 = matrix(unlist(lapply(mapped_tree, FUN= function(x) count_import_export(x, give_tips =norwegian_tips)[[1]])), nrow=1000, ncol=2, byrow=T)
+
+##MRCA's lineages size.
+c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
+colnames(c2)=c("MRCA","Lineagesize")
+```
+
+```{r,include=F}
+library(data.table)
+metadata = fread("~/Dropbox/Covid/UK_03_24/nextstrain_groups_niph_ncov_UK-centric-2021-04-07_metadata.tsv")
+#Debug:
+#sum(tree$tip.label %in% metadata$Strain)
+#length(tree$tip.label)
+tip_list = Norwegian_tips
+dates = decimal_date(metadat$`Collection Data`)
+names(dates)=metadata$Strain
+#Example of usage:
+
+source("~/Dropbox/Rfunctions/PhyloUtils/R/Relative_load_multi.R")
+#Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
+#save(Result_with_uncertainty,file="~/Dropbox/Covid/UK_03_24/Data/Relative_load_10.Rdata") 
+load("~/Dropbox/Covid/UK_03_24/Data/Relative_load_10.Rdata")
+start_time = start_date
+#Set windows for counting importations and local transmission in.
+start_time 
+time_end = start_time+max(nodeHeights(tree))
+weeks = seq(start_time, time_end, by = 1/52)
+week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
+weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
+weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
+sum_cases = weekly_importations+weekly_local_tranmissions
+
+#Plotting method
+imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
+exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
+dat=data.frame(cbind(imports,exports),dates=decimal2Date(week_time))
+colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
+
+#This uses the mean and discards uncertainty.
+ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
+                  fraction=c(weekly_importations/sum_cases,weekly_local_tranmissions/sum_cases),
+                  group=c(rep("Import",length(week_time)),
+                          rep("Local transmission",length(week_time))))
+```
+
+```{r,echo=F, fig.width=10,fig.height=10}
+g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
+  geom_area(alpha=0.6 , size=1, colour="black")+
+  theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  ylab("")+xlab("")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)+
+  theme(legend.position = c(0.55,0.15), legend.title=element_blank())
+g1
+```
+
+```{r,include=F}
+#Line for UK
+
+
+g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
+  ylim(0,30)+
+  geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")),expand=)+
+  ylab("Import")+
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g1
+
+#Line for UK
+#scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,250)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+
+  geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
+  theme(legend.position = "none")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g2
+```
+
+```{r,echo=F,fig.width=10, fig.height=10}
+library(grid)
+grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
+```
+
+
+```{r,echo=F,fig.width=10, fig.height=10}
+g1 = ggplot(c2, aes(MRCA, Lineagesize))+
+  geom_hex()+
+  theme_bw(base_size=20)+
+  theme(legend.position=c(0.85,0.85))+
+  scale_fill_viridis()+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  xlab("Estimated TMRCA")+ylab("Estimated linage size")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g1
+
+```
+
+
