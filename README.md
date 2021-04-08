@@ -1,5 +1,4 @@
-# Nextstrain_modeling
-SARS-CoV-2 - Analyser av import-analyse UK- og Sør Afrika variant
+# SARS-CoV-2 - Analyser av import-analyse UK- og Sør Afrika variant
 
 ## Bakgrunn & metoder
 
