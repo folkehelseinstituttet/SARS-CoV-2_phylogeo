@@ -22,13 +22,7 @@ tilsvarer Bodø-utbruddet.
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-    ## Warning: Removed 40 rows containing missing values (position_stack).
-
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
-
-    ## Warning: Removed 13 row(s) containing missing values (geom_path).
-
-    ## Warning: Removed 13 row(s) containing missing values (geom_path).
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 

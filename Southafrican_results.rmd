@@ -6,7 +6,7 @@ output: rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,warninig =F)
+knitr::opts_chunk$set(echo = TRUE,warning =F)
 ```
 
 
