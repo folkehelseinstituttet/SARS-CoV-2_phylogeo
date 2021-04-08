@@ -22,7 +22,8 @@ For B.1.1.7 (UK variant) har vi antatt at at raten av import til Norge er 10x h√
 https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/UK_results.md
 ## South-African-variant analysis
 https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/Southafrican_results.md
-
+#Global build
+## TBD
 
 
 
