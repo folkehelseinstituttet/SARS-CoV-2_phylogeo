@@ -1,7 +1,7 @@
 # Nextstrain_modeling
 SARS-CoV-2 - Analyser av import-analyse UK- og Sør Afrika variant
 
-Bakgrunn & metoder
+## Bakgrunn & metoder
 
 Utgangspunktet for alle analysene er daterte trær eksportert fra NextStrain, offentlig tilgjengelig her: https://nextstrain.org/groups/niph/ncov/
 
