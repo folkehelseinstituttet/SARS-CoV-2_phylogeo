@@ -1,13 +1,7 @@
-Resultater - B.1.351, “Sør Afrika variant”
+Resultater - B.1.1.7, “UK variant
 ================
 Magnus Nygård Osnes
 4/8/2021
-
-# Resultater - B.1.1.7, “UK variant”
-
-Fylogeografisk transisjonsmatrise
-
-Estimated transition matrix for the build 07.04.2021: Q =
 
 Import og lokal smitte over tid
 
