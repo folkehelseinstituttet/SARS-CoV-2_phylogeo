@@ -20,7 +20,7 @@ For B.1.1.7 (UK variant) har vi antatt at at raten av import til Norge er 10x h�
 
 
 
-#Resultater - B.1.1.7, “UK variant”
+# Resultater - B.1.1.7, “UK variant”
 
 Fylogeografisk transisjonsmatrise
 
@@ -52,7 +52,7 @@ Fig. 3. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7. “TMRCA” 
 
 
 
-#Resultater - B.1.351, “Sør Afrika variant”
+# Resultater - B.1.351, “Sør Afrika variant”
 
 Import og lokal smitte over tid
 
