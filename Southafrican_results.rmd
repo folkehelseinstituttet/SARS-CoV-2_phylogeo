@@ -1,5 +1,5 @@
 ---
-title: "# Resultater - B.1.351, “Sør Afrika variant”"
+title: "Resultater - B.1.351, “Sør Afrika variant”"
 author: "Magnus Nygård Osnes"
 date: "4/8/2021"
 output: rmarkdown::github_document
@@ -30,7 +30,7 @@ Fig 6.  Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA” =
 
 
 ```{r remedy001, include=FALSE}
-
+library(ggplot2)
 library(phytools)
 library(ape)
 library(castor)
@@ -101,42 +101,35 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"), bty="n",pc
 # 
 ```
 
-```{r,  echo=FALSE, fig.width=13, fig.height=20}
+```{r,  include=F}
 library(data.table)
 library(lubridate)
-metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-03-25_metadata.tsv")
+metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
 
 #Extract the most recent dates.
 mrsd = max(metadat$`Collection Data`)
 dec_date = decimal_date(max(metadat$`Collection Data`))
 start_date = dec_date-max(tipHeights(tree))
 
-#ADD start time here.
 Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-#save(Result, file="~/Dropbox/Covid/Southafrican_03_24/Data/Result.Rdata")
-#load("~/Dropbox/Covid/Southafrican_03_24/Data/Result.Rdata")
 
 
-library(lubridate)
-all_lineages = Result[[2]]
-#Plot lineages:
-
-library(treemap)
-library(RColorBrewer)
-library(ggtree)
-#Treemap lineages.
-atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
-treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
-```
+# library(lubridate)
+# all_lineages = Result[[2]]
+# #Plot lineages:
+# 
+# library(treemap)
+# library(RColorBrewer)
+# library(ggtree)
+# #Treemap lineages.
+# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+# treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 
 
 #   ____________________________________________________________________________
 #   Read the metadata for this section                                      ####
-library(data.table)
 library(ggtree)
 library(treedater)
-mrsd = max(metadat$`Collection Data`)
-
 library(lubridate)
 most_recent_date = ymd(mrsd)
 most_recent_date = decimal_date(most_recent_date)
@@ -148,15 +141,94 @@ time_end = most_recent_date-start_time
 source("/Users/magnusnygardosnes/Dropbox/Rfunctions/Import_export_ace_output.R")
 library(viridis)
 #Result2 = matrix(unlist(lapply(mapped_tree, FUN= function(x) count_import_export(x, give_tips =norwegian_tips)[[1]])), nrow=1000, ncol=2, byrow=T)
-Result= count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-quantile(Result2[,1], c(0.025, 0.50,0.975)); quantile(Result2[,2], c(0.025, 0.50,0.975)); quantile(Result2[,2]/(Result2[,2]+Result2[,1]), c(0.025, 0.50,0.975))  
 
 ##MRCA's lineages size.
-plot(hist(Result[[4]], breaks=100))
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
+```
+
+```{r,include=F}
+library(data.table)
+metadata = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
+#Debug:
+#sum(tree$tip.label %in% metadata$Strain)
+#length(tree$tip.label)
+tip_list = Norwegian_tips
+dates = decimal_date(metadat$`Collection Data`)
+names(dates)=metadata$Strain
+#Example of usage:
+
+source("~/Dropbox/Rfunctions/PhyloUtils/R/Relative_load_multi.R")
+Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
+ 
+start_time = start_date
+#Set windows for counting importations and local transmission in.
+start_time 
+time_end = start_time+max(nodeHeights(tree))
+weeks = seq(start_time, time_end, by = 1/52)
+week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
+weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
+weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
+sum_cases = weekly_importations+weekly_local_tranmissions
+
+#Plotting method
+imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
+exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
+dat=data.frame(cbind(imports,exports),dates=decimal2Date(week_time))
+colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
+
+#This uses the mean and discards uncertainty.
+ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
+                  fraction=c(weekly_importations/sum_cases,weekly_local_tranmissions/sum_cases),
+                  group=c(rep("Import",length(week_time)),
+                          rep("Local transmission",length(week_time))))
+```
+
+```{r,echo=F, fig.width=10,fig.height=10}
+g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
+  geom_area(alpha=0.6 , size=1, colour="black")+
+  theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  ylab("")+xlab("")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)+
+  theme(legend.position = c(0.55,0.15), legend.title=element_blank())
+g1
+```
+
+```{r,include=F}
+#Line for UK
+#scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
+
+g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
+  ylim(0,5)+
+  geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
+  #theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+xlab("")+
+  ylab("Import")+
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g1
+
+#Line for UK
+#scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,45)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
+  geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g2
+```
+
+```{r, echo=F, width=20,height=12}
+graphics.off()
+library(grid)
+grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
+```
 
 
+```{r,echo=F,fig.width=10, fig.height=10}
 ggplot(c2, aes(MRCA, Lineagesize))+
   geom_hex()+
   theme_bw(base_size=20)+
@@ -167,21 +239,5 @@ ggplot(c2, aes(MRCA, Lineagesize))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
   annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 
-
-
-#Lineage size versus 
-# library(hexbin)
-# my_colors=colorRampPalette(rev(brewer.pal(11,'Spectral')))
-# pdf(paste0(path_to_results,"import_and_Export_over_time.pdf"), width=10,height=10)
-# plot(hexbin(c2),ylab="Logarithm of lineage size", xlab="Esitmated TMRCA",colramp=my_colors,xaxt="n")
-# xaxisticks =seq(from=range(Result$`MRCA's`)[1], to=range(Result$`MRCA's`)[2], length.out=10)
-# axis(1,at =xaxisticks, labels=as.character(decimal2Date(xaxisticks)))
-# dev.off()
-# plot(c2[,1],c2[,2],xlab="Logarithm of lineage size", ylab="Esitmated TMRCA")
-# 
-# 
-# 
-weekly_counts = table(cut(Result$`MRCA's`,breaks=seq(start_time,decimal_date(mrsd),by=1/52)))
-plot(weekly_counts)
 ```
 
