@@ -1,1 +1,0 @@
-## Results South african variant
