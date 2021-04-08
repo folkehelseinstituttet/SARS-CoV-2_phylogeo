@@ -92,7 +92,7 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 load("~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
 ```
 
-```{r,include=F,fig.width=7,fig.height=7}
+```{r, echo=FALSE, fig.width=8, fig.height=6}
 library(ips)
 cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
 plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)

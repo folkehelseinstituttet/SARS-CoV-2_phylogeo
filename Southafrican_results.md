@@ -22,6 +22,8 @@ Fig 6. Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA”
 for hver enkelt import. Den store klyngen som skiller seg ut her
 tilsvarer Bodø-utbruddet.
 
+![](Southafrican_results_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
 library(data.table) library(lubridate) metadat =
 fread(“\~/Dropbox/Covid/Southafrican\_03\_24/nextstrain\_groups\_niph\_ncov\_southafrican-2021-03-25\_metadata.tsv”)
 
