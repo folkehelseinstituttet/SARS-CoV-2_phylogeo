@@ -22,23 +22,6 @@ Fig 6. Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA”
 for hver enkelt import. Den store klyngen som skiller seg ut her
 tilsvarer Bodø-utbruddet.
 
-``` r
-library(ips)
-cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
-plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
-axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
-nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
-tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
-#abline(v=seq(0,382,10), lty=2, col="grey")
-legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"), bty="n",pch=20, cex = 1, pt.cex=1)
-```
-
-![](Southafrican_results_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
-
-``` r
-# 
-```
-
 library(data.table) library(lubridate) metadat =
 fread(“\~/Dropbox/Covid/Southafrican\_03\_24/nextstrain\_groups\_niph\_ncov\_southafrican-2021-03-25\_metadata.tsv”)
 
