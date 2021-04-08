@@ -221,7 +221,7 @@ g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(ba
 g2
 ```
 
-```{r, echo=F, fig.width=10, fig.height=10}
+```{r,echo=F,fig.width=10, fig.height=10}
 graphics.off()
 library(grid)
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
