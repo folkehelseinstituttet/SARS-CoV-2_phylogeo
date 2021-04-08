@@ -1,0 +1,217 @@
+---
+title: "Untitled"
+author: "Magnus Nygård Osnes"
+date: "4/8/2021"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Resultater - B.1.351, “Sør Afrika variant”
+
+Import og lokal smitte over tid
+
+Antall sekvenser over tid som estimeres å være resultat av import samt tilfeller som er resultat av smitte i Norge (Fig. 4).
+
+
+
+Fig. 4. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
+
+
+
+
+Fig. 5. Forhold mellom import og lokaltransmisjon av B.1.351 over tid i Norge. OBS, ingen sekvenserte isolater som er nyere enn 10. mars.
+
+
+
+Fig 6.  Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
+
+
+
+```{r remedy001, include=FALSE}
+
+library(phytools)
+library(ape)
+library(castor)
+library(ips)
+#   ____________________________________________________________________________
+#   Note section                                                            ####
+
+#Negative and zero branch lengths were set to 10^-7
+
+path_to_results = "~/Dropbox/Covid/Southafrican_03_24/Results/"
+
+
+tree = read.tree("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_timetree.nwk")
+plot.phylo(tree,show.tip.label = F)
+nodelabels(cex=0.5)
+
+#Exclude the basal branch, NB: update this for new builds.
+tree = extract.clade(tree, node=1721)
+Locations = grepl("Norway",tree$tip.label)
+Locations[Locations=="TRUE"]="Norway"
+Locations[Locations=="FALSE"]="RoW"
+names(Locations)=tree$tip.label
+
+#Remedy for ugly tree branches
+set.seed(100)
+tree = multi2di(tree)
+tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+tree=ladderize(tree)#reorder.phylo(tree)
+
+#USE the castor approch as this is much faster.
+locations_for_castor = as.numeric(as.factor(Locations))
+names(locations_for_castor)=names(Locations)
+rate_model=rbind(c(0,1),c(0,0))
+rate_model
+castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,rate_model="ARD",include_ancestral_likelihoods = T)
+
+
+
+
+library(data.table)
+library(lubridate)
+metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
+
+#Extract the most recent dates.
+mrsd = max(metadat$`Collection Data`)
+dec_date = decimal_date(max(metadat$`Collection Data`))
+start_date = dec_date-max(tipHeights(tree))
+
+#Find the labels of the taxa that are observed in Norway. 
+Norwegian_tips = names(Locations[Locations=="Norway"])
+#Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
+
+#source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
+#multi_counts = replicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file="~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
+
+load("~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
+```
+
+```{r,include=T}
+library(ips)
+cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
+plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
+axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
+nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
+tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
+#abline(v=seq(0,382,10), lty=2, col="grey")
+legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"), bty="n",pch=20, cex = 1, pt.cex=1)
+# 
+```
+
+
+library(data.table)
+library(lubridate)
+metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-03-25_metadata.tsv")
+
+#Extract the most recent dates.
+mrsd = max(metadat$`Collection Data`)
+dec_date = decimal_date(max(metadat$`Collection Data`))
+start_date = dec_date-max(tipHeights(tree))
+
+#ADD start time here.
+Norwegian_tips = names(Locations[Locations=="Norway"])
+source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
+Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+Result = count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+Result$`MRCA's`
+
+save(Result, file="~/Dropbox/Covid/Southafrican_03_24/Result.Rdata")
+
+
+library(lubridate)
+all_lineages = Result[[2]]
+#Plot lineages:
+
+library(treemap)
+library(RColorBrewer)
+library(ggtree)
+#Treemap lineages.
+atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+
+#For greying out smaller lineages. 
+# paste0("G:",1:length(all_lineages)," S: ", all_lineages)
+# qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+# colvar = (all_lineages>=2)*1
+# col_list = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))[1:length(which(colvar==1))]
+# small_col = "#BABABA"
+# colvar[which(colvar==1)]=col_list
+# colvar[which(colvar==0)]=small_col
+# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " tmrca: ",
+#                                    decimal2Date(Result$`MRCA's`)),Value=all_lineages,vColor=colvar)
+# pdf(paste0(path_to_results,"treemap_lineages.pdf"),width=20,height=20)
+# treemap(atreemap,index=("group"),vSize="Value", type="color",vColor="vColor")
+# dev.off()
+
+
+#metadata =read.table("~/Dropbox/Covid/metadata_samples/metadata_import_export_2021-02-03.tsv", header=T)
+
+
+# #Set up time windows for counting state changes
+# tree = ARD2650[[1]]
+
+
+
+#   ____________________________________________________________________________
+#   Read the metadata for this section                                      ####
+library(data.table)
+library(ggtree)
+library(treedater)
+mrsd = max(metadat$`Collection Data`)
+
+library(lubridate)
+most_recent_date = ymd(mrsd)
+most_recent_date = decimal_date(most_recent_date)
+start_time = most_recent_date-max(nodeHeights(tree))
+time_end = most_recent_date-start_time
+
+#   ____________________________________________________________________________
+#   Import export estimates                                                 ####
+source("/Users/magnusnygardosnes/Dropbox/Rfunctions/Import_export_ace_output.R")
+library(viridis)
+#Result2 = matrix(unlist(lapply(mapped_tree, FUN= function(x) count_import_export(x, give_tips =norwegian_tips)[[1]])), nrow=1000, ncol=2, byrow=T)
+Result= count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+quantile(Result2[,1], c(0.025, 0.50,0.975)); quantile(Result2[,2], c(0.025, 0.50,0.975)); quantile(Result2[,2]/(Result2[,2]+Result2[,1]), c(0.025, 0.50,0.975))  
+
+##MRCA's lineages size.
+plot(hist(Result[[4]], breaks=100))
+c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
+colnames(c2)=c("MRCA","Lineagesize")
+
+
+ggplot(c2, aes(MRCA, Lineagesize))+
+  geom_hex()+
+  theme_bw(base_size=20)+
+  theme(legend.position=c(0.85,0.85))+
+  scale_fill_viridis()+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  xlab("Estimated TMRCA")+ylab("Estimated linage size")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+
+
+
+#Lineage size versus 
+# library(hexbin)
+# my_colors=colorRampPalette(rev(brewer.pal(11,'Spectral')))
+# pdf(paste0(path_to_results,"import_and_Export_over_time.pdf"), width=10,height=10)
+# plot(hexbin(c2),ylab="Logarithm of lineage size", xlab="Esitmated TMRCA",colramp=my_colors,xaxt="n")
+# xaxisticks =seq(from=range(Result$`MRCA's`)[1], to=range(Result$`MRCA's`)[2], length.out=10)
+# axis(1,at =xaxisticks, labels=as.character(decimal2Date(xaxisticks)))
+# dev.off()
+# plot(c2[,1],c2[,2],xlab="Logarithm of lineage size", ylab="Esitmated TMRCA")
+# 
+# 
+# 
+weekly_counts = table(cut(Result$`MRCA's`,breaks=seq(start_time,decimal_date(mrsd),by=1/52)))
+plot(weekly_counts)
+
+
+```
+
