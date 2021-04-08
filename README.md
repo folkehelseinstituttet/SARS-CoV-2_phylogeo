@@ -17,5 +17,5 @@ Vi har lagt følgende forenklende antagelse til grunn for våre analyser:
 
 For B.1.1.7 (UK variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Sør Afrika variant) er transisjonsrate estimert direkte fra dataene.
 
-
+### The analysis for the UK variant and South African variant can be viewed by accessing the files southafrican_results.md and uk_results.md
 
