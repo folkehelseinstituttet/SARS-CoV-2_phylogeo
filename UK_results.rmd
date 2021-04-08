@@ -221,7 +221,8 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,30)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")),expand=)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
+  #theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+xlab("")+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
@@ -229,12 +230,12 @@ g1
 #Line for UK
 #scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,250)+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+
+
+ g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,250)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
-  theme(legend.position = "none")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g2
 ```
 
