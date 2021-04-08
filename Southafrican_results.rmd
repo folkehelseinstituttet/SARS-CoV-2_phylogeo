@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "# Resultater - B.1.351, “Sør Afrika variant”"
 author: "Magnus Nygård Osnes"
 date: "4/8/2021"
 output: rmarkdown::github_document
@@ -9,8 +9,6 @@ output: rmarkdown::github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-# Resultater - B.1.351, “Sør Afrika variant”
 
 Import og lokal smitte over tid
 
@@ -71,7 +69,6 @@ castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,rate_model="
 
 
 
-
 library(data.table)
 library(lubridate)
 metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
@@ -85,7 +82,7 @@ start_date = dec_date-max(tipHeights(tree))
 Norwegian_tips = names(Locations[Locations=="Norway"])
 #Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
 
-#source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
+source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
 #multi_counts = replicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file="~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
 
@@ -104,7 +101,7 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"), bty="n",pc
 # 
 ```
 
-
+```{r,  echo=FALSE, fig.width=13, fig.height=20}
 library(data.table)
 library(lubridate)
 metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-03-25_metadata.tsv")
@@ -115,13 +112,9 @@ dec_date = decimal_date(max(metadat$`Collection Data`))
 start_date = dec_date-max(tipHeights(tree))
 
 #ADD start time here.
-Norwegian_tips = names(Locations[Locations=="Norway"])
-source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
 Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-Result = count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-Result$`MRCA's`
-
-save(Result, file="~/Dropbox/Covid/Southafrican_03_24/Result.Rdata")
+#save(Result, file="~/Dropbox/Covid/Southafrican_03_24/Data/Result.Rdata")
+#load("~/Dropbox/Covid/Southafrican_03_24/Data/Result.Rdata")
 
 
 library(lubridate)
@@ -134,28 +127,7 @@ library(ggtree)
 #Treemap lineages.
 atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
 treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
-
-#For greying out smaller lineages. 
-# paste0("G:",1:length(all_lineages)," S: ", all_lineages)
-# qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-# colvar = (all_lineages>=2)*1
-# col_list = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))[1:length(which(colvar==1))]
-# small_col = "#BABABA"
-# colvar[which(colvar==1)]=col_list
-# colvar[which(colvar==0)]=small_col
-# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " tmrca: ",
-#                                    decimal2Date(Result$`MRCA's`)),Value=all_lineages,vColor=colvar)
-# pdf(paste0(path_to_results,"treemap_lineages.pdf"),width=20,height=20)
-# treemap(atreemap,index=("group"),vSize="Value", type="color",vColor="vColor")
-# dev.off()
-
-
-#metadata =read.table("~/Dropbox/Covid/metadata_samples/metadata_import_export_2021-02-03.tsv", header=T)
-
-
-# #Set up time windows for counting state changes
-# tree = ARD2650[[1]]
-
+```
 
 
 #   ____________________________________________________________________________
@@ -211,7 +183,5 @@ ggplot(c2, aes(MRCA, Lineagesize))+
 # 
 weekly_counts = table(cut(Result$`MRCA's`,breaks=seq(start_time,decimal_date(mrsd),by=1/52)))
 plot(weekly_counts)
-
-
 ```
 

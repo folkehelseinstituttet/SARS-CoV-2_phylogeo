@@ -1,9 +1,7 @@
-Untitled
+\# Resultater - B.1.351, “Sør Afrika variant”
 ================
 Magnus Nygård Osnes
 4/8/2021
-
-# Resultater - B.1.351, “Sør Afrika variant”
 
 Import og lokal smitte over tid
 
@@ -24,52 +22,119 @@ tilsvarer Bodø-utbruddet.
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-library(data.table) library(lubridate) metadat =
-fread(“\~/Dropbox/Covid/Southafrican\_03\_24/nextstrain\_groups\_niph\_ncov\_southafrican-2021-03-25\_metadata.tsv”)
+    ## Warning in fread("~/Dropbox/Covid/Southafrican_03_24/
+    ## nextstrain_groups_niph_ncov_southafrican-2021-03-25_metadata.tsv"): Found and
+    ## resolved improper quoting out-of-sample. First healed line 356: <<Croatia/
+    ## HRV000_95/2021 32 20C Croatia Zagreb Zagreb EPI_ISL_1168769 Human A2a Zagreb
+    ## "Dr. Andrija Stampar“ Teaching Institute of Public Health B.1.351 One month ago
+    ## Europe Europe Female 20C Croatian Institute of Public Health 2021-02-09 Irena
+    ## Tabain et al >>. If the fields are not quoted (e.g. field separator does not
+    ## appear within any field), try quote="" to avoid this warning.
 
-\#Extract the most recent dates. mrsd =
-max(metadat$\`Collection Data\`) dec\_date = decimal\_date(max(metadat$`Collection Data`))
-start\_date = dec\_date-max(tipHeights(tree))
+    ## Warning in if (is.na(give_tips) == F) {: the condition has length > 1 and only
+    ## the first element will be used
 
-\#ADD start time here. Norwegian\_tips =
-names(Locations\[Locations==“Norway”\])
-source(“\~/Dropbox/Rfunctions/Import\_export\_ace\_output.R”) Result =
-count\_import\_export\_ace(tree, ace\_nodes =
-castor$ancestral\_likelihoods, give\_tips = Norwegian\_tips,ace\_tips = to.matrix(Locations,seq=c("Norway","RoW")),start\_time = start\_date) Result = count\_import\_export\_ace\_uncertainty(tree, ace\_nodes = castor$ancestral\_likelihoods,
-give\_tips = Norwegian\_tips,ace\_tips =
-to.matrix(Locations,seq=c(“Norway”,“RoW”)),start\_time = start\_date)
-Result$`MRCA's`
+    ## Norway/2276/2021 
+    ##              165 
+    ## [1] "imports are:1"
+    ## [1] "Local transmissions are:0"
+    ## Norway/3479/2021 
+    ##              300 
+    ## [1] "imports are:2"
+    ## [1] "Local transmissions are:0"
+    ## Norway/3252/2021 
+    ##              329 
+    ## [1] "imports are:3"
+    ## [1] "Local transmissions are:0"
+    ## Norway/2799/2021 
+    ##              358 
+    ## [1] "imports are:4"
+    ## [1] "Local transmissions are:9"
+    ## Norway/7234/2020 
+    ##              483 
+    ## [1] "imports are:5"
+    ## [1] "Local transmissions are:9"
+    ## Norway/0657/2021 
+    ##              636 
+    ## [1] "imports are:6"
+    ## [1] "Local transmissions are:9"
+    ## Norway/5164/2021 
+    ##              708 
+    ## [1] "imports are:7"
+    ## [1] "Local transmissions are:9"
+    ## Norway/4125/2021 
+    ##             1079 
+    ## [1] "imports are:8"
+    ## [1] "Local transmissions are:9"
+    ## Norway/3565/2021 
+    ##             1162 
+    ## [1] "imports are:9"
+    ## [1] "Local transmissions are:11"
+    ## Norway/6143/2021 
+    ##             1227 
+    ## [1] "imports are:10"
+    ## [1] "Local transmissions are:11"
+    ## Norway/3386/2021 
+    ##             1245 
+    ## [1] "imports are:11"
+    ## [1] "Local transmissions are:11"
+    ## Norway/6183/2021 
+    ##             1471 
+    ## [1] "imports are:12"
+    ## [1] "Local transmissions are:35"
+    ## Norway/3636/2021 
+    ##             1497 
+    ## [1] "imports are:13"
+    ## [1] "Local transmissions are:35"
+    ## Norway/3778/2021 
+    ##             1525 
+    ## [1] "imports are:14"
+    ## [1] "Local transmissions are:35"
+    ## Norway/4475/2021 
+    ##             1546 
+    ## [1] "imports are:15"
+    ## [1] "Local transmissions are:35"
+    ## Norway/4610/2021 
+    ##             1562 
+    ## [1] "imports are:16"
+    ## [1] "Local transmissions are:35"
+    ## Norway/3986/2021 
+    ##             1571 
+    ## [1] "imports are:17"
+    ## [1] "Local transmissions are:135"
+    ## Norway/4726/2021 
+    ##             1578 
+    ## [1] "imports are:18"
+    ## [1] "Local transmissions are:135"
+    ## Norway/6140/2021 
+    ##             1595 
+    ## [1] "imports are:19"
+    ## [1] "Local transmissions are:135"
 
-save(Result, file=“\~/Dropbox/Covid/Southafrican\_03\_24/Result.Rdata”)
+    ## Registered S3 method overwritten by 'treeio':
+    ##   method     from
+    ##   root.phylo ape
 
-library(lubridate) all\_lineages = Result\[\[2\]\] \#Plot lineages:
+    ## ggtree v2.4.1  For help: https://yulab-smu.top/treedata-book/
+    ## 
+    ## If you use ggtree in published research, please cite the most appropriate paper(s):
+    ## 
+    ## [36m-[39m Guangchuang Yu. Using ggtree to visualize data on tree-like structures. Current Protocols in Bioinformatics, 2020, 69:e96. doi:10.1002/cpbi.96
+    ## [36m-[39m Guangchuang Yu, Tommy Tsan-Yuk Lam, Huachen Zhu, Yi Guan. Two methods for mapping and visualizing associated data on phylogeny using ggtree. Molecular Biology and Evolution 2018, 35(12):3041-3043. doi:10.1093/molbev/msy194
+    ## [36m-[39m Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. Methods in Ecology and Evolution 2017, 8(1):28-36. doi:10.1111/2041-210X.12628
 
-library(treemap) library(RColorBrewer) library(ggtree) \#Treemap
-lineages. atreemap =
-data.frame(group=paste0(“G:”,1:length(all\_lineages)," S: “,
-all\_lineages,” mrca:
-“,decimal2Date(Result$`MRCA's`)),Value=all\_lineages)
-treemap(atreemap,index=(”group“),vSize=”Value“, type=”index“,
-palette=”Paired")
+    ## 
+    ## Attaching package: 'ggtree'
 
-\#For greying out smaller lineages. \#
-paste0(“G:”,1:length(all\_lineages)," S: ", all\_lineages) \#
-qual\_col\_pals = brewer.pal.info\[brewer.pal.info$category == ‘qual’,\]
-\# colvar = (all\_lineages&gt;=2)\*1 \# col\_list =
-unlist(mapply(brewer.pal,
-qual\_col\_pals$maxcolors, rownames(qual\_col\_pals)))\[1:length(which(colvar==1))\] \# small\_col = "\#BABABA" \# colvar\[which(colvar==1)\]=col\_list \# colvar\[which(colvar==0)\]=small\_col \# atreemap = data.frame(group=paste0("G:",1:length(all\_lineages)," S: ", all\_lineages, " tmrca: ", \# decimal2Date(Result$`MRCA's`)),Value=all\_lineages,vColor=colvar)
-\#
-pdf(paste0(path\_to\_results,“treemap\_lineages.pdf”),width=20,height=20)
-\# treemap(atreemap,index=(“group”),vSize=“Value”,
-type=“color”,vColor=“vColor”) \# dev.off()
+    ## The following object is masked from 'package:TreeTools':
+    ## 
+    ##     MRCA
 
-\#metadata
-=read.table(“\~/Dropbox/Covid/metadata\_samples/metadata\_import\_export\_2021-02-03.tsv”,
-header=T)
+    ## The following object is masked from 'package:ape':
+    ## 
+    ##     rotate
 
-# \#Set up time windows for counting state changes
-
-# tree = ARD2650\[\[1\]\]
+![](Southafrican_results_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 # \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -121,6 +186,4 @@ labels=as.character(decimal2Date(xaxisticks))) \# dev.off() \#
 plot(c2\[,1\],c2\[,2\],xlab=“Logarithm of lineage size”, ylab=“Esitmated
 TMRCA”) \# \# \# weekly\_counts =
 table(cut(Result$`MRCA's`,breaks=seq(start\_time,decimal\_date(mrsd),by=1/52)))
-plot(weekly\_counts)
-
-\`\`\`
+plot(weekly\_counts) \`\`\`
