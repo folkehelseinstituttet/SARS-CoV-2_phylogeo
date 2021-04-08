@@ -30,4 +30,6 @@ tilsvarer Bodø-utbruddet.
 
     ## Warning: Removed 13 row(s) containing missing values (geom_path).
 
+![](Southafrican_results_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
