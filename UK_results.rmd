@@ -83,7 +83,8 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 #Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
 
 source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
-#multi_counts = replicate(10, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+library(pbapply)
+multi_counts = pbreplicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file="~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
 
 load("~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
