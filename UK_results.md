@@ -1,40 +1,23 @@
-Resultater - B.1.1.7, “UK variant
+Results - B.1.1.7, “UK variant”
 ================
 4/8/2021
 
-Import og lokal smitte over tid
+Phylogeographic mapping
 
-Vi har sett nærmere antall sekvenser over tid som estimeres å være
-resultat av import relativt til tilfeller som er resultat av smitte i
-Norge (Fig. 1). Hvis man for eksempel har en import til Norge som
-resulterer i videre smitte og ytterligere to tilfeller, vil disse telles
-som ett tilfelle av import og to tilfeller av lokal transmisjon. Det er
-viktig å huske på at disse estimatene er basert kun på sekvenserte
-tilfeller. De absolutte tallene på importer og lokale transmisjoner vil
-derfor være underestimerte, men kan anses som minimumsestimater.
-
-De absolutte tallene presentert over vil generelt være underestimerte,
-men antall importer per uke ser ut til å ha vært høyest i slutten av
-januar. Den relative andelen av nye sekvenser som estimeres å være
-resultat av import og lokal transmisjon blir ikke påvirket av dette, og
-er derfor kanskje den mest informative måten å studere dette på.
-Forholdet mellom import og lokal transmisjon er presentert i Fig. 2.
-
-Importklynger
-
-Videre kan vi se på størrelsen på utbrudd/klynger i Norge som en
-funksjon estimert importtidspunkt. Dette er framstilt i Fig. 3 under.
-Figuren illustrerer at de færreste importer resulterer i større
-smitteklynger/utbrudd i Norge. De aller fleste større utbrudd og
-smitteklynger med UK variant i Norge er resultat av importer fra slutten
-av desember og fram til slutten av januar. Likevel ser vi at importer
-også i februar har gitt opphav til smitteklynger i Norge.
+The analyses take a dated phylogeny exported from NextStrain as a
+starting point for quantifying imports and local transmission of
+Sars-CoV-2 B.1.1.7 in Norway. Each isolate is assigned to one of two
+binary categories: “Norway” or “Rest of the world (RoW)”. The output is
+presented in Fig.1 and ancestral character estimation performed on the
+dated phylogeny.
 
 ![Test](UK_results_files/figure-gfm/unnamed-chunk-1-1.png)
 
-##### Fig.1. fylogeni med binær geografisk mapping (Norge, resten av verden \[RoW\]).
+##### Fig. 1. B.1.1.7 phylogeny colored by binary geographic mappings (Norway, rest of the world \[RoW\]).
 
-##### Table 1. Estimated number of Norwegian infections that are caused by importation and local transmission in geographically mapped phylogeny in Figure 1.
+Quantifying introductions and local transmission
+
+##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
@@ -42,16 +25,35 @@ også i februar har gitt opphav til smitteklynger i Norge.
 | Local transmission | 1128.4750 | 1135.0000 | 1140.0000 |
 | Import / Total     |    0.1416 |    0.1453 |    0.1502 |
 
+Next, we estimate the fraction of introductions relative to local
+transmission over time. In these and subsequent analyses it is important
+to keep detection lag into account (see
+<https://science.sciencemag.org/content/371/6530/708>). There will
+always be a delay between the introduction and detection, which varies
+from case to case. In the figures below, the last four weeks prior to
+the time of sampling of the most recent included isolate is shaded to
+indicate that estimates in this period is highly uncertain.
+
 ![](UK_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-##### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.1.7 over tid i Norge. Lokal transmisjon har blitt relativt viktigere for epidemiologien av B.1.1.7 i Norge over tid.
+##### Fig. 2. Relative quantification of infection source (new introduction / import vs local transmission).
+
+The same output is visualized as absolute numbers in Fig. 3 below. It
+should be noted that absolute estimates will be significantly shaped by
+sampling density.
 
 ![](UK_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-##### Fig. 3. Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i
+##### Fig. 3. Absolute quantification of imports and local transmission events.
 
-perioden skravert i grått"
+Perhaps the most interesting aspect of quantifying introductions, is to
+investigate the fate of individual inferred imports. Mandatory testing
+at the border and/or mandatory quaranteens etc will obviously have a
+bearing on the fate of newly introduced infections from abroad. The plot
+below visualizes the number of infections in Norway resulting from each
+individual import over time, stratified by inferred TMRCA of each
+introduced lineage.
 
 ![](UK_results_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-##### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7. “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import.
+##### Fig. 4. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
