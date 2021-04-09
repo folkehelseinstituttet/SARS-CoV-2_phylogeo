@@ -2,7 +2,8 @@
 title: "Resultater - B.1.1.7, “UK variant"
 author: "Magnus Nygård Osnes"
 date: "4/8/2021"
-output: rmarkdown::github_document
+output: 
+  html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -14,8 +15,7 @@ Import og lokal smitte over tid
 
 Vi har sett nærmere antall sekvenser over tid som estimeres å være resultat av import relativt til tilfeller som er resultat av smitte i Norge (Fig. 1). Hvis man for eksempel har en import til Norge som resulterer i videre smitte og ytterligere to tilfeller, vil disse telles som ett tilfelle av import og to tilfeller av lokal transmisjon. Det er viktig å huske på at disse estimatene er basert kun på sekvenserte tilfeller. De absolutte tallene på importer og lokale transmisjoner vil derfor være underestimerte, men kan anses som minimumsestimater. 
 
-
-Fig. 1 Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
+Fig.1
 
 De absolutte tallene presentert over vil generelt være underestimerte, men antall importer per uke ser ut til å ha vært høyest i slutten av januar. Den relative andelen av nye sekvenser som estimeres å være resultat av import og lokal transmisjon blir ikke påvirket av dette, og er derfor kanskje den mest informative måten å studere dette på. Forholdet mellom import og lokal transmisjon er  presentert i Fig. 2.
 
@@ -97,7 +97,7 @@ source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
 load("~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
 ```
 
-```{r, echo=FALSE, fig.width=13, fig.height=20}
+```{r, echo=FALSE, fig.width=13, fig.height=20, fig.cap="Test"}
 library(ips)
 cols<-setNames( c("#B3E2CD","#FDCDAC"),unique(Locations))
 plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
@@ -193,7 +193,7 @@ ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
                           rep("Local transmission",length(week_time))))
 ```
 
-```{r,echo=F, fig.width=10,fig.height=10}
+```{r,echo=F, fig.width=10,fig.height=10, fig.cap="Fig. 1 Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått"}
 g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
   geom_area(alpha=0.6 , size=1, colour="black")+
   theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
