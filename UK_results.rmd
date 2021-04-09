@@ -187,7 +187,7 @@ ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
                           rep("Local transmission",length(week_time))))
 ```
 
-```{r,echo=F, fig.width=10,fig.height=10}
+```{r,echo=F, fig.width=7,fig.height=7}
 g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
   geom_area(alpha=0.6 , size=1, colour="black")+
   theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
@@ -236,7 +236,7 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ##### Fig. 3. Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i 
 perioden skravert i grått" 
 
-```{r,echo=F,fig.width=10, fig.height=10}
+```{r,echo=F,fig.width=7, fig.height=7}
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   geom_hex()+
   theme_bw(base_size=20)+
