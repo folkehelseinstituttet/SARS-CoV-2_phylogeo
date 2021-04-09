@@ -14,18 +14,12 @@ viktig å huske på at disse estimatene er basert kun på sekvenserte
 tilfeller. De absolutte tallene på importer og lokale transmisjoner vil
 derfor være underestimerte, men kan anses som minimumsestimater.
 
-Fig.1
-
 De absolutte tallene presentert over vil generelt være underestimerte,
 men antall importer per uke ser ut til å ha vært høyest i slutten av
 januar. Den relative andelen av nye sekvenser som estimeres å være
 resultat av import og lokal transmisjon blir ikke påvirket av dette, og
 er derfor kanskje den mest informative måten å studere dette på.
 Forholdet mellom import og lokal transmisjon er presentert i Fig. 2.
-
-Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.1.7 over tid i
-Norge. Lokal transmisjon har blitt relativt viktigere for epidemiologien
-av B.1.1.7 i Norge over tid.
 
 Importklynger
 
@@ -37,17 +31,20 @@ smitteklynger med UK variant i Norge er resultat av importer fra slutten
 av desember og fram til slutten av januar. Likevel ser vi at importer
 også i februar har gitt opphav til smitteklynger i Norge.
 
-Fig. 3. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7.
-“TMRCA” = time of most recent common ancestor, og indikerer estimert
-tidspunkt for hver enkelt import.
-
 ![Test](UK_results_files/figure-gfm/unnamed-chunk-1-1.png)
 
-![Fig. 1 Import og lokal transmisjon av B.1.1.7. Estimert antall
-import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det
-er knyttet stor usikkerhet rundt estimater i perioden skravert i
-grått](UK_results_files/figure-gfm/unnamed-chunk-4-1.png)
+##### Fig.1. fylogeni med binær geografisk mapping (Norge, resten av verden \[RoW\]).
+
+![](UK_results_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+##### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.1.7 over tid i Norge. Lokal transmisjon har blitt relativt viktigere for epidemiologien av B.1.1.7 i Norge over tid.
 
 ![](UK_results_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
+##### Fig. 3. Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i
+
+perioden skravert i grått"
+
 ![](UK_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+##### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7. “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import.
