@@ -1,4 +1,5 @@
-# SARS-CoV-2 - Import-lokaltransmisjon analyse UK- og Sør Afrika variant
+# SARS-CoV-2 - Import-lokaltransmisjon analyse
+# UK- og Sør Afrika variant
 
 ## Bakgrunn & metoder
 
