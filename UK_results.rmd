@@ -84,10 +84,10 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 
 source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
 library(pbapply)
-multi_counts = pbreplicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
-#save(multi_counts, file="~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
+#multi_counts = pbreplicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file="~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_100.Rdata")
 
-load("~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_10.Rdata")
+load("~/Dropbox/Covid/UK_03_24/Data/count_ML_UK_100.Rdata")
 ```
 
 ```{r, echo=FALSE, fig.width=13, fig.height=20, fig.cap="Test"}
@@ -163,8 +163,8 @@ names(dates)=metadata$Strain
 
 source("~/Dropbox/Rfunctions/PhyloUtils/R/Relative_load_multi.R")
 #Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
-#save(Result_with_uncertainty,file="~/Dropbox/Covid/UK_03_24/Data/Relative_load_10.Rdata") 
-load("~/Dropbox/Covid/UK_03_24/Data/Relative_load_10.Rdata")
+#save(Result_with_uncertainty,file="~/Dropbox/Covid/UK_03_24/Data/Relative_load_100.Rdata") 
+load("~/Dropbox/Covid/UK_03_24/Data/Relative_load_100.Rdata")
 start_time = start_date
 #Set windows for counting importations and local transmission in.
 start_time 

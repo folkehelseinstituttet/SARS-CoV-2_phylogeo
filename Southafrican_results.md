@@ -1,17 +1,23 @@
-Resultater - B.1.351, “Sør Afrika variant”
+Results - B.1.351, “South Africa variant”
 ================
 4/8/2021
 
-Import og lokal smitte over tid
+Phylogeographic mapping
 
-Antall sekvenser over tid som estimeres å være resultat av import samt
-tilfeller som er resultat av smitte i Norge (Fig. 4).
+Ancestral character estimation was performed on a dated phylogeny
+exported from NextStrain. Each isolate was assigned to one of two binary
+categories: “Norway” or “Rest of the world (RoW)”. The output is
+presented in Fig.1.
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-##### Fig. 1. fylogeni med binær geografisk mapping (Norge, resten av verden \[RoW\]).
+##### Fig. 1. B.1.351 phylogeny colored by binary geographic mappings (Norway, rest of the world \[RoW\]).
 
-##### Table 1. Estimated number of Norwegian infections that are caused by importation and local transmission in geographically mapped phylogeny in Figure 1.
+The number of Norwegian isolates resulting from local transmission vs
+introductions from abroad were estimated from the tree and is summarized
+in Table 1.
+
+##### Table 1. Estimated number of Norwegian infections that are caused by import and local transmission in geographically mapped phylogeny in Figure 1.
 
 |                    |     2.5% |      50% |    97.5% |
 |:-------------------|---------:|---------:|---------:|

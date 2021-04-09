@@ -38,9 +38,9 @@ også i februar har gitt opphav til smitteklynger i Norge.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  189.0000 |  191.5000 |  197.3250 |
-| Local transmission | 1130.6750 | 1136.5000 | 1139.0000 |
-| Import / Total     |    0.1423 |    0.1442 |    0.1486 |
+| Import             |  188.0000 |  193.0000 |  199.5250 |
+| Local transmission | 1128.4750 | 1135.0000 | 1140.0000 |
+| Import / Total     |    0.1416 |    0.1453 |    0.1502 |
 
 ![](UK_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
