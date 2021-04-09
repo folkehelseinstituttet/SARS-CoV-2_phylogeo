@@ -34,16 +34,23 @@ også i februar har gitt opphav til smitteklynger i Norge.
 
 ##### Fig.1. fylogeni med binær geografisk mapping (Norge, resten av verden \[RoW\]).
 
-![](UK_results_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+The number of infections that are a results
+
+|                    |     2.5% |    50% |    97.5% |
+|:-------------------|---------:|-------:|---------:|
+| Import             |  189.000 |  191.5 |  197.325 |
+| Local transmission | 1130.675 | 1136.5 | 1139.000 |
+
+![](UK_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ##### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.1.7 over tid i Norge. Lokal transmisjon har blitt relativt viktigere for epidemiologien av B.1.1.7 i Norge over tid.
 
-![](UK_results_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](UK_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ##### Fig. 3. Import og lokal transmisjon av B.1.1.7. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i
 
 perioden skravert i grått"
 
-![](UK_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](UK_results_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ##### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.1.7. “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import.
