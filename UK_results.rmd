@@ -1,6 +1,6 @@
 ---
 title: "Resultater - B.1.1.7, “UK variant"
-author: "Magnus Nygård Osnes"
+author: ""
 date: "4/8/2021"
 output: 
   github_document

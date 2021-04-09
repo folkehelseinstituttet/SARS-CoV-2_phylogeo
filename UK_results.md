@@ -1,6 +1,5 @@
 Resultater - B.1.1.7, “UK variant
 ================
-Magnus Nygård Osnes
 4/8/2021
 
 Import og lokal smitte over tid

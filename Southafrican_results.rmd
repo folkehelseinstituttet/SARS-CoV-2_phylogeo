@@ -1,6 +1,6 @@
 ---
 title: "Resultater - B.1.351, “Sør Afrika variant”"
-author: "Magnus Nygård Osnes"
+author: ""
 date: "4/8/2021"
 output: rmarkdown::github_document
 ---
@@ -14,18 +14,6 @@ Import og lokal smitte over tid
 
 Antall sekvenser over tid som estimeres å være resultat av import samt tilfeller som er resultat av smitte i Norge (Fig. 4).
 
-
-
-Fig. 4. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
-
-
-
-
-Fig. 5. Forhold mellom import og lokaltransmisjon av B.1.351 over tid i Norge. OBS, ingen sekvenserte isolater som er nyere enn 10. mars.
-
-
-
-Fig 6.  Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
 
 
 
@@ -100,7 +88,9 @@ tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"), bty="n",pch=20, cex = 1, pt.cex=1)
 # 
 ```
-
+ 
+##### Fig. 1. fylogeni med binær geografisk mapping (Norge, resten av verden [RoW]). 
+ 
 ```{r,  include=F}
 library(data.table)
 library(lubridate)
@@ -196,6 +186,9 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
 g1
 ```
 
+###### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.351 over tid i Norge. OBS, ingen sekvenserte isolater som er nyere enn 10. mars.
+
+
 ```{r,include=F}
 #Line for UK
 #scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
@@ -226,6 +219,7 @@ library(grid)
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ```
 
+###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
 
 ```{r,echo=F,fig.width=10, fig.height=10}
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
@@ -240,3 +234,5 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
 g1
 
 ```
+
+###### Fig. 4.  Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
