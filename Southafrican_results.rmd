@@ -26,10 +26,12 @@ library(ips)
 
 #Negative and zero branch lengths were set to 10^-7
 
-path_to_results = "~/Dropbox/Covid/Southafrican_03_24/Results/"
+path_Main = "~/Dropbox/Covid/Southafrican_03_24/"
+path_Results = "~/Dropbox/Covid/Southafrican_03_24/Results/"  #Replace these paths to run locally.
+path_Rscripts = "~/Dropbox/Covid/Rfunctions/"  #Replace these paths to run locally.
+path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
-
-tree = read.tree("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_timetree.nwk")
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_timetree.nwk"))
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
 
@@ -57,7 +59,7 @@ castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,rate_model="
 
 library(data.table)
 library(lubridate)
-metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
 
 #Extract the most recent dates.
 mrsd = max(metadat$`Collection Data`)
@@ -68,11 +70,11 @@ start_date = dec_date-max(tipHeights(tree))
 Norwegian_tips = names(Locations[Locations=="Norway"])
 #Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
 
-source("~/Dropbox/Rfunctions/Import_export_ace_output.R")
+source(paste0(path_Rscripts,"Import_export_ace_output.R"))
 #multi_counts = replicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
-#save(multi_counts, file="~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
+#save(multi_counts, file="paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 
-load("~/Dropbox/Covid/Southafrican_03_24/Data/count_ML_southafrica_100.Rdata")
+load(paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 ```
 
 ```{r, echo=FALSE, fig.width=13, fig.height=20}
@@ -92,7 +94,7 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),pch=20, cex
 ```{r,  include=F}
 library(data.table)
 library(lubridate)
-metadat = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
 
 #Extract the most recent dates.
 mrsd = max(metadat$`Collection Data`)
@@ -126,7 +128,7 @@ time_end = most_recent_date-start_time
 
 #   ____________________________________________________________________________
 #   Import export estimates                                                 ####
-source("/Users/magnusnygardosnes/Dropbox/Rfunctions/Import_export_ace_output.R")
+source(paste0(path_Rscripts,"Import_export_ace_output.R"))
 library(viridis)
 #Result2 = matrix(unlist(lapply(mapped_tree, FUN= function(x) count_import_export(x, give_tips =norwegian_tips)[[1]])), nrow=1000, ncol=2, byrow=T)
 
@@ -137,7 +139,7 @@ colnames(c2)=c("MRCA","Lineagesize")
 
 ```{r,include=F}
 library(data.table)
-metadata = fread("~/Dropbox/Covid/Southafrican_03_24/nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv")
+metadata = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
 #Debug:
 #sum(tree$tip.label %in% metadata$Strain)
 #length(tree$tip.label)
@@ -146,7 +148,7 @@ dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
 #Example of usage:
 
-source("~/Dropbox/Rfunctions/PhyloUtils/R/Relative_load_multi.R")
+source(paste0(path_Rscripts,"Relative_load_multi.R"))
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
  
 start_time = start_date
