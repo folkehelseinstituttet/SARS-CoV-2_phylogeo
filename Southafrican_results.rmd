@@ -77,7 +77,7 @@ tree=ladderize(tree)#reorder.phylo(tree)
 #   ____________________________________________________________________________
 #   Ancestral state reconstruction                                          ####
 
-#Reconstruct ancestral states using maximum likelihood with a fixed transition matrix. 
+#Reconstruct ancestral states using maximum likelihood.
 locations_for_castor = as.numeric(as.factor(Locations))
 names(locations_for_castor)=names(Locations)
 
@@ -93,6 +93,8 @@ most_recent_date = ymd(mrsd)
 most_recent_date = decimal_date(most_recent_date)
 start_time = most_recent_date-max(nodeHeights(tree))
 time_end = most_recent_date-start_time
+start_time = start_date
+time_end = start_time+max(nodeHeights(tree))
 
 #Find the labels of the taxa that are observed in Norway. 
 Norwegian_tips = names(Locations[Locations=="Norway"])
@@ -149,23 +151,14 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),
 ```{r,include=F}
 #   ____________________________________________________________________________
 #   Import export estimates                                                 ####
-
-##MRCA's lineages size.
-c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
-colnames(c2)=c("MRCA","Lineagesize")
-#Debug:
-#sum(tree$tip.label %in% metadata$Strain)
-#length(tree$tip.label)
 tip_list = Norwegian_tips
 dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
-#Example of usage:
 
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
  
-start_time = start_date
-time_end = start_time+max(nodeHeights(tree))
-#Set windows for counting importations and local transmission in.
+
+#Make weekly time windows to count events. 
 weeks = seq(start_time, time_end, by = 1/52)
 week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
 weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
@@ -243,6 +236,9 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
 
 ```{r,echo=F,fig.width=7, fig.height=7}
+##MRCA's lineages size.
+c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
+colnames(c2)=c("MRCA","Lineagesize")
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   geom_hex()+
   theme_bw(base_size=20)+
