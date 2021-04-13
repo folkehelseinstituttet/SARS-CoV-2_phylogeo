@@ -35,4 +35,4 @@ in Table 1.
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-###### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.135 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
+###### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.351 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.

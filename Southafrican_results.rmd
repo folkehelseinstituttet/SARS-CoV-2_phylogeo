@@ -16,25 +16,50 @@ Ancestral character estimation was performed on a dated phylogeny exported from 
 
 
 ```{r remedy001, include=FALSE}
+
+
+#   ____________________________________________________________________________
+#   Loading required packages                                               ####
+
 library(ggplot2)
 library(phytools)
 library(ape)
 library(castor)
 library(ips)
-#   ____________________________________________________________________________
-#   Note section                                                            ####
+library(data.table)
+library(lubridate)
+library(ggtree)
+library(treedater)
+library(viridis)
+library(grid)
+library(BactDating)
 
-#Negative and zero branch lengths were set to 10^-7
+#   ____________________________________________________________________________
+#   Setup paths                                                             ####
 
 path_Main = "~/Dropbox/Covid/Southafrican_03_24/"
 path_Results = "~/Dropbox/Covid/Southafrican_03_24/Results/"  #Replace these paths to run locally.
 path_Rscripts = "~/Dropbox/Covid/Rfunctions/"  #Replace these paths to run locally.
 path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
+
+#   ____________________________________________________________________________
+#   Loading required scripts                                                ####
+source(paste0(path_Rscripts,"Import_export_ace_output.R"))
+source(paste0(path_Rscripts,"Relative_load_multi.R"))
+
+#   ____________________________________________________________________________
+#   Read required data                                                      ####
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
+metadata = metadat #Used alternate spellings some places.
 tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_timetree.nwk"))
+
+
+#   ____________________________________________________________________________
+#   Analysis begins here                                                    ####
+
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
-
 #Exclude the basal branch, NB: update this for new builds.
 tree = extract.clade(tree, node=1721)
 Locations = grepl("Norway",tree$tip.label)
@@ -48,66 +73,67 @@ tree = multi2di(tree)
 tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
 tree=ladderize(tree)#reorder.phylo(tree)
 
-#USE the castor approch as this is much faster.
+
+#   ____________________________________________________________________________
+#   Ancestral state reconstruction                                          ####
+
+#Reconstruct ancestral states using maximum likelihood with a fixed transition matrix. 
 locations_for_castor = as.numeric(as.factor(Locations))
 names(locations_for_castor)=names(Locations)
-rate_model=rbind(c(0,1),c(0,0))
-rate_model
-castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,rate_model="ARD",include_ancestral_likelihoods = T)
+
+castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
+                              rate_model="ARD",include_ancestral_likelihoods = T)
 
 
-
-library(data.table)
-library(lubridate)
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
-
-#Extract the most recent dates.
+#Setup date variables that are used in downstream function calls.
 mrsd = max(metadat$`Collection Data`)
 dec_date = decimal_date(max(metadat$`Collection Data`))
 start_date = dec_date-max(tipHeights(tree))
+most_recent_date = ymd(mrsd)
+most_recent_date = decimal_date(most_recent_date)
+start_time = most_recent_date-max(nodeHeights(tree))
+time_end = most_recent_date-start_time
 
 #Find the labels of the taxa that are observed in Norway. 
 Norwegian_tips = names(Locations[Locations=="Norway"])
-#Extract lineages from the maximum likelihood mapping by sampling from node probabilities.
 
-source(paste0(path_Rscripts,"Import_export_ace_output.R"))
+
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out, like below          ####
+### New results should be saved and loaded once new builds are produced     ####
+
+#Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
 #multi_counts = replicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file="paste0(path_Data,"count_ML_southafrica_100.Rdata"))
-
 load(paste0(path_Data,"count_ML_southafrica_100.Rdata"))
+
+#Lineage descriptions using the state with more than 50% probability for all nodes.
+Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods,give_tips = Norwegian_tips,
+                                 ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+
 ```
 
 ```{r, echo=FALSE, fig.width=13, fig.height=20}
-library(ips)
 cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
 plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
 axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
 nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
 tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 #abline(v=seq(0,382,10), lty=2, col="grey")
-legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),pch=20, cex = 5, pt.cex=5, bty="n")
+legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),
+       pch=20, cex = 5, pt.cex=5, bty="n")
 # 
 ```
  
 ##### Fig. 1. B.1.351 phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
  
 ```{r,  include=F}
-library(data.table)
-library(lubridate)
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
-
-#Extract the most recent dates.
-mrsd = max(metadat$`Collection Data`)
-dec_date = decimal_date(max(metadat$`Collection Data`))
-start_date = dec_date-max(tipHeights(tree))
-
-Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Lineage size squareplots                                                ####
 
 # library(lubridate)
 # all_lineages = Result[[2]]
 # #Plot lineages:
-# 
 # library(treemap)
 # library(RColorBrewer)
 # library(ggtree)
@@ -115,31 +141,18 @@ Result = count_import_export_ace(tree, ace_nodes = castor$ancestral_likelihoods,
 # atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
 # treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
 
-#   ____________________________________________________________________________
-#   Read the metadata for this section                                      ####
-library(ggtree)
-library(treedater)
-library(lubridate)
-most_recent_date = ymd(mrsd)
-most_recent_date = decimal_date(most_recent_date)
-start_time = most_recent_date-max(nodeHeights(tree))
-time_end = most_recent_date-start_time
 
+```
+
+```{r,include=F}
 #   ____________________________________________________________________________
 #   Import export estimates                                                 ####
-source(paste0(path_Rscripts,"Import_export_ace_output.R"))
-library(viridis)
-#Result2 = matrix(unlist(lapply(mapped_tree, FUN= function(x) count_import_export(x, give_tips =norwegian_tips)[[1]])), nrow=1000, ncol=2, byrow=T)
 
 ##MRCA's lineages size.
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
-```
-
-```{r,include=F}
-library(data.table)
-metadata = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
 #Debug:
 #sum(tree$tip.label %in% metadata$Strain)
 #length(tree$tip.label)
@@ -148,26 +161,24 @@ dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
 #Example of usage:
 
-source(paste0(path_Rscripts,"Relative_load_multi.R"))
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
  
 start_time = start_date
-#Set windows for counting importations and local transmission in.
-start_time 
 time_end = start_time+max(nodeHeights(tree))
+#Set windows for counting importations and local transmission in.
 weeks = seq(start_time, time_end, by = 1/52)
 week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
 weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
 weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
 sum_cases = weekly_importations+weekly_local_tranmissions
 
-#Plotting method
+#Calculate confidence intervals
 imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
 exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
 dat=data.frame(cbind(imports,exports),dates=decimal2Date(week_time))
 colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
 
-#This uses the mean and discards uncertainty.
+#Setup data for import versus local transmission based on the mean.
 ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
                   fraction=c(weekly_importations/sum_cases,weekly_local_tranmissions/sum_cases),
                   group=c(rep("Import",length(week_time)),
@@ -179,7 +190,6 @@ The number of Norwegian isolates resulting from local transmission vs introducti
 ##### Table 1. Estimated number of Norwegian infections that are caused by import and local transmission in geographically mapped phylogeny in Figure 1.
 
 ```{r, echo=F,fig.width=10, fig.height=10}
-library(xtable)
 imports_temp = unlist(multi_counts[1,])[seq(1,length(multi_counts[1,])*2,by=2)]
 local_temp = unlist(multi_counts[1,])[seq(2,length(multi_counts[1,])*2,by=2)]
 relative_temp = imports_temp/(imports_temp+local_temp)
@@ -208,24 +218,18 @@ g1
 
 
 ```{r,include=F}
-#Line for UK
-#scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
 
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,5)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+ # limits=c(as.Date("2020-06-30"), as.Date("2021-03-29"))
-  #theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+xlab("")+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-#Line for UK
-#scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-15")))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
-
 g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,45)+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+ #limits =c(as.Date("2021-01-18"), as.Date("2021-03-15"))
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
@@ -233,7 +237,6 @@ g2
 ```
 
 ```{r,echo=F,fig.width=10, fig.height=10}
-library(grid)
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ```
 
