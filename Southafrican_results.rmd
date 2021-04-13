@@ -35,11 +35,11 @@ library(grid)
 library(BactDating)
 
 #   ____________________________________________________________________________
-#   Setup paths                                                             ####
+#   Setup paths - replace these to run locally                              ####
 
 path_Main = "~/Dropbox/Covid/Southafrican_03_24/"
-path_Results = "~/Dropbox/Covid/Southafrican_03_24/Results/"  #Replace these paths to run locally.
-path_Rscripts = "~/Dropbox/Covid/Rfunctions/"  #Replace these paths to run locally.
+path_Results = "~/Dropbox/Covid/Southafrican_03_24/Results/"
+path_Rscripts = "~/Dropbox/Covid/Rfunctions/"
 path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
 
