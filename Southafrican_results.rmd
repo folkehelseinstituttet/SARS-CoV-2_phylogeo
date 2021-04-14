@@ -33,6 +33,8 @@ library(treedater)
 library(viridis)
 library(grid)
 library(BactDating)
+library(GeoLineages)
+
 
 #   ____________________________________________________________________________
 #   Setup paths - replace these to run locally                              ####
@@ -41,12 +43,6 @@ path_Main = "~/Dropbox/Covid/Southafrican_03_24/"
 path_Results = "~/Dropbox/Covid/Southafrican_03_24/Results/"
 path_Rscripts = "~/Dropbox/Covid/Rfunctions/"
 path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
-
-
-#   ____________________________________________________________________________
-#   Loading required scripts                                                ####
-source(paste0(path_Rscripts,"Import_export_ace_output.R"))
-source(paste0(path_Rscripts,"Relative_load_multi.R"))
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
@@ -155,7 +151,7 @@ tip_list = Norwegian_tips
 dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
 
-Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date)
+Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date,tip_list=Norwegian_tips)
  
 
 #Make weekly time windows to count events. 
