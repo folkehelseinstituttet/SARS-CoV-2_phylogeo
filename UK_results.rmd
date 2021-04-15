@@ -52,9 +52,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-07_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-14_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-07_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-14_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -63,7 +63,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=4992)
+tree = extract.clade(tree, node=5539)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
 Locations[Locations=="FALSE"]="RoW"
@@ -78,7 +78,7 @@ tree=ladderize(tree)#reorder.phylo(tree)
 
 
 #Setup transition matrix estimated using ML and the assumption 10X rate to Norway
-
+LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 transition_matrix = rbind(c(-0.1119083 ,0.1119083),c(1.1190826,-1.1190826))
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
