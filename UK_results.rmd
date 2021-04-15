@@ -4,6 +4,7 @@ author: ""
 date: "4/8/2021"
 output: 
   github_document
+  #pdf_document 
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +16,12 @@ The analyses take a dated phylogeny exported from NextStrain as a starting point
 Each isolate is assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is presented in Fig.1 and ancestral character estimation performed on the dated phylogeny. 
 
 ```{r remedy001, include=FALSE}
+### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out                      ####
+### When a new build is available these should be un-commented, the         ####
+### result saved, and recommented.                                          ####
+
 #   ____________________________________________________________________________
 #   Loading required packages                                               ####
 

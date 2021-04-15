@@ -1,6 +1,6 @@
 Results - B.1.351, “South Africa variant”
 ================
-4/8/2021
+4/14/2021
 
 Phylogeographic mapping
 
@@ -21,9 +21,9 @@ in Table 1.
 
 |                    |     2.5% |      50% |    97.5% |
 |:-------------------|---------:|---------:|---------:|
-| Import             |  19.0000 |  20.0000 |  22.0000 |
-| Local transmission | 132.0000 | 134.0000 | 135.0000 |
-| Import / Total     |   0.1234 |   0.1299 |   0.1429 |
+| Import             |  20.0000 |  22.0000 |  23.0000 |
+| Local transmission | 167.0000 | 168.0000 | 170.0000 |
+| Import / Total     |   0.1053 |   0.1158 |   0.1211 |
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 

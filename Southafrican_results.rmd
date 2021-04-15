@@ -1,8 +1,10 @@
 ---
 title: "Results - B.1.351, “South Africa variant”"
 author: ""
-date: "4/8/2021"
-output: rmarkdown::github_document
+date: "4/14/2021"
+output: 
+  rmarkdown::github_document
+  #rmarkdown::pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +18,11 @@ Ancestral character estimation was performed on a dated phylogeny exported from 
 
 
 ```{r remedy001, include=FALSE}
-
+### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out                      ####
+### When a new build is available these should be un-commented, the         ####
+### result saved, and recommented.                                          ####
 
 #   ____________________________________________________________________________
 #   Loading required packages                                               ####
@@ -46,9 +52,9 @@ path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-14_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-07_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-14_timetree.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -57,11 +63,13 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
 #Exclude the basal branch, NB: update this for new builds.
-tree = extract.clade(tree, node=1721)
+tree = extract.clade(tree, node=1863)
+plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
 Locations[Locations=="FALSE"]="RoW"
 names(Locations)=tree$tip.label
+table(Locations)
 
 #Remedy for ugly tree branches
 set.seed(100)
@@ -96,13 +104,10 @@ time_end = start_time+max(nodeHeights(tree))
 Norwegian_tips = names(Locations[Locations=="Norway"])
 
 
-### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
-### Sections that takes time to run are commented  out, like below          ####
-### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-#multi_counts = replicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
-#save(multi_counts, file="paste0(path_Data,"count_ML_southafrica_100.Rdata"))
+#< multi_counts = replicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file=paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 load(paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 
 #Lineage descriptions using the state with more than 50% probability for all nodes.
@@ -214,14 +219,14 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+
   ylab("Import")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,45)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,50)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g2
 ```
 
@@ -243,7 +248,7 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 ```
