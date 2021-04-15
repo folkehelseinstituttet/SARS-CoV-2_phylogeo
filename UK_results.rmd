@@ -31,7 +31,7 @@ library(viridis)
 library(grid)
 library(BactDating)
 library(pbapply)
-library(GeoLineages)
+library(LineageHomology)
 
 #   ____________________________________________________________________________
 #   Setup paths - replace these to run locally                              ####
@@ -105,7 +105,7 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-#multi_counts = pbreplicate(100, count_import_export_ace_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file="paste0(path_to_Data,"count_ML_UK_100.Rdata"))
 
 load(paste0(path_Data,"count_ML_UK_100.Rdata"))
