@@ -117,8 +117,8 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-#multi_counts = pbreplicate(5, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
-#save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
+multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
 load(paste0(path_Data,"count_ML_UK_100.Rdata"))
 
 #Lineage descriptions using the state with more than 50% probability for all nodes.

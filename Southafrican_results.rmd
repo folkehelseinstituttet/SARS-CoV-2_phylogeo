@@ -106,7 +106,7 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-#< multi_counts = replicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file=paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 load(paste0(path_Data,"count_ML_southafrica_100.Rdata"))
 
@@ -124,7 +124,7 @@ nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
 tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 #abline(v=seq(0,382,10), lty=2, col="grey")
 legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),
-       pch=20, cex = 5, pt.cex=5, bty="n")
+       pch=20, cex = 3, pt.cex=3, bty="n")
 # 
 ```
  
