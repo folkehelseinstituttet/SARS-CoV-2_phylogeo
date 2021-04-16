@@ -119,7 +119,7 @@ Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods,give_tip
 ```{r, echo=FALSE, fig.width=13, fig.height=20}
 cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
 plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
-axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
+LineageHomology::axisPhyloDate(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
 nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
 tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 #abline(v=seq(0,382,10), lty=2, col="grey")

@@ -117,8 +117,8 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
-save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
+#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
 load(paste0(path_Data,"count_ML_UK_100.Rdata"))
 
 #Lineage descriptions using the state with more than 50% probability for all nodes.
@@ -130,7 +130,7 @@ load(paste0(path_Data,"count_once_UK.Rdata"))
 ```{r, echo=FALSE, fig.width=13, fig.height=20, fig.cap="Test"}
 cols<-setNames( c("#B3E2CD","#FDCDAC"),unique(Locations))
 plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
-axisPhylo(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4,cex=5)
+LineageHomology::axisPhyloDate(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4,cex=5)
 nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
 tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 legend("bottomleft",c("Norway", "RoW"), col = c("#66C2A5","#FC8D62"), pch=20, cex = 5, pt.cex=5, bty="n")
