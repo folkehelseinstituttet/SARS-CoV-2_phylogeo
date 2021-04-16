@@ -165,8 +165,8 @@ dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
 
 #Import versus local transmission. 
-Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date, tip_list=Norwegian_tips)
-save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100.Rdata")) 
+#Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date, tip_list=Norwegian_tips)
+#save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100.Rdata")) 
 load(paste0(path_Data,"Relative_load_100.Rdata"))
 start_time = start_date
 #Set windows for counting importations and local transmission in.
