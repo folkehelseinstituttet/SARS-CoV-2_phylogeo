@@ -212,7 +212,6 @@ g1
 
 
 ```{r,include=F}
-
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,5)+
@@ -236,8 +235,7 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 
 ###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
 
-```{r,echo=F,fig.width=9, fig.height=}
-##MRCA's lineages size.
+```{r,echo=F,fig.width=9, fig.height=9}
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
