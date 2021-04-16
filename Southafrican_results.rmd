@@ -236,7 +236,7 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 
 ###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
 
-```{r,echo=F,fig.width=7, fig.height=7}
+```{r,echo=F,fig.width=9, fig.height=}
 ##MRCA's lineages size.
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
