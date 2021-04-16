@@ -19,11 +19,11 @@ Quantifying introductions and local transmission
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |      2.5% |       50% |     97.5% |
-|:-------------------|----------:|----------:|----------:|
-| Import             |  188.0000 |  193.0000 |  199.5250 |
-| Local transmission | 1128.4750 | 1135.0000 | 1140.0000 |
-| Import / Total     |    0.1416 |    0.1453 |    0.1502 |
+|                    |     2.5% |       50% |     97.5% |
+|:-------------------|---------:|----------:|----------:|
+| Import             |  213.000 |  215.0000 |  219.6000 |
+| Local transmission | 1406.400 | 1411.0000 | 1413.0000 |
+| Import / Total     |    0.131 |    0.1322 |    0.1351 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
