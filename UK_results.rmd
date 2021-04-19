@@ -3,8 +3,8 @@ title: "Results - B.1.1.7,  “UK variant”"
 author: ""
 date: "14/8/2021"
 output: 
-  github_document
-  #pdf_document 
+  #github_document
+  pdf_document 
 ---
 
 ```{r setup, include=FALSE}
