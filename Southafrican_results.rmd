@@ -41,6 +41,7 @@ library(grid)
 library(BactDating)
 library(LineageHomology)
 library(pbapply)
+library(hexbin)
 
 
 #   ____________________________________________________________________________
