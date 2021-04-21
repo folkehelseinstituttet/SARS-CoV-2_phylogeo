@@ -28,5 +28,3 @@ https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/Southafrican_resul
 ## Global build
 TBD
 
-#Dette er ein liten test av rstudio-github oppsettet mitt. Klarar eg dette??
-
