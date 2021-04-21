@@ -39,6 +39,7 @@ library(grid)
 library(BactDating)
 library(pbapply)
 library(LineageHomology)
+library(hexbin)
 
 #   ____________________________________________________________________________
 #   Setup paths - replace these to run locally                              ####
