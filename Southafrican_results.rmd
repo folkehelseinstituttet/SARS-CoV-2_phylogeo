@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.351, “South Africa variant”"
 author: ""
-date: "4/14/2021"
+date: "4/20/2021"
 output: 
   #rmarkdown::github_document
   rmarkdown::pdf_document
@@ -40,6 +40,7 @@ library(viridis)
 library(grid)
 library(BactDating)
 library(LineageHomology)
+library(pbapply)
 
 
 #   ____________________________________________________________________________
@@ -52,18 +53,18 @@ path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-14_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-20_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-14_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-20_timetree.nwk"))
 
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
 
-plot.phylo(tree,show.tip.label = F)
+plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Exclude the basal branch, NB: update this for new builds.
-tree = extract.clade(tree, node=1863)
+tree = extract.clade(tree, node=2118)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -221,7 +222,7 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,50)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,70)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
