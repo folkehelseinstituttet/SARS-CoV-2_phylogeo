@@ -1,10 +1,10 @@
 ---
 title: "Results - B.1.1.7,  “UK variant”"
 author: ""
-date: "14/8/2021"
+date: "20/04/2021"
 output: 
-  #github_document
-  pdf_document 
+  github_document
+  #pdf_document 
 ---
 
 ```{r setup, include=FALSE}
@@ -52,18 +52,18 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-14_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-20_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-14_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-20_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
 
 
 #Extract the most recent branches
-plot.phylo(tree,show.tip.label = F)
+plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=5539)
+tree = extract.clade(tree, node=6773)
 
 #Expand zero length branches
 set.seed(100)
@@ -82,7 +82,8 @@ names(Locations)=tree$tip.label
 
 #Setup transition matrix estimated using ML and the assumption 10X rate to Norway
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
-transition_matrix = rbind(c(-0.1127392 ,0.1127392),c(1.1273923,-1.1273923)) #Write up from the print above
+transition_matrix = rbind(c(-0.07228033 ,0.07228033),c(0.72280328,-0.72280328)) #Write up from the print above
+# #OLD WAS transition_matrix = rbind(c(-0.1127392 ,0.1127392),c(1.1273923,-1.1273923)) #Write up from the print above
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
 #Setup locations for castor
@@ -117,7 +118,7 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
-#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#multi_counts = pbreplicate(5, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
 load(paste0(path_Data,"count_ML_UK_100.Rdata"))
 
@@ -224,14 +225,14 @@ The same output is visualized as absolute numbers in Fig. 3 below. It should be 
 
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,30)+
+  ylim(0,40)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date(dat$dates[length(dat$dates)])-7),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
- g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,350)+
+ g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,500)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"),as.Date(dat$dates[length(dat$dates)])-7), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+

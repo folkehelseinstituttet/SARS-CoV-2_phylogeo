@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.4.5)  19 APR 2021 12:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.4.5)  21 APR 2021 12:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,14 +716,14 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 124.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 124.
-<UK_results_files/figure-latex/unnamed-chunk-5-1.pdf, id=6, 463.7325pt x 461.72
-5pt>
+<UK_results_files/figure-latex/unnamed-chunk-5-1.pdf, id=6, 464.73625pt x 461.7
+25pt>
 File: UK_results_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pd
 f)
 <use UK_results_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: UK_results_files/figure-latex/unnamed-chunk-5-1.pdf  u
 sed on input line 130.
-(pdftex.def)             Requested size: 463.73135pt x 461.72388pt.
+(pdftex.def)             Requested size: 464.7351pt x 461.72388pt.
 [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./U
@@ -737,14 +737,14 @@ Package pdftex.def Info: UK_results_files/figure-latex/unnamed-chunk-7-1.pdf  u
 sed on input line 141.
 (pdftex.def)             Requested size: 469.75745pt x 452.35901pt.
 [3 <./UK_results_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<UK_results_files/figure-latex/unnamed-chunk-8-1.pdf, id=52, 632.3625pt x 628.3
-475pt>
+<UK_results_files/figure-latex/unnamed-chunk-8-1.pdf, id=52, 632.3625pt x 629.3
+5126pt>
 File: UK_results_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pd
 f)
 <use UK_results_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: UK_results_files/figure-latex/unnamed-chunk-8-1.pdf  u
 sed on input line 156.
-(pdftex.def)             Requested size: 469.7646pt x 466.78197pt.
+(pdftex.def)             Requested size: 469.7646pt x 467.52762pt.
 [4 <./UK_results_files/figure-latex/unnamed-chunk-7-1.pdf>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 163.
 [5 <./UK_results_files/figure-latex/unnamed-chunk-8-1.pdf>]
@@ -757,7 +757,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 163.
 Here is how much of TeX's memory you used:
  13188 strings out of 492649
  192902 string characters out of 6129623
- 304528 words of memory out of 5000000
+ 304529 words of memory out of 5000000
  16834 multiletter control sequences out of 15000+600000
  41958 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -767,7 +767,7 @@ texlive/2018/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/20
 18/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2018/texmf-di
 st/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
 pe1/public/lm/lmr17.pfb>
-Output written on UK_results.pdf (5 pages, 5407654 bytes).
+Output written on UK_results.pdf (5 pages, 6252419 bytes).
 PDF statistics:
  107 PDF objects out of 1000 (max. 8388607)
  82 compressed objects within 1 object stream

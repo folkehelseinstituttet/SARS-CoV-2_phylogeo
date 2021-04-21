@@ -1,10 +1,10 @@
 ---
 title: "Results - B.1.351, “South Africa variant”"
 author: ""
-date: "4/20/2021"
+date: "20/04/2021"
 output: 
-  #rmarkdown::github_document
-  rmarkdown::pdf_document
+  rmarkdown::github_document
+  #rmarkdown::pdf_document
 ---
 
 ```{r setup, include=FALSE}
