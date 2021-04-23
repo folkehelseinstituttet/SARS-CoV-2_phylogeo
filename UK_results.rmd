@@ -81,8 +81,9 @@ table(Locations)
 names(Locations)=tree$tip.label
 
 
-#Setup transition matrix estimated using ML and the assumption 10X rate to Norway
+## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
+## Update below matrix with new estimates from Lineage Homology
 transition_matrix = rbind(c(-0.07228033 ,0.07228033),c(0.72280328,-0.72280328)) #Write up from the print above
 # #OLD WAS transition_matrix = rbind(c(-0.1127392 ,0.1127392),c(1.1273923,-1.1273923)) #Write up from the print above
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
@@ -119,11 +120,14 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ### New results should be saved and loaded once new builds are produced     ####
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
+## Run below command for new builds. If results needed fast use 5 replicates below, and rerun with e.g. 100.
 #multi_counts = pbreplicate(5, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+## Run below command for new builds
 #save(multi_counts, file=paste0(path_Data,"count_ML_UK_100.Rdata"))
 load(paste0(path_Data,"count_ML_UK_100.Rdata"))
 
 #Lineage descriptions using the state with more than 50% probability for all nodes.
+## Run below commands for new builds
 #Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
 #save(Result,file=paste0(path_Data,"count_once_UK.Rdata"))
 load(paste0(path_Data,"count_once_UK.Rdata"))
@@ -167,6 +171,7 @@ dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
 
 #Import versus local transmission. 
+## Run below command for new builds
 #Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date, tip_list=Norwegian_tips)
 #save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100.Rdata")) 
 load(paste0(path_Data,"Relative_load_100.Rdata"))
