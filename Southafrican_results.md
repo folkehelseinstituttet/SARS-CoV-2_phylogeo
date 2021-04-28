@@ -1,6 +1,6 @@
 Results - B.1.351, “South Africa variant”
 ================
-20/04/2021
+27/04/2021
 
 Phylogeographic mapping
 
@@ -21,18 +21,18 @@ in Table 1.
 
 |                    |     2.5% |      50% |    97.5% |
 |:-------------------|---------:|---------:|---------:|
-| Import             |  22.0000 |  23.0000 |  25.0000 |
-| Local transmission | 242.0000 | 244.0000 | 245.0000 |
-| Import / Total     |   0.0824 |   0.0861 |   0.0936 |
+| Import             |  17.0000 |  17.0000 |  18.0000 |
+| Local transmission | 261.0000 | 262.0000 | 262.0000 |
+| Import / Total     |   0.0609 |   0.0609 |   0.0645 |
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-###### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.351 over tid i Norge. OBS, ingen sekvenserte isolater som er nyere enn 10. mars.
+###### Fig. 2. Relative quantification of infection source (new introduction / import vs local transmission).
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke. Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
+###### Fig. 3. Absolute quantification of imports and local transmission events.
 
 ![](Southafrican_results_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-###### Fig. 4. Klyngestørrelser som funksjon av importtidspunkt, B.1.351 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
+###### Fig. 4. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.

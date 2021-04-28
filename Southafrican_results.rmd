@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.351, “South Africa variant”"
 author: ""
-date: "20/04/2021"
+date: "27/04/2021"
 output: 
   rmarkdown::github_document
   #rmarkdown::pdf_document
@@ -54,9 +54,9 @@ path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-20_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-27_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-20_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-27_timetree.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -65,7 +65,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Exclude the basal branch, NB: update this for new builds.
-tree = extract.clade(tree, node=2118)
+tree = extract.clade(tree, node=2418)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -210,7 +210,7 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
 g1
 ```
 
-###### Fig. 2. Forhold mellom import og lokaltransmisjon av B.1.351 over tid i Norge. OBS, ingen sekvenserte isolater som er nyere enn 10. mars.
+###### Fig. 2. Relative quantification of infection source (new introduction / import vs local transmission).
 
 
 ```{r,include=F}
@@ -235,7 +235,7 @@ g2
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ```
 
-###### Fig. 3. Import og transmisjon av B.1.351. Estimert antall import-hendelser (øverst) og lokale transmisjoner (nederst) per uke.  Det er knyttet stor usikkerhet rundt estimater i perioden skravert i grått.
+###### Fig. 3. Absolute quantification of imports and local transmission events. 
 
 ```{r,echo=F,fig.width=9, fig.height=9}
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
@@ -253,4 +253,4 @@ g1
 
 ```
 
-###### Fig. 4.  Klyngestørrelser som funksjon av importtidspunkt, B.1.351 “TMRCA” = time of most recent common ancestor, og indikerer estimert tidspunkt for hver enkelt import. Den store klyngen som skiller seg ut her tilsvarer Bodø-utbruddet.
+###### Fig. 4.  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
