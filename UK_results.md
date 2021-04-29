@@ -1,6 +1,6 @@
 Results - B.1.1.7, “UK variant”
 ================
-27/04/2021
+29/04/2021
 
 Phylogeographic mapping
 
@@ -19,11 +19,11 @@ Quantifying introductions and local transmission
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |     2.5% |       50% |     97.5% |
-|:-------------------|---------:|----------:|----------:|
-| Import             |  212.000 |  215.5000 |  218.0000 |
-| Local transmission | 2087.000 | 2089.5000 | 2093.0000 |
-| Import / Total     |    0.092 |    0.0935 |    0.0946 |
+|                    |      2.5% |       50% |     97.5% |
+|:-------------------|----------:|----------:|----------:|
+| Import             |  223.4500 |  227.0000 |  230.5500 |
+| Local transmission | 2260.4500 | 2264.0000 | 2267.5500 |
+| Import / Total     |    0.0897 |    0.0911 |    0.0926 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
