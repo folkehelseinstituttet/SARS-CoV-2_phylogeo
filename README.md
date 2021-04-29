@@ -25,6 +25,7 @@ https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/UK_results.md
 ## Analyse av Sør-Afrika-variant -B.1.351
 https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/Southafrican_results.md
 ## Analyse av B.1.525. Variant med flere av de samme endringene som de engelske, sør-afrikanske og brasilianske virusvariantene
+https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/B1-525_results.md
 ## Global build
 TBD
 
