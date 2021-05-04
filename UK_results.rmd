@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.1.7,  “UK variant”"
 author: ""
-date: "29/04/2021"
+date: "03/05/2021"
 output: 
   github_document
 #pdf_document 
@@ -53,9 +53,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-29_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-03_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-04-29_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-03_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -64,7 +64,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=4464)
+tree = extract.clade(tree, node=4530)
 
 #Expand zero length branches
 set.seed(100)
@@ -82,11 +82,12 @@ names(Locations)=tree$tip.label
 
 
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
-LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
+#LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.1353298, 0.1353298),c(1.3532984, -1.3532984)) #Write up from the print above
+transition_matrix = rbind(c(-0.1319801, 0.1319801),c(1.3198013, -1.3198013)) #Write up from the print above
+## Old Estimate from 2021-04-29: transition_matrix = rbind(c(-0.1353298, 0.1353298),c(1.3532984, -1.3532984)) #Write up from the print above
 ## Old Estimate from 2021-04-27: transition_matrix = rbind(c(-0.07326712, 0.07326712),c(0.73267120, -0.73267120)) #Write up from the print above
-## Old Estimate from 2021-04-20: transition_matrix = rbind(c(-0.07228033 ,0.07228033),c(0.72280328,-0.72280328)) #Write up from the print above
+## Old Estimate from 2021-04-20: transition_matrix = rbind(c(-0.07228033 ,0.07228033),c(0.72280328,-0.72280328))
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
 #Setup locations for castor
@@ -219,7 +220,7 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   ylab("")+xlab("")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)+
   theme(legend.position = c(0.55,0.15), legend.title=element_blank())
 g1
 ```
@@ -236,14 +237,14 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date(dat$dates[length(dat$dates)])-7),expand=c(0,0))+
   ylab("Import")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]-7),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,500)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"),as.Date(dat$dates[length(dat$dates)])-7), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]-7),ymin=-Inf,ymax=Inf,alpha=0.2)
 g2
 ```
 
@@ -267,10 +268,24 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 ```
 
 ##### Fig. 4. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
 
+
+```{r,include=F}
+# Create tabular output of TMRCAs and lineage sizes
+
+mrcas <- Result$`MRCA's`
+mrcas <- decimal2Date(cbind(mrcas))
+mrcas <- as.data.frame(mrcas)
+Lin_sizes <- Result$Lineage_sizes
+Lin_sizes <- as.data.frame(Lin_sizes)
+mrca_sizes <- cbind(mrcas, Lin_sizes)
+write.table(mrca_sizes, file=("~/Dropbox/Covid/UK_03_24/MRCA_lineageSize.txt"))
+
+
+```
