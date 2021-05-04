@@ -1,6 +1,6 @@
 Results - B.1.1.7, “UK variant”
 ================
-29/04/2021
+03/05/2021
 
 Phylogeographic mapping
 
@@ -21,9 +21,9 @@ Quantifying introductions and local transmission
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  223.4500 |  227.0000 |  230.5500 |
-| Local transmission | 2260.4500 | 2264.0000 | 2267.5500 |
-| Import / Total     |    0.0897 |    0.0911 |    0.0926 |
+| Import             |  223.0000 |  226.0000 |  232.5500 |
+| Local transmission | 2292.4500 | 2299.0000 | 2302.0000 |
+| Import / Total     |    0.0883 |    0.0895 |    0.0921 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
