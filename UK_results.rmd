@@ -255,7 +255,8 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 
 ##### Fig. 3. Absolute quantification of imports and local transmission events. 
 
-Perhaps the most interesting aspect of quantifying introductions, is to investigate the fate of individual inferred imports. Mandatory testing at the border and/or mandatory quaranteens etc will obviously have a bearing on the fate of newly introduced infections from abroad. The plot below visualizes the number of infections in Norway resulting from each individual import over time, stratified by inferred TMRCA of each introduced lineage. 
+Perhaps the most interesting aspect of quantifying introductions, is to investigate the fate of the introduced viruses. Mandatory testing at the border and/or mandatory quaranteens etc will obviously have a bearing on the fate of new introductions from abroad. The plot below visualizes the number of infections in Norway resulting from each
+identified virus import event over time, stratified by inferred TMRCA of each introduced lineage.
 
 ```{r,echo=F,fig.width=9, fig.height=9}
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
