@@ -47,11 +47,11 @@ sampling density.
 ##### Fig. 3. Absolute quantification of imports and local transmission events.
 
 Perhaps the most interesting aspect of quantifying introductions, is to
-investigate the fate of individual inferred imports. Mandatory testing
+investigate the fate of the introduced viruses. Mandatory testing
 at the border and/or mandatory quaranteens etc will obviously have a
-bearing on the fate of newly introduced infections from abroad. The plot
+bearing on the fate of new introductions from abroad. The plot
 below visualizes the number of infections in Norway resulting from each
-individual import over time, stratified by inferred TMRCA of each
+identified virus import event over time, stratified by inferred TMRCA of each
 introduced lineage.
 
 ![](UK_results_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
