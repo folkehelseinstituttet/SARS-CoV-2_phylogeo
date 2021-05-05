@@ -19,11 +19,11 @@ For B.1.1.7 (UK variant) har vi antatt at at raten av import til Norge er 10x h�
 ### Resultatene fra analysene er tilgjengelige her:
 
 ## Analyse av UK-variant -B.1.1.7
-https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/UK_results.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md
 ## Analyse av Sør-Afrika-variant -B.1.351
-https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/Southafrican_results.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafrican_results.md
 ## Analyse av B.1.525. Variant med flere av de samme endringene som de engelske, sør-afrikanske og brasilianske virusvariantene
-https://github.com/magnusnosnes/Nextstrain_modeling/blob/main/B1-525_results.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-525_results.md
 ## Global build
 TBD
 
