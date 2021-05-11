@@ -54,9 +54,9 @@ path_Data =  "~/Dropbox/Covid/Southafrican_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-27_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-05-10_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-04-27_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021-05-10_timetree.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -65,7 +65,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_southafrican-2021
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Exclude the basal branch, NB: update this for new builds.
-tree = extract.clade(tree, node=2418)
+tree = extract.clade(tree, node=2916)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -132,24 +132,19 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),
  
 ##### Fig. 1. B.1.351 phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
  
-```{r,  include=F}
-### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
-### Lineage size squareplots                                                ####
-
-# library(lubridate)
-# all_lineages = Result[[2]]
-# #Plot lineages:
-# library(treemap)
-# library(RColorBrewer)
-# library(ggtree)
-# #Treemap lineages.
-# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
-# treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
-
-### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
-
-
+```{r, echo=FALSE, fig.width=8, fig.height=8}
+all_lineages = Result[[2]]
+#Plot lineages:
+library(lubridate)
+library(treemap)
+library(RColorBrewer)
+library(ggtree)
+#Treemap lineages.
+atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 ```
+
+##### Fig. 2. B.1.351 transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
 
 ```{r,include=F}
 #   ____________________________________________________________________________
@@ -205,12 +200,12 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   ylab("")+xlab("")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]-7),ymin=-Inf,ymax=Inf,alpha=0.2)+
   theme(legend.position = c(0.55,0.15), legend.title=element_blank())
 g1
 ```
 
-###### Fig. 2. Relative quantification of infection source (new introduction / import vs local transmission).
+###### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
 
 
 ```{r,include=F}
@@ -220,14 +215,14 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+
   ylab("Import")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,70)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,80)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
-  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
 g2
 ```
 
@@ -235,9 +230,9 @@ g2
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ```
 
-###### Fig. 3. Absolute quantification of imports and local transmission events. 
+###### Fig. 4. Absolute quantification of imports and local transmission events. 
 
-```{r,echo=F,fig.width=9, fig.height=9}
+```{r,echo=F,fig.width=9, fig.height=6}
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
@@ -248,9 +243,9 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 ```
 
-###### Fig. 4.  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
+###### Fig. 5.  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
