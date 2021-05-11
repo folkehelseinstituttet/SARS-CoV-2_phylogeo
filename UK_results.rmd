@@ -46,7 +46,7 @@ library(hexbin)
 
 #The folder names are old, but they contain the newest data.
 path_Main = "~/Dropbox/Covid/UK_03_24/"
-path_Results = "~/Dropbox/Covid/UK_03_24/Results/"
+path_Results = "~/Dropbox/Covid/UK_03_24/B1-1-7_results_files/"
 path_Rscripts = "~/Dropbox/Covid/Rfunctions/"
 path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
