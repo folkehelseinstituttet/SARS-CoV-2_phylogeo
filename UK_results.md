@@ -19,6 +19,7 @@ Quantifying introductions and local transmission
 
 Below is a visualization of the size of each transmission lineage
 detected in Norway.
+
 ![](UK_results_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ##### Fig. 2. B.1.1.7 transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
