@@ -153,6 +153,7 @@ Below is a visualization of the size of each transmission lineage detected in No
 ```{r, echo=FALSE, fig.width=8, fig.height=8}
 all_lineages = Result[[2]]
 #Plot lineages:
+library(lubridate)
 library(treemap)
 library(RColorBrewer)
 library(ggtree)
