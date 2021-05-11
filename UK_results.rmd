@@ -149,20 +149,19 @@ legend("bottomleft",c("Norway", "RoW"), col = c("#66C2A5","#FC8D62"), pch=20, ce
 
 Quantifying introductions and local transmission
 
-Below is a visualization of the size of each transmission lineage detected in Norway.
-```{r, echo=FALSE, fig.width=8, fig.height=8}
-all_lineages = Result[[2]]
-#Plot lineages:
-library(lubridate)
-library(treemap)
-library(RColorBrewer)
-library(ggtree)
-#Treemap lineages.
-atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
-treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+```{r,  include=F}
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Lineage size squareplots - not in report                                ####
+# all_lineages = Result[[2]]
+# #Plot lineages:
+# library(treemap)
+# library(RColorBrewer)
+# library(ggtree)
+# #Treemap lineages.
+# atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+# treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
 ```
-
-##### Fig. 2. B.1.1.7 transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
 
 
 ```{r,include=F}
