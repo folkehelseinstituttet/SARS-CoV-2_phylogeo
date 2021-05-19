@@ -1,6 +1,6 @@
 Results - B.1.1.7, “UK variant”
 ================
-10/05/2021
+18/05/2021
 
 Phylogeographic mapping
 
@@ -17,13 +17,21 @@ dated phylogeny.
 
 Quantifying introductions and local transmission
 
+Below is a visualization of the size of each transmission lineage
+detected in Norway.
+
+![](UK_results_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+\#\#\#\#\# Fig. 2. B.1.1.7 transmission lineage sizes in Norway. G
+denotes the number assigned to each lineage, S denotes the size of the
+lineage and TMRCA denotes the age of the lineage.
+
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |     2.5% |      50% |     97.5% |
-|:-------------------|---------:|---------:|----------:|
-| Import             |  257.125 | 2.64e+02 |  271.5500 |
-| Local transmission | 3452.450 | 3.46e+03 | 3466.8750 |
-| Import / Total     |    0.069 | 7.09e-02 |    0.0729 |
+|                    |      2.5% |       50% |     97.5% |
+|:-------------------|----------:|----------:|----------:|
+| Import             |  265.9000 |  275.0000 |  283.0000 |
+| Local transmission | 3564.0000 | 3572.0000 | 3581.1000 |
+| Import / Total     |    0.0691 |    0.0715 |    0.0736 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
