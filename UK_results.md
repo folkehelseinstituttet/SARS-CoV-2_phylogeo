@@ -1,6 +1,6 @@
 Results - B.1.1.7, “UK variant”
 ================
-18/05/2021
+25/05/2021
 
 Phylogeographic mapping
 
@@ -29,9 +29,9 @@ lineage and TMRCA denotes the age of the lineage.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  265.9000 |  275.0000 |  283.0000 |
-| Local transmission | 3564.0000 | 3572.0000 | 3581.1000 |
-| Import / Total     |    0.0691 |    0.0715 |    0.0736 |
+| Import             |  273.0000 |  279.5000 |  285.1000 |
+| Local transmission | 3609.9000 | 3615.5000 | 3622.0000 |
+| Import / Total     |    0.0701 |    0.0718 |    0.0732 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
