@@ -1,0 +1,255 @@
+---
+  title: "Results - B.1.617.2, “Delta variant”"
+author: ""
+date: "31/05/2021"
+output: 
+  rmarkdown::github_document
+#rmarkdown::pdf_document
+---
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning =F)
+```
+
+Phylogeographic mapping
+
+Ancestral character estimation was performed on a dated phylogeny exported from NextStrain. Each isolate was assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is presented in Fig.1.
+
+
+
+```{r remedy001, include=FALSE}
+### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out                      ####
+### When a new build is available these should be un-commented, the         ####
+### result saved, and recommented.                                          ####
+
+#   ____________________________________________________________________________
+#   Loading required packages                                               ####
+
+library(ggplot2)
+library(phytools)
+library(ape)
+library(castor)
+library(ips)
+library(data.table)
+library(lubridate)
+library(ggtree)
+library(treedater)
+library(viridis)
+library(grid)
+library(BactDating)
+library(LineageHomology)
+library(pbapply)
+library(hexbin)
+
+
+#   ____________________________________________________________________________
+#   Setup paths - replace these to run locally                              ####
+
+path_Main = "~/Dropbox/Covid/B1-617-2/"
+path_Results = "~/Dropbox/Dropbox/Covid/B1-617-2/Results/"
+path_Rscripts = "~/Dropbox/Covid/Rfunctions/"
+path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
+
+#   ____________________________________________________________________________
+#   Read required data                                                      ####
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-05-31_metadata.tsv"))
+metadata = metadat #Used alternate spellings some places.
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-05-31_timetree.nwk"))
+
+
+#   ____________________________________________________________________________
+#   Analysis begins here                                                    ####
+
+plot.phylo(tree,show.tip.label = F,type="cladogram")
+nodelabels(cex=0.5)
+#Exclude the basal branch, NB: update this for new builds.
+tree = extract.clade(tree, node=959)
+plot.phylo(tree,show.tip.label = F)
+Locations = grepl("Norway",tree$tip.label)
+Locations[Locations=="TRUE"]="Norway"
+Locations[Locations=="FALSE"]="RoW"
+names(Locations)=tree$tip.label
+table(Locations)
+
+#Remedy for ugly tree branches
+set.seed(100)
+tree = multi2di(tree)
+tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+tree=ladderize(tree)#reorder.phylo(tree)
+
+
+#   ____________________________________________________________________________
+#   Ancestral state reconstruction                                          ####
+
+#Reconstruct ancestral states using maximum likelihood.
+locations_for_castor = as.numeric(as.factor(Locations))
+names(locations_for_castor)=names(Locations)
+
+castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
+                              rate_model="ARD",include_ancestral_likelihoods = T)
+
+
+#Setup date variables that are used in downstream function calls.
+mrsd = max(metadat$`Collection Data`)
+dec_date = decimal_date(max(metadat$`Collection Data`))
+start_date = dec_date-max(tipHeights(tree))
+most_recent_date = ymd(mrsd)
+most_recent_date = decimal_date(most_recent_date)
+start_time = most_recent_date-max(nodeHeights(tree))
+time_end = most_recent_date-start_time
+start_time = start_date
+time_end = start_time+max(nodeHeights(tree))
+
+#Find the labels of the taxa that are observed in Norway. 
+Norwegian_tips = names(Locations[Locations=="Norway"])
+
+
+
+#Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
+#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+#save(multi_counts, file=paste0(path_Data,"count_ML_B16172_100.Rdata"))
+load(paste0(path_Data,"count_ML_B16172_100.Rdata"))
+
+#Lineage descriptions using the state with more than 50% probability for all nodes.
+Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods,give_tips = Norwegian_tips,
+                         ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+
+```
+
+```{r, echo=FALSE, fig.width=13, fig.height=20}
+cols<-setNames( c("#E41A1C","#377EB8"),unique(Locations))
+plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
+LineageHomology::axisPhyloDate(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4)
+nodelabels(pie=castor$ancestral_likelihoods,cex=0.2,piecol=cols)
+tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
+#abline(v=seq(0,382,10), lty=2, col="grey")
+legend("bottomleft",c("Norway", "RoW"), col = c("#E41A1C","#377EB8"),
+       pch=20, cex = 3, pt.cex=3, bty="n")
+# 
+```
+
+##### Fig. 1. B.1.351 phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
+
+Quantifying introductions and local transmission
+
+Below is a visualization of the size of each transmission lineage detected in Norway.
+
+```{r, echo=FALSE, fig.width=8, fig.height=8}
+all_lineages = Result[[2]]
+#Plot lineages:
+library(lubridate)
+library(treemap)
+library(RColorBrewer)
+library(ggtree)
+#Treemap lineages.
+atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
+treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
+```
+
+##### Fig. 2. B.1.351 transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
+
+```{r,include=F}
+#   ____________________________________________________________________________
+#   Import export estimates                                                 ####
+tip_list = Norwegian_tips
+dates = decimal_date(metadat$`Collection Data`)
+names(dates)=metadata$Strain
+
+Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date,tip_list=Norwegian_tips)
+
+
+#Make weekly time windows to count events. 
+weeks = seq(start_time, time_end, by = 1/52)
+week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
+weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
+weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
+sum_cases = weekly_importations+weekly_local_tranmissions
+
+#Calculate confidence intervals
+imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
+exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
+dat=data.frame(cbind(imports,exports),dates=decimal2Date(week_time))
+colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
+
+#Setup data for import versus local transmission based on the mean.
+ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
+                    fraction=c(weekly_importations/sum_cases,weekly_local_tranmissions/sum_cases),
+                    group=c(rep("Import",length(week_time)),
+                            rep("Local transmission",length(week_time))))
+```
+
+The number of Norwegian isolates resulting from local transmission vs introductions from abroad were estimated from the tree and is summarized in Table 1.
+
+##### Table 1. Estimated number of Norwegian infections that are caused by import and local transmission in geographically mapped phylogeny in Figure 1.
+
+```{r, echo=F,fig.width=10, fig.height=10}
+imports_temp = unlist(multi_counts[1,])[seq(1,length(multi_counts[1,])*2,by=2)]
+local_temp = unlist(multi_counts[1,])[seq(2,length(multi_counts[1,])*2,by=2)]
+relative_temp = imports_temp/(imports_temp+local_temp)
+c_one = quantile(imports_temp,c(0.025,0.50,0.975))
+c_two = quantile(local_temp,c(0.025,0.50,0.975))
+c_three = quantile(relative_temp,c(0.025,0.50,0.975))
+imp_loc = rbind(c_one,c_two, c_three)
+rownames(imp_loc)=c("Import", "Local transmission", "Import / Total")
+knitr::kable(imp_loc, booktabs = T, digits = 4)
+```
+
+
+```{r,echo=F, fig.width=7,fig.height=7}
+g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
+  geom_area(alpha=0.6 , size=1, colour="black")+
+  theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  ylab("")+xlab("")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]-7),ymin=-Inf,ymax=Inf,alpha=0.2)+
+  theme(legend.position = c(0.55,0.15), legend.title=element_blank())
+g1
+```
+
+###### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
+
+
+```{r,include=F}
+g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
+  ylim(0,5)+
+  geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")),expand=c(0,0))+
+  ylab("Import")+
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+g1
+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,80)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date("2021-03-28")), expand=c(0,0))+
+  geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
+  theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)])-7,ymin=-Inf,ymax=Inf,alpha=0.2)
+g2
+```
+
+```{r,echo=F,fig.width=10, fig.height=10}
+grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
+```
+
+###### Fig. 4. Absolute quantification of imports and local transmission events. 
+
+```{r,echo=F,fig.width=9, fig.height=6}
+c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
+colnames(c2)=c("MRCA","Lineagesize")
+g1 = ggplot(c2, aes(MRCA, Lineagesize))+
+  geom_hex()+
+  theme_bw(base_size=20)+
+  theme(legend.position=c(0.85,0.85))+
+  scale_fill_viridis()+
+  scale_x_date(date_breaks="1 week")+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  xlab("Estimated TMRCA")+ylab("Estimated linage size")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/12)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+g1
+
+```
+
+###### Fig. 5.  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
