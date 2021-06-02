@@ -1,7 +1,7 @@
 ---
-title: "Results - B.1.1.7,  “UK variant”"
+title: "Results - B.1.1.7,  “Alpha variant”"
 author: ""
-date: "25/05/2021"
+date: "31/05/2021"
 output: 
   github_document
 #pdf_document 
@@ -53,9 +53,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-25_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-31_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-25_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-31_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -64,7 +64,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=5789)
+tree = extract.clade(tree, node=6011)
 
 #Expand zero length branches
 set.seed(100)
@@ -84,7 +84,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.1370393, 0.1370393),c(1.3703926, -1.3703926)) #Write up from the print above
+transition_matrix = rbind(c(-0.1202222, 0.1202222),c(1.2022219, -1.2022219)) #Write up from the print above
+## Old Estimate from 2021-05-25: transition_matrix = rbind(c(-0.1370393, 0.1370393),c(1.3703926, -1.3703926)) #Write up from the print above
 ## Old Estimate from 2021-05-18: transition_matrix = rbind(c(-0.1436812, 0.1436812),c(1.4368116, -1.4368116)) #Write up from the print above
 ## Old Estimate from 2021-05-10 transition_matrix = rbind(c(-0.1388084, 0.1388084),c(1.3880840, -1.3880840)) #Write up from the print above
 ## Old Estimate from 2021-05-03 transition_matrix = rbind(c(-0.1319801, 0.1319801),c(1.3198013, -1.3198013)) #Write up from the print above
