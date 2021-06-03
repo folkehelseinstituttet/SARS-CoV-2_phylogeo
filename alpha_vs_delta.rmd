@@ -59,6 +59,7 @@ g1 = ggplot(dat, aes(TMRCA, Lineage_size))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")
 g1
 ```
+
 ###### Figure 1:  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Transmission lineages are colored by variant.
 
 ```{r,echo=F,fig.width=9, fig.height=6}
