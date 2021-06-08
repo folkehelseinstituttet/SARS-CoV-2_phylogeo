@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.1.7,  “Alpha variant”"
 author: ""
-date: "31/05/2021"
+date: "07/06/2021"
 output: 
   github_document
 #pdf_document 
@@ -53,9 +53,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-31_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-06-07_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-05-31_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-06-07_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -64,7 +64,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=6011)
+tree = extract.clade(tree, node=5947)
 
 #Expand zero length branches
 set.seed(100)
@@ -84,7 +84,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.1202222, 0.1202222),c(1.2022219, -1.2022219)) #Write up from the print above
+transition_matrix = rbind(c(-0.1226109, 0.1226109),c(1.2261085, -1.2261085)) #Write up from the print above
+## Old Estimate from 2021-05-31: transition_matrix = rbind(c(-0.1202222, 0.1202222),c(1.2022219, -1.2022219)) #Write up from the print above
 ## Old Estimate from 2021-05-25: transition_matrix = rbind(c(-0.1370393, 0.1370393),c(1.3703926, -1.3703926)) #Write up from the print above
 ## Old Estimate from 2021-05-18: transition_matrix = rbind(c(-0.1436812, 0.1436812),c(1.4368116, -1.4368116)) #Write up from the print above
 ## Old Estimate from 2021-05-10 transition_matrix = rbind(c(-0.1388084, 0.1388084),c(1.3880840, -1.3880840)) #Write up from the print above
@@ -288,6 +289,6 @@ Lin_sizes <- Result$Lineage_sizes
 Lin_sizes <- as.data.frame(Lin_sizes)
 mrca_sizes <- cbind(mrcas, Lin_sizes)
 write.table(mrca_sizes, file=("~/Dropbox/Covid/UK_03_24/MRCA_lineageSize.txt"))
-
+write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/alpha.csv"))
 
 ```
