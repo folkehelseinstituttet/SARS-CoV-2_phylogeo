@@ -1,6 +1,6 @@
 Results - B.1.617.2, “Delta variant”
 ================
-31/05/2021
+08/06/2021
 
 Phylogeographic mapping
 
@@ -30,9 +30,9 @@ in Table 1.
 
 |                    |    2.5% |     50% |   97.5% |
 |:-------------------|--------:|--------:|--------:|
-| Import             | 11.0000 | 11.0000 | 12.0000 |
-| Local transmission | 31.0000 | 32.0000 | 32.0000 |
-| Import / Total     |  0.2558 |  0.2558 |  0.2791 |
+| Import             | 13.0000 | 13.0000 | 14.0000 |
+| Local transmission | 45.0000 | 46.0000 | 46.0000 |
+| Import / Total     |  0.2203 |  0.2203 |  0.2373 |
 
 ![](B1-6172_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
