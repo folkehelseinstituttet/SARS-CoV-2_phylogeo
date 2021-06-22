@@ -1,6 +1,6 @@
 Comparative varianttransmissibility: Alpha vs Delta
 ================
-14/06/2021
+21/06/2021
 
 In these analyses we compare B.1.1.7 (alpha variant) with B.1.617.2
 (delta variant) in terms of lineage sizes in Norway. Each inferred
