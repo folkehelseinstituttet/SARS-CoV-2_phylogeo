@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.617.2, “Delta variant”"
 author: ""
-date: "14/06/2021"
+date: "21/06/2021"
 output: 
   rmarkdown::github_document
 #rmarkdown::pdf_document
@@ -55,17 +55,21 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-14_metadata.tsv"))
+#   note, when data directly from HF included (not on GISAID) is included, replace tip labels
+#   in input files, so that "Norway" label is included. This can be done with:
+#   ~/Dropbox/Covid/B1-617-2/replace_words.py using the conversion table
+#   ~/Dropbox/Covid/B1-617-2/conversion_HF_isolnames.csv
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-21_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-14_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-21_timetree_NN.nwk"))
 
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-#Exclude the basal branch, NB: update this for new builds.
-tree = extract.clade(tree, node=1167)
+#Prune away the part of the tree not corresponding to B.1.617.2. NB: update this for new builds.
+tree = extract.clade(tree, node=1391)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -74,11 +78,11 @@ names(Locations)=tree$tip.label
 table(Locations)
 
 #Remedy for ugly tree branches
-set.seed(100)
-tree = multi2di(tree)
-tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
-tree=ladderize(tree)#reorder.phylo(tree)
-
+#set.seed(100)
+#tree = multi2di(tree)
+#tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+#tree=ladderize(tree)#reorder.phylo(tree)
+###plot.phylo(tree,show.tip.label = F,edge.width=2)
 
 #   ____________________________________________________________________________
 #   Ancestral state reconstruction                                          ####
@@ -114,7 +118,6 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 #multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file=paste0(path_Data,"count_ML_B16172_100.Rdata"))
 load(paste0(path_Data,"count_ML_B16172_100.Rdata"))
-
 #Lineage descriptions using the state with more than 50% probability for all nodes.
 Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods,give_tips = Norwegian_tips,
                          ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
