@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.617.2, “Delta variant”"
 author: ""
-date: "21/06/2021"
+date: "28/06/2021"
 output: 
   rmarkdown::github_document
 #rmarkdown::pdf_document
@@ -59,9 +59,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 #   in input files, so that "Norway" label is included. This can be done with:
 #   ~/Dropbox/Covid/B1-617-2/replace_words.py using the conversion table
 #   ~/Dropbox/Covid/B1-617-2/conversion_HF_isolnames.csv
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-21_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-28_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-21_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-28_timetree_NN.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-2
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Prune away the part of the tree not corresponding to B.1.617.2. NB: update this for new builds.
-tree = extract.clade(tree, node=1391)
+tree = extract.clade(tree, node=1486)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
