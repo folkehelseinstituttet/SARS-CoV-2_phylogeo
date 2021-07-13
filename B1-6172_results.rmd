@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.617.2, “Delta variant”"
 author: ""
-date: "28/06/2021"
+date: "13/07/2021"
 output: 
   rmarkdown::github_document
 #rmarkdown::pdf_document
@@ -59,9 +59,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 #   in input files, so that "Norway" label is included. This can be done with:
 #   ~/Dropbox/Covid/B1-617-2/replace_words.py using the conversion table
 #   ~/Dropbox/Covid/B1-617-2/conversion_HF_isolnames.csv
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-28_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-07-13_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-28_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-07-13_timetree_NN.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-06-2
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Prune away the part of the tree not corresponding to B.1.617.2. NB: update this for new builds.
-tree = extract.clade(tree, node=1486)
+tree = extract.clade(tree, node=2000)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -100,8 +100,8 @@ castor$transition_matrix
 
 
 #Setup date variables that are used in downstream function calls.
-mrsd = max(metadat$`Collection Data`)
-dec_date = decimal_date(max(metadat$`Collection Data`))
+mrsd = max(metadat$`date`)
+dec_date = decimal_date(max(metadat$`date`))
 start_date = dec_date-max(tipHeights(tree))
 most_recent_date = ymd(mrsd)
 most_recent_date = decimal_date(most_recent_date)
@@ -160,8 +160,8 @@ treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 #   ____________________________________________________________________________
 #   Import export estimates                                                 ####
 tip_list = Norwegian_tips
-dates = decimal_date(metadat$`Collection Data`)
-names(dates)=metadata$Strain
+dates = decimal_date(metadat$`date`)
+names(dates)=metadata$strain
 
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date,tip_list=Norwegian_tips)
 
@@ -221,7 +221,7 @@ g1
 ```{r,include=F}
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,5)+
+  ylim(0,10)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-06-08")),expand=c(0,0))+
   ylab("Import")+
@@ -253,7 +253,7 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)+7),xmax=as.Date(dat$dates[length(dat$dates)]+7),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 ```
@@ -269,7 +269,7 @@ mrcas <- as.data.frame(mrcas)
 Lin_sizes <- Result$Lineage_sizes
 Lin_sizes <- as.data.frame(Lin_sizes)
 mrca_sizes <- cbind(mrcas, Lin_sizes)
-write.table(mrca_sizes, file=("~/Dropbox/Covid/B1-617-2/MRCA_lineageSize_2021-06-08.txt"))
+write.table(mrca_sizes, file=("~/Dropbox/Covid/B1-617-2/MRCA_lineageSize_2021-07-13.txt"))
 write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/delta.csv"))
 
 ```

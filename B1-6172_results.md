@@ -1,6 +1,6 @@
 Results - B.1.617.2, “Delta variant”
 ================
-28/06/2021
+13/07/2021
 
 Phylogeographic mapping
 
@@ -28,11 +28,11 @@ in Table 1.
 
 ##### Table 1. Estimated number of Norwegian infections that are caused by import and local transmission in geographically mapped phylogeny in Figure 1.
 
-|                    |    2.5% |     50% |   97.5% |
-|:-------------------|--------:|--------:|--------:|
-| Import             | 24.0000 | 24.0000 | 24.5250 |
-| Local transmission | 82.4750 | 83.0000 | 83.0000 |
-| Import / Total     |  0.2243 |  0.2243 |  0.2292 |
+|                    |    2.5% |      50% |   97.5% |
+|:-------------------|--------:|---------:|--------:|
+| Import             |  53.000 |  54.0000 |  55.000 |
+| Local transmission | 233.000 | 234.0000 | 235.000 |
+| Import / Total     |   0.184 |   0.1875 |   0.191 |
 
 ![](B1-6172_results_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
