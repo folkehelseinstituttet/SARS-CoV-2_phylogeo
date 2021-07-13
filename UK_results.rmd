@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.1.7,  “Alpha variant”"
 author: ""
-date: "28/06/2021"
+date: "13/07/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-06-28_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-07-13_metadata_NN.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-06-28_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-07-13_timetree_NN.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=5931)
+tree = extract.clade(tree, node=5959)
 
 #Expand zero length branches
 set.seed(100)
@@ -89,7 +89,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.1159497, 0.1159497),c(1.1594966, -1.1594966))
+transition_matrix = rbind(c(-0.09335977, 0.09335977),c(0.93359768, -0.93359768))
+## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159497, 0.1159497),c(1.1594966, -1.1594966))
 ## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159325, 0.1159325),c(1.1593248, -1.1593248))
 ## Old Estimate from 2021-06-15: transition_matrix = rbind(c(-0.124796, 0.124796),c(1.247960, -1.247960))
 ## Old Estimate from 2021-06-07: transition_matrix = rbind(c(-0.1226109, 0.12261091.2261085),c(1.22610851.2261085, -1.2261085)) #Write up from the print above
@@ -117,8 +118,8 @@ castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
 
 
 #Extract the most recent dates.
-mrsd = max(metadat$`Collection Data`)
-dec_date = decimal_date(max(metadat$`Collection Data`))
+mrsd = max(metadat$`date`)
+dec_date = decimal_date(max(metadat$`date`))
 start_date = dec_date-max(tipHeights(tree))
 most_recent_date = ymd(mrsd)
 most_recent_date = decimal_date(most_recent_date)
@@ -179,8 +180,8 @@ treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 ```{r,include=F}
 ##MRCA's lineages size.
 tip_list = Norwegian_tips
-dates = decimal_date(metadat$`Collection Data`)
-names(dates)=metadata$Strain
+dates = decimal_date(metadat$`date`)
+names(dates)=metadata$strain
 
 #Import versus local transmission. 
 ## Run below command for new builds
