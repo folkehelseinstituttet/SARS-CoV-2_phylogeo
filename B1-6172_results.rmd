@@ -217,8 +217,8 @@ g1
 
 ###### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
 
-# REMEMBER CHECKING THAT X and Y MAX etc ARE OK BELOW
 ```{r,include=F}
+# REMEMBER CHECKING THAT X and Y MAX etc ARE OK BELOW
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,40)+

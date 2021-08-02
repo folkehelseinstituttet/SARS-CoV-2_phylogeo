@@ -38,8 +38,6 @@ in Table 1.
 
 ###### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
 
-# REMEMBER CHECKING THAT X and Y MAX etc ARE OK BELOW
-
 ![](B1-6172_results_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ###### Fig. 4. Absolute quantification of imports and local transmission events.
