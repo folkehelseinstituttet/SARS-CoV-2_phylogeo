@@ -1,13 +1,13 @@
 ---
 title: "Results - B.1.617.2, “Delta variant”"
 author: ""
-date: "31/05/2021"
+date: "13/07/2021"
 output: 
   rmarkdown::github_document
 #rmarkdown::pdf_document
 ---
-
-```{r setup, include=FALSE}
+  
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,warning =F)
 ```
 
@@ -55,19 +55,21 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-05-31_metadata.tsv"))
+#   note, when data directly from HF included (not on GISAID) is included, replace tip labels
+#   in input files, so that "Norway" label is included. This can be done with:
+#   ~/Dropbox/Covid/B1-617-2/replace_words.py using the conversion table
+#   ~/Dropbox/Covid/B1-617-2/conversion_HF_isolnames.csv
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-07-13_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-05-31_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_B-1-617-2021-07-13_timetree_NN.nwk"))
 
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
-
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-#Exclude the basal branch, NB: update this for new builds.
-#tree = extract.clade(tree, node=763) Correct node for entire B.1.617
-tree = extract.clade(tree, node=959)
+#Prune away the part of the tree not corresponding to B.1.617.2. NB: update this for new builds.
+tree = extract.clade(tree, node=2000)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -76,11 +78,11 @@ names(Locations)=tree$tip.label
 table(Locations)
 
 #Remedy for ugly tree branches
-set.seed(100)
-tree = multi2di(tree)
-tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
-tree=ladderize(tree)#reorder.phylo(tree)
-
+#set.seed(100)
+#tree = multi2di(tree)
+#tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+#tree=ladderize(tree)#reorder.phylo(tree)
+###plot.phylo(tree,show.tip.label = F,edge.width=2)
 
 #   ____________________________________________________________________________
 #   Ancestral state reconstruction                                          ####
@@ -89,24 +91,17 @@ tree=ladderize(tree)#reorder.phylo(tree)
 locations_for_castor = as.numeric(as.factor(Locations))
 names(locations_for_castor)=names(Locations)
 
-# Try below step for new builds
-#castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
-#                              rate_model="ARD",include_ancestral_likelihoods = T)
-#castor$transition_matrix
-
-# if the above fails, set transition matrix by other means e.g. by using entire B.1.617 and follow below steps
-transition_matrix = rbind(c(-0.01243657, 0.01243657),c(0.20321063, -0.20321063))
-fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
-transition_matrix = summary(fit_given)$Q
-#Setup locations for castor
-locations_for_castor = as.numeric(as.factor(Locations))
-names(locations_for_castor)=names(Locations)
+# Run below for new builds - estimating transition matrix from whole B.1.617
 castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
-                              transition_matrix=transition_matrix,include_ancestral_likelihoods = T)
+                              rate_model="ARD",include_ancestral_likelihoods = T)
+castor$transition_matrix
+
+#transition_matrix = rbind(c(-0.6985837, 0.6985837),c(0.2926757, -0.2926757))
+
 
 #Setup date variables that are used in downstream function calls.
-mrsd = max(metadat$`Collection Data`)
-dec_date = decimal_date(max(metadat$`Collection Data`))
+mrsd = max(metadat$`date`)
+dec_date = decimal_date(max(metadat$`date`))
 start_date = dec_date-max(tipHeights(tree))
 most_recent_date = ymd(mrsd)
 most_recent_date = decimal_date(most_recent_date)
@@ -119,12 +114,10 @@ time_end = start_time+max(nodeHeights(tree))
 Norwegian_tips = names(Locations[Locations=="Norway"])
 
 
-
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
 #multi_counts = pbreplicate(100, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 #save(multi_counts, file=paste0(path_Data,"count_ML_B16172_100.Rdata"))
 load(paste0(path_Data,"count_ML_B16172_100.Rdata"))
-
 #Lineage descriptions using the state with more than 50% probability for all nodes.
 Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods,give_tips = Norwegian_tips,
                          ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
@@ -167,8 +160,8 @@ treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 #   ____________________________________________________________________________
 #   Import export estimates                                                 ####
 tip_list = Norwegian_tips
-dates = decimal_date(metadat$`Collection Data`)
-names(dates)=metadata$Strain
+dates = decimal_date(metadat$`date`)
+names(dates)=metadata$strain
 
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date,tip_list=Norwegian_tips)
 
@@ -228,15 +221,15 @@ g1
 ```{r,include=F}
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,5)+
+  ylim(0,10)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-05-31")),expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-06-08")),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,20)+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-05-31")), expand=c(0,0))+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,30)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-06-08")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
@@ -260,9 +253,24 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
-  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)+7),xmax=as.Date(dat$dates[length(dat$dates)]+7),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 ```
 
 ###### Fig. 5.  Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
+
+```{r,include=F}
+# Create tabular output of TMRCAs and lineage sizes
+
+mrcas <- Result$`MRCA's`
+mrcas <- decimal2Date(cbind(mrcas))
+mrcas <- as.data.frame(mrcas)
+Lin_sizes <- Result$Lineage_sizes
+Lin_sizes <- as.data.frame(Lin_sizes)
+mrca_sizes <- cbind(mrcas, Lin_sizes)
+write.table(mrca_sizes, file=("~/Dropbox/Covid/B1-617-2/MRCA_lineageSize_2021-07-13.txt"))
+write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/delta.csv"))
+
+```
+

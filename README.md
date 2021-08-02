@@ -27,9 +27,6 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafri
 ## Analyse av B.1.617.2 Delta variant
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-6172_results.md
 
-## Analyse av B.1.525. Variant med flere av de samme endringene som de engelske, sør-afrikanske og brasilianske virusvariantene
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-525_results.md
-
-## Global build
-TBD
+## Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md
 
