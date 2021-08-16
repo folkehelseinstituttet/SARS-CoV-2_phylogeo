@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.1.7,  “Alpha variant”"
 author: ""
-date: "13/07/2021"
+date: "02/08/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-07-13_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain__metadata_Alpha_2021-08-02.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-07-13_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain__timetree_Alpha_2021-08-02.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,14 +69,14 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_UK-centric-2021-0
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=5959)
+tree = extract.clade(tree, node=6027)
 
 #Expand zero length branches
-set.seed(100)
+#set.seed(100)
 #tree = multi2di(tree)
-tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
-tree=ladderize(tree)#reorder.phylo(tree)
-plot.phylo(tree,show.tip.label = F,edge.width=2)
+#tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
+#tree=ladderize(tree)#reorder.phylo(tree)
+#plot.phylo(tree,show.tip.label = F,edge.width=2)
 
 
 Locations = grepl("Norway",tree$tip.label)
@@ -89,7 +89,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.09335977, 0.09335977),c(0.93359768, -0.93359768))
+transition_matrix = rbind(c(-0.1032237, 0.1032237),c(1.0322375, -1.0322375))
+## Old Estimate from 2021-07-13: transition_matrix = rbind(c(-0.09335977, 0.09335977),c(0.93359768, -0.93359768))
 ## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159497, 0.1159497),c(1.1594966, -1.1594966))
 ## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159325, 0.1159325),c(1.1593248, -1.1593248))
 ## Old Estimate from 2021-06-15: transition_matrix = rbind(c(-0.124796, 0.124796),c(1.247960, -1.247960))
@@ -116,7 +117,6 @@ names(locations_for_castor)=names(Locations)
 castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
                               transition_matrix=transition_matrix,include_ancestral_likelihoods = T)
 
-
 #Extract the most recent dates.
 mrsd = max(metadat$`date`)
 dec_date = decimal_date(max(metadat$`date`))
@@ -129,7 +129,6 @@ time_end = start_time+max(nodeHeights(tree))
 
 #Find the labels of the taxa that are observed in Norway. 
 Norwegian_tips = names(Locations[Locations=="Norway"])
-
 
 ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
 ### Sections that takes time to run are commented  out, like below          ####
@@ -195,7 +194,6 @@ week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning result
 weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
 weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
 sum_cases = weekly_importations+weekly_local_tranmissions
-
 #Plotting method
 imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
 exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
