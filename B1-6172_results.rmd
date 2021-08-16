@@ -223,13 +223,13 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,60)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-01")),expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-08")),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
 g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,200)+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-01")), expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-08")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
