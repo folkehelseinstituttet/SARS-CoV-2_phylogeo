@@ -265,12 +265,12 @@ g1
 
 mrcas <- Result$`MRCA's`
 mrcas <- decimal2Date(cbind(mrcas))
-mrcas <- as.data.frame(mrcas)
+TMRCA <- as.data.frame(mrcas)
 Lin_sizes <- Result$Lineage_sizes
-Lin_sizes <- as.data.frame(Lin_sizes)
-mrca_sizes <- cbind(mrcas, Lin_sizes)
-write.table(mrca_sizes, file=("~/Dropbox/Covid/B1-617-2/MRCA_lineageSize_2021-08-16.txt"))
-write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/delta.csv"))
+Lineage_sizes <- as.data.frame(Lin_sizes)
+mrca_sizes <- cbind(TMRCA, Lineage_sizes)
+write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodelling/SARS-CoV-2_phylogeo/Delta_lineage_sizes.txt"))
+write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes.csv"))
 
 ```
 
