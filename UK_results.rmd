@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.1.7,  “Alpha variant”"
 author: ""
-date: "02/08/2021"
+date: "16/08/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/UK_03_24/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain__metadata_Alpha_2021-08-02.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_alpha-2021-08-08_metadata.tsv"))
 metadata = metadat
-tree = read.tree(paste0(path_Main,"nextstrain__timetree_Alpha_2021-08-02.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_alpha-2021-08-08_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain__timetree_Alpha_2021-08-02.nwk"))
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=6027)
+tree = extract.clade(tree, node=5928)
 
 #Expand zero length branches
 #set.seed(100)
@@ -89,7 +89,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransition10x(tree,Locations,model=c(rbind(c(0,1,1,0)))) #The 10X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.1032237, 0.1032237),c(1.0322375, -1.0322375))
+transition_matrix = rbind(c(-0.08, 0.08),c(0.8, -0.8)) # artificial rate as real estimated matrix failed in lineagehomology step. Estimated rate ca 0.07 and 0.7
+## Old Estimate from 2021-08-02: transition_matrix = rbind(c(-0.1032237, 0.1032237),c(1.0322375, -1.0322375))
 ## Old Estimate from 2021-07-13: transition_matrix = rbind(c(-0.09335977, 0.09335977),c(0.93359768, -0.93359768))
 ## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159497, 0.1159497),c(1.1594966, -1.1594966))
 ## Old Estimate from 2021-06-21: transition_matrix = rbind(c(-0.1159325, 0.1159325),c(1.1593248, -1.1593248))
@@ -242,14 +243,14 @@ The same output is visualized as absolute numbers in Fig. 3 below. It should be 
 
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,30)+
+  ylim(0,40)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date(dat$dates[length(dat$dates)])-7),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]-7),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,400)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,500)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"),as.Date(dat$dates[length(dat$dates)])-7), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+

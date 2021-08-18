@@ -1,6 +1,6 @@
 Results - B.1.1.7, “Alpha variant”
 ================
-02/08/2021
+16/08/2021
 
 Phylogeographic mapping
 
@@ -29,9 +29,9 @@ lineage and TMRCA denotes the age of the lineage.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  277.0000 |  281.0000 |  286.5500 |
-| Local transmission | 3736.4500 | 3742.0000 | 3746.0000 |
-| Import / Total     |    0.0689 |    0.0698 |    0.0712 |
+| Import             |  232.2250 |  236.0000 |  242.3250 |
+| Local transmission | 3651.6750 | 3658.0000 | 3661.7750 |
+| Import / Total     |    0.0596 |    0.0606 |    0.0622 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
