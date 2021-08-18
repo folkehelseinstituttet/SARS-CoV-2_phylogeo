@@ -1,7 +1,7 @@
 ---
 title: "Results - B.1.617.2, “Delta variant”"
 author: ""
-date: "16/08/2021"
+date: "18/08/2021"
 output: 
   rmarkdown::github_document
 #rmarkdown::pdf_document
@@ -59,9 +59,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 #   in input files, so that "Norway" label is included. This can be done with:
 #   ~/Dropbox/Covid/B1-617-2/replace_words.py using the conversion table
 #   ~/Dropbox/Covid/B1-617-2/conversion_HF_isolnames.csv
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-08_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-16_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-08_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-16_timetree_NN.nwk"))
 
 
 #   ____________________________________________________________________________
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-08_
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
 #Prune away the part of the tree not corresponding to B.1.617.2. NB: update this for new builds.
-tree = extract.clade(tree, node=3573)
+tree = extract.clade(tree, node=4495)
 plot.phylo(tree,show.tip.label = F)
 Locations = grepl("Norway",tree$tip.label)
 Locations[Locations=="TRUE"]="Norway"
@@ -95,9 +95,6 @@ names(locations_for_castor)=names(Locations)
 castor = castor::asr_mk_model(tree,tip_states =locations_for_castor,
                               rate_model="ARD",include_ancestral_likelihoods = T)
 castor$transition_matrix
-
-#transition_matrix = rbind(c(-0.6985837, 0.6985837),c(0.2926757, -0.2926757))
-
 
 #Setup date variables that are used in downstream function calls.
 mrsd = max(metadat$`date`)
@@ -221,14 +218,14 @@ g1
 # REMEMBER CHECKING THAT X and Y MAX etc ARE OK BELOW
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,60)+
+  ylim(0,80)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-08")),expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-09")),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,200)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,300)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-04-01"), as.Date("2021-08-08")), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
@@ -242,12 +239,12 @@ grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 
 ###### Fig. 4. Absolute quantification of imports and local transmission events. 
 
-```{r,echo=F,fig.width=9, fig.height=6}
+```{r,echo=F,fig.width=9, fig.height=8}
 c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   geom_hex()+
-  theme_bw(base_size=20)+
+  theme_bw(base_size=15)+
   theme(legend.position=c(0.85,0.85))+
   scale_fill_viridis()+
   scale_x_date(date_breaks="1 week")+
@@ -273,4 +270,3 @@ write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodell
 write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes.csv"))
 
 ```
-
