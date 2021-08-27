@@ -29,11 +29,16 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lin
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_5xFixedRateIn.txt
 
+###
 
-
-
+###
 
 ### ELDRE ANALYSER (OPPDATERES IKKE):
+
+Vi har lagt følgende forenklende antagelse til grunn for dise analyser:
+
+For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta variant) er transisjonsrate estimert direkte fra dataene.
+
 
 ## Analyse av B.1.1.7 Alpha variant
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md
@@ -44,7 +49,3 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafri
 ## Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md
 
-
-Vi har lagt følgende forenklende antagelse til grunn for våre analyser:
-
-For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta variant) er transisjonsrate estimert direkte fra dataene.
