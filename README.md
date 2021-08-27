@@ -12,11 +12,28 @@ Da sekvenseringsaktiviteten er ekstremt varierende fra land til land i Europa og
 
 Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner geografisk lokasjon til alle noder og tupper treet. Tuppene er kjent, da disse representerer faktisk isolater med kjent lokasjon. Basert på geografisk opprinnelse til alle enkeltisolater, genetiske distanser og tidsinformasjon kodet i treet, samt den underliggende modellen, avleder algoritmen om noder (noder tilsvarer infererte, ikke-observerte “forfedre”) bakover i treet tilhører den ene eller andre geografiske kategorien. I praksis her, om disse eksisterte i Norge eller utenfor Norge. Om vi for eksempel har et isolat fra Norge, så vil dette bli inferert som en import hvis den umiddelbare noden (ikke observert) oppstrøms i treet er inferert å ha eksistert utenfor Norge. Om oppstrømsnoden også blir inferert å ha eksistert i Norge, vil isolatet være et resultat av smitte i Norge.
 
-Vi har lagt følgende forenklende antagelse til grunn for våre analyser:
+## Oppdaterte analyser blir nå kun gjort på Delta varianten, som er totalt dominerende i Norge.
 
-For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta variant), B.1.617.2 (Delta variant) og B.1.525 er transisjonsrate estimert direkte fra dataene.
+For Delta varianten har vi antatt at at raten av import til Norge er 3x høyere enn eksport ut av Norge. Dette er basert på følgende: Skandinavia og Europa er regionene som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien, inkludert siste 2 uker (per 26.08.2021), se https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Europe_deaths_prev14days_2021-08-26.csv. Skandinavia som helhet har hatt ca 1.3x flere dødsfall enn Norge alene sise 2 uker. Antall dødsfall per innbygger fra Covid-19 kan antas å korrelere sterkt med smittetrykk. Basert på tallene i Europa som helhet og Skandinavia, har vi i våre modeller gjort den forenklede antagelsen at importraten av Delta virus er 3x høyere inn til Norge enn eksportraten ut. For mange deler av verden er det reelle smittetrykket ukjent. Vi har derfor brukt 3x estimatet (basert på tall fra Europa og Skandinavia) for hele verden (RoW). 
 
-### Resultatene fra analysene er tilgjengelige her:
+Med importrate satt 3x høyere enn eksportrate ser analysene slik ut
+
+## Analyse av B.1.617.2 Delta variant
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-6172_results.md
+
+## Liste over importhendelser, klyngestørrelse og ca dato for import:
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_3xFixedRateIn.txt
+
+
+## Tilsvarende analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her:
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_5xFixedRateIn.txt
+
+
+
+
+
+### ELDRE ANALYSER (OPPDATERES IKKE):
 
 ## Analyse av B.1.1.7 Alpha variant
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md
@@ -24,9 +41,10 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_result
 ## Analyse av B.1.351 Beta variant
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafrican_results.md
 
-## Analyse av B.1.617.2 Delta variant
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-6172_results.md
-
 ## Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md
 
+
+Vi har lagt følgende forenklende antagelse til grunn for våre analyser:
+
+For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta variant) er transisjonsrate estimert direkte fra dataene.
