@@ -87,10 +87,10 @@ names(Locations)=tree$tip.label
 
 
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
-#LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 5) #The 5X rate is added internally
+#LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 3) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.3815287, 0.3815287),c(1.9076433, -1.9076433)) 
-## 2021-08-23 Transition matrix using using 10x rate: = rbind(c(-0.1882434, 0.1882434),c(1.8824343, -1.8824343)) ## 2021-08-23 Transition matrix using using 3x rate: = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555)) 
+transition_matrix = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555)) 
+## 2021-08-23 Transition matrix using using 10x rate: = rbind(c(-0.1882434, 0.1882434),c(1.8824343, -1.8824343)) ## 2021-08-23 Transition matrix using using 5x rate: = rbind(c(-0.3815287, 0.3815287),c(1.9076433, -1.9076433)) 
 
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
@@ -127,14 +127,14 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 ## Run below command for new builds. If results needed fast use 10 replicates below, and rerun with e.g. 100.
 #multi_counts = pbreplicate(10, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 ## Run below command for new builds
-#save(multi_counts, file=paste0(path_Data,"count_ML_Delta_100.Rdata"))
-load(paste0(path_Data,"count_ML_Delta_100.Rdata"))
+#save(multi_counts, file=paste0(path_Data,"count_ML_Delta_3xRate_100.Rdata"))
+load(paste0(path_Data,"count_ML_Delta_3xRate_100.Rdata"))
 
 #Lineage descriptions using the state with more than 50% probability for all nodes.
 ## Run below commands for new builds
 #Result = LineageHomology(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
-#save(Result,file=paste0(path_Data,"count_once_Delta.Rdata"))
-load(paste0(path_Data,"count_once_Delta.Rdata"))
+#save(Result,file=paste0(path_Data,"count_once_Delta_3xRate.Rdata"))
+load(paste0(path_Data,"count_once_Delta_3xRate.Rdata"))
 ```
 
 ```{r, echo=FALSE, fig.width=13, fig.height=20, fig.cap="Test"}
@@ -174,8 +174,8 @@ names(dates)=metadata$strain
 #Import versus local transmission. 
 ## Run below command for new builds
 #Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date, tip_list=Norwegian_tips)
-#save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100.Rdata")) 
-load(paste0(path_Data,"Relative_load_100.Rdata"))
+#save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100_3xRate.Rdata")) 
+load(paste0(path_Data,"Relative_load_100_3xRate.Rdata"))
 start_time = start_date
 #Set windows for counting importations and local transmission in.
 weeks = seq(start_time, time_end, by = 1/52)
@@ -233,7 +233,7 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,150)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2020-11-30"), as.Date(dat$dates[length(dat$dates)])),expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-03-15"), as.Date(dat$dates[length(dat$dates)])),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
@@ -284,7 +284,7 @@ TMRCA <- as.data.frame(mrcas)
 Lin_sizes <- Result$Lineage_sizes
 Lineage_sizes <- as.data.frame(Lin_sizes)
 mrca_sizes <- cbind(TMRCA, Lineage_sizes)
-write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodelling/SARS-CoV-2_phylogeo/Delta_lineage_sizes_5xFixedRateIn.txt"))
-write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes_5xFixedRateIn.csv"))
+write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodelling/SARS-CoV-2_phylogeo/Delta_lineage_sizes_3xFixedRateIn.txt"))
+write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes_3xFixedRateIn.csv"))
 
 ```
