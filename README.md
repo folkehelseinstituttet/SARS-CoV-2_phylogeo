@@ -19,7 +19,7 @@ For Delta varianten har vi antatt at at raten av import til Norge er 3x høyere 
 Med importrate satt 3x høyere enn eksportrate ser analysene slik ut
 
 ## Analyse av B.1.617.2 Delta variant
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/B1-6172_results.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_3x_in_vs_out.md
 
 ## Liste over importhendelser, klyngestørrelse og ca dato for import:
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_3xFixedRateIn.txt
