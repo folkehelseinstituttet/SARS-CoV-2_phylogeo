@@ -1,6 +1,6 @@
 Results - “Delta variant”
 ================
-16/08/2021
+06/09/2021
 
 Phylogeographic mapping
 
@@ -27,11 +27,11 @@ lineage and TMRCA denotes the age of the lineage.
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |      2.5% |       50% |     97.5% |
-|:-------------------|----------:|----------:|----------:|
-| Import             |  466.2250 |  471.5000 |  478.5500 |
-| Local transmission | 1391.4500 | 1398.5000 | 1403.7750 |
-| Import / Total     |    0.2493 |    0.2521 |    0.2559 |
+|                    |     2.5% |       50% |     97.5% |
+|:-------------------|---------:|----------:|----------:|
+| Import             |  457.675 |  462.5000 |  470.1000 |
+| Local transmission | 1519.900 | 1527.5000 | 1532.3250 |
+| Import / Total     |    0.230 |    0.2324 |    0.2362 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
@@ -44,7 +44,7 @@ indicate that estimates in this period is highly uncertain.
 
 ![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
+##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It
 should be noted that absolute estimates will be significantly shaped by
@@ -52,7 +52,7 @@ sampling density.
 
 ![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-##### Fig. 4. Absolute quantification of imports and local transmission events.
+##### Fig. 4. Absolute quantification of imports and local transmission events. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 Perhaps the most interesting aspect of quantifying introductions, is to
 investigate the fate of the introduced viruses. Mandatory testing at the
@@ -64,4 +64,4 @@ lineage.
 
 ![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
+##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.

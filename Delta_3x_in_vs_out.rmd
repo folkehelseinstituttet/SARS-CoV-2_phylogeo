@@ -1,7 +1,7 @@
 ---
 title: "Results -  “Delta variant”"
 author: ""
-date: "16/08/2021"
+date: "06/09/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-23_metadata_NN.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-09-06_metadata_NN.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-23_timetree_NN.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-09-06_timetree_NN.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-08-23_
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=5105)
+tree = extract.clade(tree, node=5370)
 
 #Expand zero length branches
 set.seed(100)
@@ -89,8 +89,10 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 3) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555)) 
-## 2021-08-23 Transition matrix using using 10x rate: = rbind(c(-0.1882434, 0.1882434),c(1.8824343, -1.8824343)) ## 2021-08-23 Transition matrix using using 5x rate: = rbind(c(-0.3815287, 0.3815287),c(1.9076433, -1.9076433)) 
+transition_matrix = rbind(c(-0.413421, 0.413421),c(1.240263, -1.240263)) 
+## 2021-08-23 Transition matrix using using 3x rate: = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555))  
+## 2021-08-23 Transition matrix using using 5x rate: = rbind(c(-0.3815287, 0.3815287),c(1.9076433, -1.9076433)) 
+## 2021-08-23 Transition matrix using using 10x rate: = rbind(c(-0.1882434, 0.1882434),c(1.8824343, -1.8824343)) 
 
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
@@ -223,7 +225,7 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
 g1
 ```
 
-##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission).
+##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It should be noted that absolute estimates will be significantly shaped by sampling density.
 
@@ -231,7 +233,7 @@ The same output is visualized as absolute numbers in Fig. 3 below. It should be 
 
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,150)+
+  ylim(0,120)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-03-15"), as.Date(dat$dates[length(dat$dates)])),expand=c(0,0))+
   ylab("Import")+
@@ -251,7 +253,7 @@ g2
 grid.draw(rbind(ggplotGrob(g1), ggplotGrob(g2), size = "last"))
 ```
 
-##### Fig. 4. Absolute quantification of imports and local transmission events. 
+##### Fig. 4. Absolute quantification of imports and local transmission events. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 Perhaps the most interesting aspect of quantifying introductions, is to investigate the fate of the introduced viruses. Mandatory testing at the border and/or mandatory quaranteens etc will obviously have a bearing on the fate of new introductions from abroad. The plot below visualizes the number of infections in Norway resulting from each
 identified virus import event over time, stratified by inferred TMRCA of each introduced lineage.
@@ -264,6 +266,7 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   theme_bw(base_size=20)+
   theme(legend.position=c(0.85,0.85))+
   scale_fill_viridis()+
+  scale_y_log10() + annotation_logticks() + 
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
@@ -272,7 +275,7 @@ g1
 
 ```
 
-##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor.
+##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 
 ```{r,include=F}
