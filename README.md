@@ -25,15 +25,11 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_3x_
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_3xFixedRateIn.txt
 
 
-## Tilsvarende analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her:
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_5xFixedRateIn.txt
-
-###
 
 ###
 
 ### ELDRE ANALYSER (OPPDATERES IKKE):
+
 
 Vi har lagt følgende forenklende antagelse til grunn for dise analyser:
 
@@ -48,4 +44,9 @@ https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafri
 
 ## Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md
+
+
+## Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her:
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_5xFixedRateIn.txt
 
