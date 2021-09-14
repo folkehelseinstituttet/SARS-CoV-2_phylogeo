@@ -1,6 +1,6 @@
 Results - “Delta variant”
 ================
-06/09/2021
+13/09/2021
 
 Phylogeographic mapping
 
@@ -27,11 +27,11 @@ lineage and TMRCA denotes the age of the lineage.
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |     2.5% |       50% |     97.5% |
-|:-------------------|---------:|----------:|----------:|
-| Import             |  457.675 |  462.5000 |  470.1000 |
-| Local transmission | 1519.900 | 1527.5000 | 1532.3250 |
-| Import / Total     |    0.230 |    0.2324 |    0.2362 |
+|                    |      2.5% |       50% |     97.5% |
+|:-------------------|----------:|----------:|----------:|
+| Import             |  417.4500 |  424.5000 |  430.8750 |
+| Local transmission | 1256.1250 | 1262.5000 | 1269.5500 |
+| Import / Total     |    0.2475 |    0.2516 |    0.2554 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
