@@ -27,11 +27,11 @@ lineage and TMRCA denotes the age of the lineage.
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |     2.5% |      50% |     97.5% |
-|:-------------------|---------:|---------:|----------:|
-| Import             |  490.000 |  497.500 |  502.0000 |
-| Local transmission | 1368.000 | 1372.500 | 1380.0000 |
-| Import / Total     |    0.262 |    0.266 |    0.2684 |
+|                    |      2.5% |      50% |     97.5% |
+|:-------------------|----------:|---------:|----------:|
+| Import             |  434.0000 |  442.000 |  448.1000 |
+| Local transmission | 1238.9000 | 1245.000 | 1253.0000 |
+| Import / Total     |    0.2573 |    0.262 |    0.2656 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
