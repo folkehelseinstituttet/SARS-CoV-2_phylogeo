@@ -1,6 +1,6 @@
 Results - “Delta variant”
 ================
-20/09/2021
+11/10/2021
 
 Phylogeographic mapping
 
@@ -29,9 +29,9 @@ lineage and TMRCA denotes the age of the lineage.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  560.1250 |  573.5000 |  579.7750 |
-| Local transmission | 2047.2250 | 2053.5000 | 2066.8750 |
-| Import / Total     |    0.2132 |    0.2183 |    0.2207 |
+| Import             |  499.6750 |  507.5000 |  516.1000 |
+| Local transmission | 3013.9000 | 3022.5000 | 3030.3250 |
+| Import / Total     |    0.1416 |    0.1438 |    0.1462 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important

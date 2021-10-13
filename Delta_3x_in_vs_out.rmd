@@ -1,7 +1,7 @@
 ---
 title: "Results -  “Delta variant”"
 author: ""
-date: "20/09/2021"
+date: "11/10/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-09-20_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-10-11_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-09-20_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-10-11_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-2021-09-20_
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=6579)
+tree = extract.clade(tree, node=8515)
 
 #Expand zero length branches
 set.seed(100)
@@ -89,7 +89,7 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 3) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.4352623, 0.4352623),c(1.3057868, -1.3057868)) 
+transition_matrix = rbind(c(-0.263285, 0.263285),c(0.7900130, -0.7900130)) 
 ## 2021-09-13 Transition matrix using using 3x rate: = rbind(c(-0.3214454, 0.3214454),c(0.9643362, -0.9643362))   
 ## 2021-08-23 Transition matrix using using 3x rate: = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555))  
 ## 2021-08-23 Transition matrix using using 5x rate: = rbind(c(-0.3815287, 0.3815287),c(1.9076433, -1.9076433)) 
@@ -234,15 +234,15 @@ The same output is visualized as absolute numbers in Fig. 3 below. It should be 
 
 g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
-  ylim(0,180)+
+  ylim(0,150)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-02-15"), as.Date(dat$dates[length(dat$dates)])),expand=c(0,0))+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-03-15"), as.Date(dat$dates[length(dat$dates)])),expand=c(0,0))+
   ylab("Import")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,600)+
-  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-02-15"),as.Date(dat$dates[length(dat$dates)])), expand=c(0,0))+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,1000)+
+  scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-03-15"),as.Date(dat$dates[length(dat$dates)])), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
