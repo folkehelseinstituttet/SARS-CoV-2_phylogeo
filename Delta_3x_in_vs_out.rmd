@@ -1,7 +1,7 @@
 ---
 title: "SARS-CoV-2 Delta variant: balanced temporal sampling"
 author: ""
-date: "18/10/2021"
+date: "25/10/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,9 +58,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-10-18_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-10-25_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-10-18_timetree.nwk"))
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-10-25_timetree.nwk"))
 
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
@@ -69,7 +69,7 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanaly
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F,type="cladogram")
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=2890)
+tree = extract.clade(tree, node=2888)
 
 #Expand zero length branches
 set.seed(100)
@@ -89,8 +89,9 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 3) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.6053547, 0.6053547),c(1.8160641, -1.8160641))
-## SUBSEQUENT BUILDS WERE BALANCED IN TERMS OF TEMPORAL SAMPLING ###
+transition_matrix = rbind(c(-0.6089536, 0.6089536),c(1.8268608, -1.8268608))
+## 2021-10-18 Transition matrix using using 3x rate: = rbind(c(-0.6053547, 0.6053547),c(1.8160641, -1.8160641))   
+## BUILDS NEWER THAN OCT 11 WERE BALANCED IN TERMS OF TEMPORAL SAMPLING ###
 ## 2021-10-11 Transition matrix using using 3x rate: = rbind(c(-0.3214454, 0.3214454),c(0.9643362, -0.9643362))   
 ## 2021-09-13 Transition matrix using using 3x rate: = rbind(c(-0.3214454, 0.3214454),c(0.9643362, -0.9643362))   
 ## 2021-08-23 Transition matrix using using 3x rate: = rbind(c(-0.6492185, 0.6492185),c(1.9476555, -1.9476555))  
@@ -227,7 +228,6 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
   theme(legend.position = c(0.55,0.15), legend.title=element_blank())
 g1
 ```
-
 ##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It should be noted that absolute estimates will be significantly shaped by sampling density.
@@ -275,7 +275,6 @@ g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   xlab("Estimated TMRCA")+ylab("Estimated linage size")+
   annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
-
 ```
 
 ##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.

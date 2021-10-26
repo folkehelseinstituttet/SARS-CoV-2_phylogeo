@@ -1,6 +1,6 @@
 SARS-CoV-2 Delta variant: balanced temporal sampling
 ================
-18/10/2021
+25/10/2021
 
 Phylogeographic mapping
 
@@ -29,9 +29,9 @@ lineage and TMRCA denotes the age of the lineage.
 
 |                    |      2.5% |       50% |     97.5% |
 |:-------------------|----------:|----------:|----------:|
-| Import             |  330.3500 |  341.5000 |  355.5250 |
-| Local transmission | 1298.4750 | 1312.5000 | 1323.6500 |
-| Import / Total     |    0.1997 |    0.2065 |    0.2149 |
+| Import             |  315.4500 |  323.0000 |  333.2000 |
+| Local transmission | 1319.8000 | 1330.0000 | 1337.5500 |
+| Import / Total     |    0.1908 |    0.1954 |    0.2016 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
@@ -43,8 +43,10 @@ the time of sampling of the most recent included isolate is shaded to
 indicate that estimates in this period is highly uncertain.
 
 ![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
-
-##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
+\#\#\#\#\# Fig. 3. Relative quantification of infection source (new
+introduction / import vs local transmission). Grey shading indicates
+that inferences in this period (last 4 weeks) are uncertain due to
+detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It
 should be noted that absolute estimates will be significantly shaped by
