@@ -11,7 +11,7 @@ two binary categories: “Norway” or “Rest of the world (RoW)”. The output
 is presented in Fig.1 and ancestral character estimation performed on
 the dated phylogeny.
 
-![Test](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-1-1.png)
+![Test](Delta_3x_in_vs_out_2021-11-08_files/figure-gfm/unnamed-chunk-1-1.png)
 
 ##### Fig. 1. B.1.617.2 phylogeny colored by binary geographic mappings (Norway, rest of the world \[RoW\]).
 
@@ -20,7 +20,7 @@ Quantifying introductions and local transmission
 Below is a visualization of the size of each transmission lineage
 detected in Norway.
 
-![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](Delta_3x_in_vs_out_2021-11-08_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 \#\#\#\#\# Fig. 2. B.1.617.2 transmission lineage sizes in Norway. G
 denotes the number assigned to each lineage, S denotes the size of the
 lineage and TMRCA denotes the age of the lineage.
@@ -42,7 +42,7 @@ from case to case. In the figures below, the last four weeks prior to
 the time of sampling of the most recent included isolate is shaded to
 indicate that estimates in this period is highly uncertain.
 
-![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](Delta_3x_in_vs_out_2021-11-08_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 \#\#\#\#\# Fig. 3. Relative quantification of infection source (new
 introduction / import vs local transmission). Grey shading indicates
 that inferences in this period (last 4 weeks) are uncertain due to
@@ -52,7 +52,7 @@ The same output is visualized as absolute numbers in Fig. 3 below. It
 should be noted that absolute estimates will be significantly shaped by
 sampling density.
 
-![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](Delta_3x_in_vs_out_2021-11-08_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ##### Fig. 4. Absolute quantification of imports and local transmission events. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
@@ -64,6 +64,6 @@ number of infections in Norway resulting from each identified virus
 import event over time, stratified by inferred TMRCA of each introduced
 lineage.
 
-![](Delta_3x_in_vs_out_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](Delta_3x_in_vs_out_2021-11-08_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ##### Fig. 5. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
