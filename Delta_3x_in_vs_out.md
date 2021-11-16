@@ -1,6 +1,6 @@
 SARS-CoV-2 Delta variant: balanced temporal sampling
 ================
-08/11/2021
+15/11/2021
 
 Phylogeographic mapping
 
@@ -27,11 +27,11 @@ lineage and TMRCA denotes the age of the lineage.
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |      2.5% |       50% |     97.5% |
-|:-------------------|----------:|----------:|----------:|
-| Import             |  367.6750 |  373.5000 |  387.8750 |
-| Local transmission | 1665.1250 | 1679.5000 | 1685.3250 |
-| Import / Total     |    0.1791 |    0.1819 |    0.1889 |
+|                    |      2.5% |       50% |    97.5% |
+|:-------------------|----------:|----------:|---------:|
+| Import             |  406.4500 |  409.5000 |  419.325 |
+| Local transmission | 1677.6750 | 1687.5000 | 1690.550 |
+| Import / Total     |    0.1938 |    0.1953 |    0.200 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
