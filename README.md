@@ -17,8 +17,7 @@ Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner ge
 ## Analyse av Delta variant
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md
 
-## Analyse av Omicron variant
-## obs, pga små tall og lite divergens, bør infererte importhendelser tolkes med stor forsiktighet.
+## Analyse av Omicron variant (obs, som følge av lite data og divergens, bør infererte importhendelser tolkes med forsiktighet)
 https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_EqualRates.md
 
 
