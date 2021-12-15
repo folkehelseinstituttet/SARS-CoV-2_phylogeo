@@ -12,17 +12,24 @@ Da sekvenseringsaktiviteten er ekstremt varierende fra land til land i Europa og
 
 Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner geografisk lokasjon til alle noder og tupper treet. Tuppene er kjent, da disse representerer faktisk isolater med kjent lokasjon. Basert på geografisk opprinnelse til alle enkeltisolater, genetiske distanser og tidsinformasjon kodet i treet, samt den underliggende modellen, avleder algoritmen om noder (noder tilsvarer infererte, ikke-observerte “forfedre”) bakover i treet tilhører den ene eller andre geografiske kategorien. I praksis her, om disse eksisterte i Norge eller utenfor Norge. Om vi for eksempel har et isolat fra Norge, så vil dette bli inferert som en import hvis den umiddelbare noden (ikke observert) oppstrøms i treet er inferert å ha eksistert utenfor Norge. Om oppstrømsnoden også blir inferert å ha eksistert i Norge, vil isolatet være et resultat av smitte i Norge.
 
-## Oppdaterte analyser blir nå kun gjort på Delta varianten, som er totalt dominerende i Norge.
+## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron.
 
-For Delta varianten har vi antatt at at raten av import til Norge er 3x høyere enn eksport ut av Norge. Dette er basert på følgende: Skandinavia og Europa er regionene som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien, inkludert siste 2 uker (per 26.08.2021), se https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Europe_deaths_prev14days_2021-08-26.csv. Skandinavia som helhet har hatt ca 1.3x flere dødsfall enn Norge alene sise 2 uker. Antall dødsfall per innbygger fra Covid-19 kan antas å korrelere sterkt med smittetrykk. Basert på tallene i Europa som helhet og Skandinavia, har vi i våre modeller gjort den forenklede antagelsen at importraten av Delta virus er 3x høyere inn til Norge enn eksportraten ut. For mange deler av verden er det reelle smittetrykket ukjent. Vi har derfor brukt 3x estimatet (basert på tall fra Europa og Skandinavia) for hele verden (RoW). 
+## Analyse av Delta variant
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md
 
-Med importrate satt 3x høyere enn eksportrate ser analysene slik ut
+## Analyse av Omicron variant
+https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_EqualRates.md
 
-## Analyse av B.1.617.2 Delta variant
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_3x_in_vs_out.md
 
-## Liste over importhendelser, klyngestørrelse og ca dato for import:
-https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_3xFixedRateIn.txt
+
+## ytterligere kontekst
+
+For Delta varianten har vi tidligere antatt at at raten av import til Norge er 3x høyere enn eksport ut av Norge. Dette var basert på følgende: Skandinavia og Europa er regionene som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien, inkludert siste 2 uker (per 26.08.2021), se https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Europe_deaths_prev14days_2021-08-26.csv. Skandinavia som helhet har hatt ca 1.3x flere dødsfall enn Norge alene sise 2 uker. Antall dødsfall per innbygger fra Covid-19 kan antas å korrelere sterkt med smittetrykk. Basert på tallene i Europa som helhet og Skandinavia, har vi i våre modeller gjort den forenklede antagelsen at importraten av Delta virus er 3x høyere inn til Norge enn eksportraten ut. For mange deler av verden er det reelle smittetrykket ukjent. Vi har derfor brukt 3x estimatet (basert på tall fra Europa og Skandinavia) for hele verden (RoW). 
+
+Fra og med desember 2021, antar vi at byrden av Delta virus er relativt lik i Norge og landene vi er tettest knyttet til i form av reiseaktivitet. I analysene settes derfor importrate lik eksportrate. I praksis ser vi at endring av disse forutsetningene har begrenset effekt på estimatene.
+
+For Omicron som per nå er i tidlig fase og i større grad importdrevet er det mer uklart hva som er riktig parametrisering her. Per nå settes importrate til å være 3x eksportrate.
+
 
 
 
