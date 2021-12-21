@@ -1,7 +1,7 @@
 ---
 title: "SARS-CoV-2 Delta variant: balanced temporal sampling. Equal rates in/out Norway"
 author: ""
-date: "13/12/2021"
+date: "20/12/2021"
 output: 
   github_document
 #pdf_document 
@@ -58,10 +58,9 @@ path_Data =  "~/Dropbox/Covid/B1-617-2/Data/"
 # ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
 # ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-12-13_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-12-20_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-12-13_timetree.nwk"))
-
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanalysis-2021-12-20_timetree.nwk"))
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
 
@@ -69,11 +68,11 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_delta-importanaly
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=4254)
+#tree = extract.clade(tree, node=4471)
 
 #Expand zero length branches
 set.seed(100)
-#tree = multi2di(tree) Fucks things up, not sure why
+#tree = multi2di(tree) #Fucks things up, not sure why
 tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
 tree=ladderize(tree)#reorder.phylo(tree)
 plot.phylo(tree,show.tip.label = F,edge.width=2)
@@ -89,7 +88,8 @@ names(Locations)=tree$tip.label
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
 #LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 1) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-1.763243, 1.763243),c(1.763243, -1.763243))
+transition_matrix = rbind(c(-1.647031, 1.647031),c(1.647031, -1.647031))
+# matrix from 2021-12-13 = rbind(c(-1.763243, 1.763243),c(1.763243, -1.763243))
 # matrix from 2021-11-29 = rbind(c(-1.584083, 1.584083),c(1.584083, -1.584083))
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
@@ -176,6 +176,7 @@ names(dates)=metadata$strain
 #save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100_EqualRates.Rdata")) 
 load(paste0(path_Data,"Relative_load_100_EqualRates.Rdata"))
 start_time = start_date
+
 #Set windows for counting importations and local transmission in.
 weeks = seq(start_time, time_end, by = 1/52)
 week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
