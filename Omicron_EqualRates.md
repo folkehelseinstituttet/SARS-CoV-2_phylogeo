@@ -1,6 +1,6 @@
-SARS-CoV-2 Omicron variant: All samples equal rates in/out Norway
+SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway
 ================
-14/12/2021
+20/12/2021
 
 Phylogeographic mapping
 
@@ -13,7 +13,7 @@ the dated phylogeny.
 
 ![Test](Omicron_EqualRates_files/figure-gfm/unnamed-chunk-1-1.png)
 
-##### Fig. 1. B.1.617.2 phylogeny colored by binary geographic mappings (Norway, rest of the world \[RoW\]).
+##### Fig. 1. Omicron phylogeny colored by binary geographic mappings (Norway, rest of the world \[RoW\]).
 
 Quantifying introductions and local transmission
 
@@ -21,17 +21,16 @@ Below is a visualization of the size of each transmission lineage
 detected in Norway.
 
 ![](Omicron_EqualRates_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
-\#\#\#\#\# Fig. 2. B.1.617.2 transmission lineage sizes in Norway. G
-denotes the number assigned to each lineage, S denotes the size of the
-lineage and TMRCA denotes the age of the lineage.
+
+##### Fig. 2. Omicron transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
 
 ##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
 
-|                    |   2.5% |     50% |   97.5% |
-|:-------------------|-------:|--------:|--------:|
-| Import             | 9.0000 | 10.0000 | 10.0000 |
-| Local transmission | 4.0000 |  4.0000 |  5.0000 |
-| Import / Total     | 0.6429 |  0.7143 |  0.7143 |
+|                    |    2.5% |     50% |   97.5% |
+|:-------------------|--------:|--------:|--------:|
+| Import             | 19.0000 | 20.5000 | 21.0000 |
+| Local transmission | 34.0000 | 34.5000 | 36.0000 |
+| Import / Total     |  0.3455 |  0.3727 |  0.3818 |
 
 Next, we estimate the fraction of introductions relative to local
 transmission over time. In these and subsequent analyses it is important
@@ -43,10 +42,8 @@ the time of sampling of the most recent included isolate is shaded to
 indicate that estimates in this period is highly uncertain.
 
 ![](Omicron_EqualRates_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
-\#\#\#\#\# Fig. 3. Relative quantification of infection source (new
-introduction / import vs local transmission). Grey shading indicates
-that inferences in this period (last 4 weeks) are uncertain due to
-detection lag.
+
+##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It
 should be noted that absolute estimates will be significantly shaped by

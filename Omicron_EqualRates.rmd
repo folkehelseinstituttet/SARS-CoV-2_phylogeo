@@ -1,7 +1,7 @@
 ---
-title: "SARS-CoV-2 Omicron variant: All samples equal rates in/out Norway"
+title: "SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway"
 author: ""
-date: "14/12/2021"
+date: "20/12/2021"
 output: 
   github_document
 #pdf_document 
@@ -53,15 +53,10 @@ path_Data =  "~/Dropbox/Covid/Omicron/Data/"
 
 #   ____________________________________________________________________________
 #   Read required data                                                      ####
-# Some newer builds including sequences not uploaded to Gisaid lack 'Norway' in sample ID.
-# Fixed this in both .tsv and .nwk files using the script:
-# ~/Dropbox/Covid/UK_03_24/replace_words.py and the conversion file:
-# ~/Dropbox/Covid/UK_03_24/conversion_HF_isolnames.csv
 
-metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_omicron-2021-12-13_metadata.tsv"))
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_omicron-2021-12-20_metadata.tsv"))
 metadata = metadat #Used alternate spellings some places.
-tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_omicron-2021-12-13_timetree.nwk"))
-
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_omicron-2021-12-20_timetree.nwk"))
 #   ____________________________________________________________________________
 #   Analysis begins here                                                    ####
 
@@ -69,11 +64,11 @@ tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_omicron-2021-12-1
 #Extract the most recent branches
 plot.phylo(tree,show.tip.label = F)
 nodelabels(cex=0.5)
-tree = extract.clade(tree, node=953)
+tree = extract.clade(tree, node=2033)
 
 #Expand zero length branches
 set.seed(100)
-#tree = multi2di(tree) Fucks things up, not sure why
+#tree = multi2di(tree) #Fucks things up, not sure why
 tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])
 tree=ladderize(tree)#reorder.phylo(tree)
 plot.phylo(tree,show.tip.label = F,edge.width=2)
@@ -85,11 +80,12 @@ Locations[Locations=="FALSE"]="RoW"
 table(Locations)
 names(Locations)=tree$tip.label
 
-
 ## Setup transition matrix estimated using ML and the assumption 10X rate to Norway. DO RUN WHENEVER NEW BUILD ADDED
-LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 1) #The 3X rate is added internally
+#LineageHomology::FitTransitionFreeX(tree,Locations,model=c(rbind(c(0,1,1,0))), scaling_factor = 1) #The 3X rate is added internally
 ## Update below matrix with new estimates from Lineage Homology
-transition_matrix = rbind(c(-0.5396541 , 0.5396541 ),c(0.5396541, -0.5396541))
+transition_matrix = rbind(c(-0.6057073 , 0.6057073 ),c(0.6057073, -0.6057073))
+# transmission matrix from 2021-12-13: transition_matrix = rbind(c(-0.5396541 , 0.5396541 ),c(0.5396541, -0.5396541))
+
 fit_given = fitMk(tree, Locations,fixedQ = transition_matrix, pi=c(0,1)); AIC(fit_given)
 transition_matrix = summary(fit_given)$Q
 #Setup locations for castor
@@ -123,7 +119,7 @@ Norwegian_tips = names(Locations[Locations=="Norway"])
 
 #Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
 ## Run below command for new builds. If results needed fast use 10 replicates below, and rerun with e.g. 100.
-#multi_counts = pbreplicate(10, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+multi_counts = pbreplicate(10, LineageHomology_w_uncertainty(tree, ace_nodes = castor$ancestral_likelihoods, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
 ## Run below command for new builds
 #save(multi_counts, file=paste0(path_Data,"count_ML_Omicron_EqualRates_100.Rdata"))
 load(paste0(path_Data,"count_ML_Omicron_EqualRates_100.Rdata"))
@@ -144,7 +140,7 @@ tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
 legend("bottomleft",c("Norway", "RoW"), col = c("#66C2A5","#FC8D62"), pch=20, cex = 5, pt.cex=5, bty="n")
 ```
 
-##### Fig. 1. B.1.617.2 phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
+##### Fig. 1. Omicron phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
 
 Quantifying introductions and local transmission
 
@@ -160,7 +156,8 @@ library(ggtree)
 atreemap = data.frame(group=paste0("G:",1:length(all_lineages)," S: ", all_lineages, " mrca: ",decimal2Date(Result$`MRCA's`)),Value=all_lineages)
 treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 ```
-##### Fig. 2. B.1.617.2 transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
+
+##### Fig. 2. Omicron transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage.
 
 
 ```{r,include=F}
@@ -173,8 +170,9 @@ names(dates)=metadata$strain
 ## Run below command for new builds
 #Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date, tip_list=Norwegian_tips)
 #save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100_EqualRates.Rdata")) 
-load(paste0(path_Data,"Relative_load_100_3xRate.Rdata"))
+load(paste0(path_Data,"Relative_load_100_EqualRates.Rdata"))
 start_time = start_date
+
 #Set windows for counting importations and local transmission in.
 weeks = seq(start_time, time_end, by = 1/52)
 week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
@@ -212,7 +210,7 @@ Next, we estimate the fraction of introductions relative to local transmission o
 ```{r,echo=F, fig.width=7,fig.height=7}
 g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
   geom_area(alpha=0.6 , size=1, colour="black")+
-  theme_minimal(base_size=20)+scale_fill_brewer(palette="Set1")+
+  theme_minimal(base_size=12)+scale_fill_brewer(palette="Set1")+
   scale_x_date(date_breaks="1 week")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+
   ylab("")+xlab("")+
@@ -220,13 +218,14 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
   theme(legend.position = c(0.55,0.15), legend.title=element_blank())
 g1
 ```
+
 ##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It should be noted that absolute estimates will be significantly shaped by sampling density.
 
 ```{r,include=F}
 
-g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=20)+
+g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_size=12)+
   theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
   ylim(0,20)+
   geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.2), fill="lightblue")+
@@ -235,7 +234,7 @@ g1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Red")+theme_minimal(base_siz
   theme(legend.position = "none")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.2)
 g1
 
-g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,20)+
+g2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="Darkgreen")+theme_minimal(base_size=20)+ylim(0,30)+
   scale_x_date(date_breaks="1 week",limits =c(as.Date("2021-03-15"),as.Date(dat$dates[length(dat$dates)])), expand=c(0,0))+
   geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.2), fill="lightblue")+
   theme(axis.text.x=element_text(angle=60, hjust=1))+scale_fill_continuous("Grey")+ylab("Local transmission")+xlab("")+
@@ -258,7 +257,7 @@ c2 = data.frame(decimal2Date(cbind(Result$`MRCA's`)),Result$Lineage_sizes)
 colnames(c2)=c("MRCA","Lineagesize")
 g1 = ggplot(c2, aes(MRCA, Lineagesize))+
   geom_hex()+
-  theme_bw(base_size=20)+
+  theme_bw(base_size=10)+
   theme(legend.position=c(0.85,0.85))+
   scale_fill_viridis()+
   scale_y_log10() + annotation_logticks() + 
