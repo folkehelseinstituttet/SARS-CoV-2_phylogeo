@@ -12,6 +12,8 @@ Da sekvenseringsaktiviteten er ekstremt varierende fra land til land i Europa og
 
 Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner geografisk lokasjon til alle noder og tupper treet. Tuppene er kjent, da disse representerer faktisk isolater med kjent lokasjon. Basert på geografisk opprinnelse til alle enkeltisolater, genetiske distanser og tidsinformasjon kodet i treet, samt den underliggende modellen, avleder algoritmen om noder (noder tilsvarer infererte, ikke-observerte “forfedre”) bakover i treet tilhører den ene eller andre geografiske kategorien. I praksis her, om disse eksisterte i Norge eller utenfor Norge. Om vi for eksempel har et isolat fra Norge, så vil dette bli inferert som en import hvis den umiddelbare noden (ikke observert) oppstrøms i treet er inferert å ha eksistert utenfor Norge. Om oppstrømsnoden også blir inferert å ha eksistert i Norge, vil isolatet være et resultat av smitte i Norge.
 
+## ANALYSENE ER I HOVEDSAK INFORMATIVE FOR Å FÅ ET OVERBLIKK OVER ENDRINGER I IMPORTMØNSTRE OVER TID, OG ER DÅRLIG EGNET FOR Å TREKKE KONKLUSJONER OM ENKELTIMPORTER OG TIDSPUNKTET FOR DISSE. SPESIELT I TIDLIG FASE AV EN VARIANT-BØLGE KAN ROBUSTHET VÆRE BEGRENSET DA DET ER LITE DATA OG LITE DIVERGENS MELLOM OBSERVERTE SEKVENSER.
+
 ## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron.
 
 ## Analyse av Delta variant
