@@ -86,8 +86,8 @@ praksis ser vi at endring av disse forutsetningene har begrenset effekt
 på estimatene.
 
 For Omicron som per nå er i tidlig fase og i større grad importdrevet er
-det mer uklart hva som er riktig parametrisering her. Per nå settes
-importrate til å være 3x eksportrate.
+det mer uklart hva som er riktig parametrisering her. Nå settes
+importraten lik eksportraten.
 
 ### ELDRE ANALYSER
 
