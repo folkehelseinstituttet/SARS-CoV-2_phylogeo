@@ -68,8 +68,8 @@ Norge er 3x høyere enn eksport ut av Norge. Dette var basert på
 følgende: Skandinavia og Europa er regionene som er tettest knyttet til
 Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere
 dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien,
-inkludert siste 2 uker (per 26.08.2021), se
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Europe_deaths_prev14days_2021-08-26.csv>.
+inkludert siste 2 uker (per 26.08.2021), [se oversikt
+her](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Data/Europe_deaths_prev14days_2021-08-26.csv).
 Skandinavia som helhet har hatt ca 1.3x flere dødsfall enn Norge alene
 sise 2 uker. Antall dødsfall per innbygger fra Covid-19 kan antas å
 korrelere sterkt med smittetrykk. Basert på tallene i Europa som helhet
