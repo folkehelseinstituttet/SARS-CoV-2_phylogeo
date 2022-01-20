@@ -1,0 +1,393 @@
+---
+title: "SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway"
+author: ""
+date: "2022-01-22"
+output: 
+  github_document
+#pdf_document 
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning =F)
+```
+### Table of content
+-   [Estimating the geographical location of omicron lineages](#geographical-mapping-of-the-lineages)
+-   [Lineage size distributions](#lineage-size-distributions)
+-   [Introductions and local transmission](#quantifying-introductions-and-local-transmission)
+-   [Growth and size of individual lineages (NB. Keep in mind dection lag)](#quantifying-introductions-and-local-transmission)
+
+## Geographical mapping of the lineages
+
+The analyses take a dated phylogeny exported from [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-01-17/omicron-BA-one) as a starting point for quantifying imports and local transmission of SARS-CoV-2 Omicron variant in Norway. 
+Each isolate is assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is based on maximum likelihood ancestral character estimation performed on the dated phylogeny and presented in Fig.1. 
+
+```{r remedy001, include=FALSE}
+### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out                      ####
+### When a new build is available these should be un-commented, the         ####
+### result saved, and re-commented. ylim's may have to be adjusted          ####
+
+#   ____________________________________________________________________________
+#   Loading required packages                                               ####
+
+library(ggplot2)
+library(phytools)
+library(ape)
+library(castor)
+library(ips)
+library(data.table)
+library(lubridate)
+library(ggtree)
+library(treedater)
+library(viridis)
+library(grid)
+library(BactDating)
+library(pbapply)
+library(LineageHomology)
+library(hexbin)
+library(scales)
+
+#   ____________________________________________________________________________
+#   Setup paths - replace these to run locally                              ####
+
+#The folder names are old, but they contain the newest data.
+path_Main = "~/Dropbox/Covid/Omicron/"
+path_Results = "~/Dropbox/Dropbox/Covid/Omicron/Results/"
+path_Rscripts = "~/Dropbox/Covid/Rfunctions/"
+path_Data =  "~/Dropbox/Covid/Omicron/Data/"
+
+
+#   ____________________________________________________________________________
+#   Read required data                                                      ####
+
+metadat = fread(paste0(path_Main,"nextstrain_groups_niph_ncov_2022-01-17_omicron-BA-one_metadata.tsv"))
+metadata = metadat #Used alternate spellings some places.
+tree = read.tree(paste0(path_Main,"nextstrain_groups_niph_ncov_2022-01-17_omicron-BA-one_timetree.nwk"))
+#   ____________________________________________________________________________
+#   Analysis begins here                                                    ####
+
+
+#Extract the most recent branches
+plot.phylo(tree,show.tip.label = F)
+nodelabels(cex=0.5)
+#tree = extract.clade(tree, node=2033) #No necessary here. 
+
+#Expand zero length branches
+set.seed(100) #For reproducibility
+tree = multi2di(tree,random=F) #polytomies couldn't be broken randomly in this case. Probably basal polytomies skewing all the times.  
+tree$edge.length[tree$edge.length<0]=0
+tree$edge.length[tree$edge.length<=0]=min(tree$edge.length[tree$edge.length>0])/1000
+tree=ladderize(tree)#reorder.phylo(tree)
+plot.phylo(tree,show.tip.label = F,edge.width=2)
+
+#set up location data
+Locations = grepl("Norway",tree$tip.label)
+Locations[Locations=="TRUE"]="Norway"
+Locations[Locations=="FALSE"]="RoW"
+table(Locations)
+names(Locations)=tree$tip.label
+
+#   ____________________________________________________________________________
+#   Ancestral state reconstruction                                          ####
+
+#Reconstruct ancestral states using maximum likelihood with the fixed transition matrix above.
+ace_fit = ace(x=Locations, phy= tree, type="discrete", mod="ER") #Equal rates
+
+#Extract the most recent dates.
+mrsd = max(metadat$`date`)
+dec_date = decimal_date(max(metadat$`date`))
+start_date = dec_date-max(tipHeights(tree))
+most_recent_date = ymd(mrsd)
+most_recent_date = decimal_date(most_recent_date)
+start_time = most_recent_date-max(nodeHeights(tree))
+time_end = most_recent_date-start_time
+time_end = start_time+max(nodeHeights(tree))
+
+#Find the labels of the taxa that are observed in Norway. 
+Norwegian_tips = names(Locations[Locations=="Norway"])
+
+### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+### Sections that takes time to run are commented  out, like below          ####
+### New results should be saved and loaded once new builds are produced     ####
+
+#Lineage description from the maximum likelihood mappings obtained by sampling from node probabilities.
+## Run below command for new builds. If results needed fast use 10 replicates below, and rerun with e.g. 100.
+#multi_counts = pbreplicate(100, LineageHomology_w_uncertainty_v2(tree, ace_nodes = ace_fit$lik.anc, give_tips = Norwegian_tips,ace_tips = to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date))
+## Run below command for new builds
+#save(multi_counts, file=paste0(path_Data,"count_ML_Omicron_EqualRates_100.Rdata"))
+load(paste0(path_Data,"count_ML_Omicron_EqualRates_100.Rdata"))
+
+#Lineage descriptions using the state with more than 50% probability for all nodes.
+## Run below commands for new builds
+Result = LineageHomology(tree, ace_nodes = ace_fit$lik.anc, give_tips = Norwegian_tips,ace_tips =to.matrix(Locations,seq=c("Norway","RoW")),start_time = start_date)
+Result = reorder_LH(Result)
+#save(Result,file=paste0(path_Data,"count_once_Omicron_EqualRates.Rdata"))
+load(paste0(path_Data,"count_once_Omicron_EqualRates.Rdata"))
+```
+
+```{r, echo=FALSE, fig.width=13, fig.height=30, fig.cap="Test"}
+cols<-setNames( c("#B3E2CD","#FDCDAC"),unique(Locations))
+plot.phylo(tree,cex=0.3, mar=c(5.1,0.2,0.2,0.2),show.tip.label = F,edge.width=2)
+LineageHomology::axisPhyloDate(1,root.time= decimal_date(mrsd)-max(tipHeights(tree)), backward = F, lwd=4,cex=5)
+nodelabels(pie=ace_fit$lik.anc,cex=0.2,piecol=cols)
+tiplabels(pie=to.matrix(Locations,seq=c("Norway","RoW")),cex=0.2,piecol=cols)
+legend("bottomleft",c("Norway", "RoW"), col = c("#66C2A5","#FC8D62"), pch=20, cex = 3, pt.cex=3, bty="n")
+```
+
+##### Fig. 1. Omicron phylogeny colored by binary geographic mappings (Norway, rest of the world [RoW]). 
+
+The large group in Norway in top of the plot represents the large outbreak at Aker Brygge and downstream transmission from this super-spreading event (SSE). The other groups in Norway in different parts of the tree represents separate introductions from the SSE. 
+
+## Lineage size distributions
+
+Below is a visualization of the size of each transmission lineage detected in Norway
+
+```{r, echo=FALSE, fig.width=8, fig.height=8}
+all_lineages = Result[[2]]
+#Plot lineages:
+library(treemap)
+library(RColorBrewer)
+library(ggtree)
+#Treemap lineages.
+treemap2 = function(Result_LineageHomology,remove_largest=NA) {
+  
+  if(is.na(remove_largest)){
+     atreemap = data.frame(group=paste0("G:",1:length(Result_LineageHomology$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes, "\n TMRCA: ", decimal2Date(Result_LineageHomology$`MRCA's`)),Value=Result_LineageHomology$Lineage_sizes,root=round(Result_LineageHomology$`MRCA's`,2))
+  treemap::treemap(atreemap,index=("group"),vSize="Value", vColor="root",
+                   type="value", palette=rev(RColorBrewer::brewer.pal(name = "RdYlBu",n=5)),
+                   mapping=c(start_date,time_end-(time_end-start_date)/2,time_end), range=c(start_date,time_end))
+  }
+ 
+  if(is.na(remove_largest)==F){
+    start_ind = remove_largest+1
+    atreemap = data.frame(group=paste0("G:",start_ind:length(Result_LineageHomology$Lineage_sizes)," S: ", Result_LineageHomology$Lineage_sizes[-c(1:remove_largest)], "\n TMRCA: ", decimal2Date(Result_LineageHomology$`MRCA's`[-c(1:remove_largest)])),Value=Result_LineageHomology$Lineage_sizes[-c(1:remove_largest)],root=round(Result_LineageHomology$`MRCA's`,2)[-c(1:remove_largest)])
+  treemap::treemap(atreemap,index=("group"),vSize="Value", vColor="root",
+                   type="value", palette=rev(RColorBrewer::brewer.pal(name = "RdYlBu",n=5)),
+                   mapping=c(start_date,time_end-(time_end-start_date)/2,time_end), range=c(start_date,time_end))
+  }
+}
+treemap2(Result)
+```
+
+##### Fig. 2. Omicron transmission lineage sizes in Norway. G denotes the number assigned to each lineage, S denotes the size of the lineage and TMRCA denotes the age of the lineage. The area of the squares represents the size of the lineages.
+
+The SSE outbreak dominates the Norwegian sequences. If we exclude this lineage, the we obtain the following size distribution
+
+```{r, echo=FALSE, fig.width=8, fig.height=8}
+treemap2(Result,remove_largest=1)
+#hist(sort(all_lineages,decreasing=T)[-1], breaks=20)
+```
+
+##### Fig. 3. Transmission lineage size as in Fig. 2, exluding the largest one.
+
+The distribution of lineages is highly skewed with some . As can be seen from the color of the groups and TMRCA, most of the large lineages (orange and yellow) were introduced at earlier points in time, while the recenty introduced lineages (red) are still small. Bear in mind that these results are heavily influenced by the current set of available sequneces and are will change as the lineages grow and we obtain updated datasets.
+
+
+```{r,include=F}
+##MRCA's lineages size.
+tip_list = Norwegian_tips
+dates = decimal_date(metadat$`date`)
+names(dates)=metadata$strain
+
+#Import versus local transmission. 
+## Run below command for new builds
+
+#Result_with_uncertainty = import_local_transmission(tree,multi_counts,start_time = start_time,time_interval_size = 1/52)
+
+#save(Result_with_uncertainty,file=paste0(path_Data,"Relative_load_100_EqualRates.Rdata")) 
+load(paste0(path_Data,"Relative_load_100_EqualRates.Rdata"))
+start_time = start_date
+
+
+#Set windows for counting importations and local transmission in.
+weeks = seq(start_time, time_end, by = 1/52)
+week_time=weeks[1:(length(weeks)-1)]+1/(52*2) #This is only for returning results at midpoint of weeks.
+weekly_importations = apply(Result_with_uncertainty$Import,2, FUN="mean")
+weekly_local_tranmissions = apply(Result_with_uncertainty$LC,2, FUN="mean")
+sum_cases = weekly_importations+weekly_local_tranmissions
+#Plotting method
+imports = t(apply(Result_with_uncertainty$Import, 2,quantile,c(0.025,0.5,0.975)))
+exports = t(apply(Result_with_uncertainty$LC, 2,quantile,c(0.025,0.5,0.975)))
+dat=data.frame(cbind(imports,exports),dates=decimal2Date(week_time))
+colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
+
+#This uses the mean and discards uncertainty.
+ggdata = data.frame(dates = as.Date(date_decimal(week_time)),
+                    fraction=c(weekly_importations/sum_cases,weekly_local_tranmissions/sum_cases),
+                    group=c(rep("Import",length(week_time)),
+                            rep("Local transmission",length(week_time))))
+```
+
+## Quantifying introductions and local transmission
+
+Based on the estimated locations of the lineages in Fig. 1 we can can derive the number of importation events, and local transmission events using the methods from [LineageHomology](https://github.com/magnusnosnes/LineageHomology). LineageHomology assumes that each lineage observed in Norway starts with one importation event, and that each subsequent ancestral branching in the lineage represents local transmission events. 
+
+##### Table 1. Estimated number of infections in Norway resulting from import and local transmission based on the phylogeographic analyses in Figure 1.
+
+```{r, echo=F,fig.width=10, fig.height=10}
+knitr::kable(Summarize_import_local_transmission(LineageHomology_replicates = multi_counts), booktabs = T, digits = 4)
+```
+
+Next, we estimate the fraction of introductions relative to local transmission over time. In these and subsequent analyses it is important to keep detection lag into account (see https://science.sciencemag.org/content/371/6530/708). There will always be a delay between the introduction and detection, which varies from case to case. In the figures below, the last four weeks prior to the time of sampling of the most recent included isolate is shaded to indicate that estimates in this period is highly uncertain.
+
+```{r,echo=F, fig.width=7,fig.height=7}
+g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) + 
+  geom_area(alpha=0.6 , size=1, colour="black")+
+  theme_minimal(base_size=12)+scale_fill_brewer(palette="Set1")+
+  scale_x_date(date_breaks="1 week",expand = c(0, 0))+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  ylab("")+xlab("")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(dat$dates[length(dat$dates)]),ymin=-Inf,ymax=Inf,alpha=0.1)+
+  theme(legend.position = c(0.55,0.15), legend.title=element_blank())+
+      scale_y_continuous(expand = c(0, 0))
+g1
+```
+
+##### Fig. 4. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
+
+The same output is visualized as absolute numbers in Fig. 5 below. It should be noted that absolute estimates will be significantly shaped by sampling density (i.e. if we only obtain 20% samples of the true cases in a transmission lineage, the true size would in reality be five times larger).
+
+```{r,echo=F, fig.width=7,fig.height=7}
+plot_importation_local_transmission2 = function(tree,result_import_local_transmission, time_interval_size=1/52,start_time, date_breaks="1 month", importation_or_local="both")
+{
+
+  nrep= nrow(result_import_local_transmission$Import)
+  time_end = start_time+max(nodeHeights(tree))
+  time = seq(start_time, time_end, by = time_interval_size)
+  mid_time=time[1:(length(time)-1)]+(time_interval_size/2) #This is only for returning results at midpoint of weeks.
+  interval_importations = apply(result_import_local_transmission$Import,2, FUN="mean")
+  interval_local_tranmissions = apply(result_import_local_transmission$LC,2, FUN="mean")
+  sum_cases = interval_importations+interval_local_tranmissions
+
+  #Plotting method
+  imports = t(apply(result_import_local_transmission$Import, 2,quantile,c(0.025,0.5,0.975)))
+  local_transmission = t(apply(result_import_local_transmission$LC, 2,quantile,c(0.025,0.5,0.975)))
+  #Set up data
+  dat=data.frame(cbind(imports,local_transmission),dates=as.Date(date_decimal(mid_time)))
+  colnames(dat)=c("i2.5","i50","i97.5","e2.5","e50","e97.5","dates")
+
+  if(importation_or_local=="both") {
+    library(grid) #Requires the grid package for plotting
+    g1_1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Blue")+theme_minimal(base_size=20)+
+      theme(axis.title.x = element_blank(), axis.text.x = element_blank())+
+      geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.1), fill="blue")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(date_decimal(time_end)),ymin=-Inf,ymax=Inf,alpha=0.1)+
+      scale_x_date(date_breaks=date_breaks,limits = as.Date(date_decimal(c(start_time,time_end))),labels=date_format("%Y-%m-%d"), expand=c(0,0))+
+      ylab("Import")+
+      theme(legend.position = "none")
+    #g1_1
+
+
+    g2_2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="red")+theme_minimal(base_size=20)+
+      theme(axis.title.x = element_blank())+
+      geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.1), fill="red")+
+      scale_x_date(date_breaks=date_breaks,limits = as.Date(date_decimal(c(start_time,time_end))),labels=date_format("%Y-%m-%d"), expand=c(0,0))+
+      ylab("Local transmissions")+annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(date_decimal(time_end)),ymin=-Inf,ymax=Inf,alpha=0.1)+
+      theme(axis.text.x=element_text(angle=60, hjust=1))+
+      theme(legend.position = "none")
+    #g2_2
+    grid.draw(rbind(ggplotGrob(g1_1), ggplotGrob(g2_2), size = "last"))
+  }
+
+  else if(importation_or_local=="importation")
+  {g1_1 = ggplot(dat, aes(x=dates,y=i50))+geom_line(col="Blue")+theme_minimal(base_size=20)+
+    theme(axis.title.x = element_blank())+
+    geom_ribbon(aes(ymin=i2.5, ymax=i97.5,alpha=0.1), fill="blue")+
+    scale_x_date(date_breaks=date_breaks,limits = as.Date(date_decimal(c(start_time,time_end))),labels=date_format("%Y-%m-%d"), expand=c(0,0))+
+    ylab("Import")+
+    theme(axis.text.x=element_text(angle=60, hjust=1))+
+    theme(legend.position = "none")
+  g1_1}
+
+  else if(importation_or_local=="local") {
+    g2_2 = ggplot(dat, aes(x=dates,y=e50))+geom_line(col="red")+theme_minimal(base_size=20)+
+      theme(axis.title.x = element_blank())+
+      geom_ribbon(aes(ymin=e2.5, ymax=e97.5,alpha=0.1), fill="red")+
+      scale_x_date(date_breaks=date_breaks,limits = as.Date(date_decimal(c(start_time,time_end))),labels=date_format("%Y-%m-%d"), expand=c(0,0))+
+      ylab("Local transmissions")+
+      theme(axis.text.x=element_text(angle=60, hjust=1))+
+      theme(legend.position = "none")
+    g2_2
+  }
+
+  }
+
+plot_importation_local_transmission2(tree = tree,
+                                    result_import_local_transmission = Result_with_uncertainty,
+                                    start_time=start_time, time_interval_size = 1/52,
+                                    date_breaks = "1 week",
+                                    importation_or_local = "both")
+```
+
+##### Fig. 5. Absolute quantification of imports and local transmission events. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
+
+
+## Growth and size of individual lineages 
+
+Perhaps the most interesting aspect of quantifying introductions, is to investigate the fate of the introduced viruses. Mandatory testing at the border and/or mandatory quaranteens etc will obviously have a bearing on the fate of new introductions from abroad. The plot below visualizes the number of infections in Norway resulting from each
+identified virus import event over time, stratified by inferred TMRCA of each introduced lineage.
+
+```{r,echo=F,fig.width=7, fig.height=7}
+c2 = data.frame(decimal2Date(Result$Halfedge_over_tmrca),Result$Lineage_sizes)
+colnames(c2)=c("halfedge","Lineagesize")
+g1 = ggplot(c2[-1,], aes(halfedge, Lineagesize))+
+  geom_hex(bins=50,)+
+  theme_bw(base_size=10)+
+  theme(legend.position=c(0.85,0.85))+scale_fill_viridis()+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  xlab("Estimated arrival")+ylab("Estimated linage size")+
+  annotate("rect",xmin=as.Date(decimal2Date(time_end-1/13)),xmax=as.Date(date_decimal(time_end)),ymin=-Inf,ymax=Inf,alpha=0.1)+scale_y_continuous(limits=c(0,17))+scale_x_date(date_breaks="1 week",expand=c(0,0))
+g1
+```
+
+##### Fig. 6. Transmission lineage sizes as a function of time of introduction. “TMRCA” = time of most recent common ancestor. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag. NB. we have excluded the largest lineage that is visible in 
+
+```{r,echo=F,fig.width=7, fig.height=7}
+lineage_growth_cumulative2 = function(Result_lineage_info,color_by_state=FALSE) {
+  Result_lineage_info$group_cumsum = ave(Result_lineage_info$dates,as.factor(Result_lineage_info$group_no), FUN=function(x) rank(x,ties.method = "first"))-1 #Use the rank function to obtain cumulative counts. The -1 removes the count of the mrca.
+    g1 = ggplot(Result_lineage_info,aes(x=decimal2Date(dates), y=group_cumsum,group=group_no))+geom_line(alpha=0.4)+theme_bw()+ylab("Group size")+xlab(element_blank())+
+      scale_x_date(date_breaks="1 week",expand = c(0,0))+
+      annotate("rect",xmin=as.Date("2021-12-13"),xmax=as.Date("2022-01-10"),ymin=-Inf,ymax=Inf,alpha=0.1)+
+      theme(axis.text.x=element_text(angle=60, hjust=1))
+  g1
+}
+
+name_date = data.frame(name = names(Locations), dates= BactDating::leafDates(tree)+start_time)
+Result_lineage_info = LineageHomology::lineage_info(Result,name_date)
+g1 = lineage_growth_cumulative2(Result_lineage_info = Result_lineage_info)
+g1
+```
+
+##### Fig. 7. Cumulative number of cases in each transmission lineage. The lines represents independent importation events, and the growth of the lines represents the cumulative number of cases observed in each linage over time. 
+
+The rapid growth of the SSE dominates the picture. After the initial event of spread the growth of this lineage continued, but in a slower fashion. This could also be a result of targeted sampling and sequencing of cases connected to this outbreak, followed by a less intense sampling regime of this afterwards. Or it could be actual, in that it first spread rapidly, and then slower in the community.  
+
+If we exclude the known SSE, we obtain the following figure.
+```{r,echo=F,fig.width=7, fig.height=7}
+#Remove the largest lineage:
+remove_inds = which(Result_lineage_info$group_no==1)
+Result_lineage_info = Result_lineage_info[-remove_inds,]
+
+g1 = lineage_growth_cumulative2(Result_lineage_info = Result_lineage_info)
+g1
+
+
+```
+
+##### Fig. 8. Cumulative number of cases in each transmission lineage
+
+
+```{r,include=F}
+# Create tabular output of TMRCAs and lineage sizes
+
+mrcas <- Result$`MRCA's`
+mrcas <- decimal2Date(cbind(mrcas))
+TMRCA <- as.data.frame(mrcas)
+Lin_sizes <- Result$Lineage_sizes
+Lineage_sizes <- as.data.frame(Lin_sizes)
+mrca_sizes <- cbind(TMRCA, Lineage_sizes)
+mrca_sizes$halfedge_above_mrca =Result$Halfedge_over_tmrca
+write.table(mrca_sizes, file="~/Dropbox/Covid/Omicron/Results/Omicron_lineage_sizes_EqualRates.txt")
+write.csv(mrca_sizes, file="~/Dropbox/Covid/Omicron/Results/Omicron_lineage_sizes_EqualRates.csv")
+
+```
