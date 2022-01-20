@@ -55,11 +55,11 @@ være et resultat av smitte i Norge.
 
 #### NB. ANALYSENE ER I HOVEDSAK INFORMATIVE FOR Å FÅ ET OVERBLIKK OVER ENDRINGER I IMPORTMØNSTRE OVER TID, OG ER DÅRLIG EGNET FOR Å TREKKE KONKLUSJONER OM ENKELTIMPORTER OG TIDSPUNKTET FOR DISSE. SPESIELT I TIDLIG FASE AV EN VARIANT-BØLGE KAN ROBUSTHET VÆRE BEGRENSET DA DET ER LITE DATA OG LITE DIVERGENS MELLOM OBSERVERTE SEKVENSER.
 
-## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron
+## Fra og med 13. desember 2021 oppdateres analyser av Delta og Omicron
 
-## [Analyse av Omicron variant - 22.01.2022](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_new_Equalrates/01_Mapping_Omicron.md)
+## [Analyse av Omicron variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron/01_Mapping_Omicron.md)
 
-## [Analyse av Delta variant - 20.12.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md)
+## [Analyse av Delta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta/Delta_equal_rates.md)
 
 ## Ytterligere kontekst
 
