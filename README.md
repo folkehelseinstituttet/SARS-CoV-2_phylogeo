@@ -5,7 +5,9 @@
 
 -   [Om analysene](#bakgrunn-&-metoder)
 -   [Ytterligere kontekst](#ytterligere-kontekst)
--   [Eldre analyser (oppdateres ikke)](#eldre-analyse-(oppdateres-ikke))
+-   [Analyse av Omicron variant](#analyse-av-omicron-variant)
+-   [Analyse av Delta variant](#analyse-av-delta-variant)
+-   [Eldre analyser](#eldre-analyser)
 
 ## Bakgrunn & metoder
 
@@ -55,9 +57,9 @@ være et resultat av smitte i Norge.
 
 ## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron
 
-## [Analyse av Delta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md)
+## [Analyse av Omicron variant - 22.01.2022](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_new_Equalrates/01_Mapping_Omicron.md)
 
-## [Analyse av Omicron variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_new_Equalrates/01_Mapping_Omicron.md)
+## [Analyse av Delta variant - 20.12.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md)
 
 ## Ytterligere kontekst
 
@@ -87,9 +89,10 @@ For Omicron som per nå er i tidlig fase og i større grad importdrevet er
 det mer uklart hva som er riktig parametrisering her. Per nå settes
 importrate til å være 3x eksportrate.
 
-### ELDRE ANALYSER (OPPDATERES IKKE)
+### ELDRE ANALYSER
 
-Vi har lagt følgende forenklende antagelse til grunn for dise analyser:
+Vi har lagt følgende forenklende antagelse til grunn for disse
+analysene.
 
 For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til
 Norge er 10x høyere enn eksport ut av Norge. Dette er basert på
@@ -104,10 +107,10 @@ smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at
 smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta
 variant) er transisjonsrate estimert direkte fra dataene.
 
-## [Analyse av B.1.1.7 Alpha variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md)
+## [Analyse av B.1.1.7 Alpha variant - 16.08.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/UK_results.md)
 
-## [Analyse av B.1.351 Beta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafrican_results.md)
+## [Analyse av B.1.351 Beta variant - 27.04.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/Southafrican_results.md)
 
-## [Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md)
+## [Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant) - 08.08.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/alpha_vs_delta.md)
 
 ## [Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md)
