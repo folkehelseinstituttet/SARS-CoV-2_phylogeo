@@ -1,6 +1,14 @@
-SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway
+SARS-CoV-2 Omicron variant - 2022-01-22
 ================
-2022-01-22
+
+## Disclaimer: These analyses must be interpreted with caution and estimates times of events may not be reliable
+
+Phylogeographic analyses are only as good as the data we input. For
+these analyses we have assumed that there is a signal in the genetic
+data and that the time scaling of the phylogenetic tree is Most of the
+first samples of Omicron in Norway came from a super-spreading event at
+Aker Brygge. There is a substantial overrepresentation of the outbreak
+in the genetic data, which could influence.
 
 ### Table of content
 
@@ -10,17 +18,19 @@ SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway
 -   [Introductions and local
     transmission](#quantifying-introductions-and-local-transmission)
 -   [Growth and size of individual lineages (NB. Keep in mind dection
-    lag)](#quantifying-introductions-and-local-transmission)
+    lag)](#growth-and-size-of-individual-lineages)
 
-## Geographical mapping of the lineages
+## Geographical mapping of omicron lineages
 
 The analyses take a dated phylogeny exported from
 [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-01-17/omicron-BA-one)
 as a starting point for quantifying imports and local transmission of
-SARS-CoV-2 Omicron variant in Norway. Each isolate is assigned to one of
-two binary categories: “Norway” or “Rest of the world (RoW)”. The output
-is based on maximum likelihood ancestral character estimation performed
-on the dated phylogeny and presented in Fig.1.
+SARS-CoV-2 Omicron variant in Norway.The current set of sequences
+includes 678 Norwegian genome sequences, and 1345 from the “Rest of the
+world (RoW)” Each isolate is assigned to one of two binary categories:
+“Norway” or RoW. The output is based on maximum likelihood ancestral
+character estimation performed on the dated phylogeny and presented in
+Fig.1.
 
 ![Test](01_Mapping_Omicron_files/figure-gfm/unnamed-chunk-1-1.png)
 

@@ -1,13 +1,13 @@
-SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway
-================
-2022-01-22
 
 # SARS-CoV-2 - analyser av importer og lokal transmisjon av varianter av særlig interesse
 
 ## Innhold
 
 -   [Om analysene](#bakgrunn-&-metoder)
--   [Om analysene](#bakgrunn-&-metoder)
+-   [Ytterligere kontekst](#ytterligere-kontekst)
+-   [Eldre analyser (oppdateres ikke)](#eldre-analyse-(oppdateres-ikke))
+-   [Ytterligere kontekst](#ytterligere-kontekst)
+-   [Ytterligere kontekst](#ytterligere-kontekst)
 
 ## Bakgrunn & metoder
 
@@ -19,9 +19,9 @@ For hver av virusvariantene inkluderer disse analysene til en hver tid
 alle norske sekvenserte genomer som har blitt lastet opp til GISAID,
 samt et større antall sekvenser fra resten av verden for å
 kontekstualisere de norske sekvensene. I praksis tar det et par uker fra
-en prøve flagger positivt til den er sekvensert og ligger på GISAID, så
-det vil alltid være en viss forsinkelse i analysene i forhold til
-øyeblikksbildet akkurat nå.
+en prøve flagger positivt til den er sekvensert og ligger på
+[GISAID](https://www.gisaid.org/), så det vil alltid være en viss
+forsinkelse i analysene i forhold til øyeblikksbildet akkurat nå.
 
 Målet med analysene presentert her er å gjennomføre formelle
 fylogeografiske analyser og deretter formelt oppsummere resultatene fra
@@ -53,19 +53,15 @@ oppstrøms i treet er inferert å ha eksistert utenfor Norge. Om
 oppstrømsnoden også blir inferert å ha eksistert i Norge, vil isolatet
 være et resultat av smitte i Norge.
 
-## ANALYSENE ER I HOVEDSAK INFORMATIVE FOR Å FÅ ET OVERBLIKK OVER ENDRINGER I IMPORTMØNSTRE OVER TID, OG ER DÅRLIG EGNET FOR Å TREKKE KONKLUSJONER OM ENKELTIMPORTER OG TIDSPUNKTET FOR DISSE. SPESIELT I TIDLIG FASE AV EN VARIANT-BØLGE KAN ROBUSTHET VÆRE BEGRENSET DA DET ER LITE DATA OG LITE DIVERGENS MELLOM OBSERVERTE SEKVENSER.
+#### NB. ANALYSENE ER I HOVEDSAK INFORMATIVE FOR Å FÅ ET OVERBLIKK OVER ENDRINGER I IMPORTMØNSTRE OVER TID, OG ER DÅRLIG EGNET FOR Å TREKKE KONKLUSJONER OM ENKELTIMPORTER OG TIDSPUNKTET FOR DISSE. SPESIELT I TIDLIG FASE AV EN VARIANT-BØLGE KAN ROBUSTHET VÆRE BEGRENSET DA DET ER LITE DATA OG LITE DIVERGENS MELLOM OBSERVERTE SEKVENSER.
 
-## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron.
+## Fra og med 13 desember 2021 oppdateres analyser av Delta og Omicron
 
-## Analyse av Delta variant
+## [Analyse av Delta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md)
 
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_equal_rates.md>
+## [Analyse av Omicron variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_new_Equalrates/01_Mapping_Omicron.md)
 
-## Analyse av Omicron variant (obs, som følge av lite data og divergens, infererte importhendelser bør tolkes med forsiktighet)
-
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron_new_Equalrates/01_Mapping_Omicron.md>
-
-## ytterligere kontekst
+## Ytterligere kontekst
 
 For Delta varianten har vi tidligere antatt at at raten av import til
 Norge er 3x høyere enn eksport ut av Norge. Dette var basert på
@@ -93,9 +89,7 @@ For Omicron som per nå er i tidlig fase og i større grad importdrevet er
 det mer uklart hva som er riktig parametrisering her. Per nå settes
 importrate til å være 3x eksportrate.
 
-### 
-
-### ELDRE ANALYSER (OPPDATERES IKKE):
+### ELDRE ANALYSER (OPPDATERES IKKE)
 
 Vi har lagt følgende forenklende antagelse til grunn for dise analyser:
 
@@ -112,19 +106,10 @@ smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at
 smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta
 variant) er transisjonsrate estimert direkte fra dataene.
 
-## Analyse av B.1.1.7 Alpha variant
+## [Analyse av B.1.1.7 Alpha variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md)
 
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/UK_results.md>
+## [Analyse av B.1.351 Beta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafrican_results.md)
 
-## Analyse av B.1.351 Beta variant
+## [Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md)
 
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Southafrican_results.md>
-
-## Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant)
-
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/alpha_vs_delta.md>
-
-## Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her:
-
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md>
-<https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_lineage_sizes_5xFixedRateIn.txt>
+## [Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md)

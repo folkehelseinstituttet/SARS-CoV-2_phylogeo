@@ -1,7 +1,6 @@
 ---
-title: "SARS-CoV-2 Omicron variant: All samples equal - rates in/out Norway"
+title: "SARS-CoV-2 Omicron variant - 2022-01-22"
 author: ""
-date: "2022-01-22"
 output: 
   github_document
 #pdf_document 
@@ -10,16 +9,22 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,warning =F)
 ```
+## Disclaimer: These analyses must be interpreted with caution and estimates times of events may not be reliable
+
+Phylogeographic analyses are only as good as the data we input. For these analyses we have assumed that there is a signal in the genetic data and that the time scaling of the phylogenetic tree is
+Most of the first samples of Omicron in Norway came from a super-spreading event at Aker Brygge. There is a substantial overrepresentation of the outbreak in the genetic data, which could influence.  
+
+
 ### Table of content
 -   [Estimating the geographical location of omicron lineages](#geographical-mapping-of-the-lineages)
 -   [Lineage size distributions](#lineage-size-distributions)
 -   [Introductions and local transmission](#quantifying-introductions-and-local-transmission)
--   [Growth and size of individual lineages (NB. Keep in mind dection lag)](#quantifying-introductions-and-local-transmission)
+-   [Growth and size of individual lineages (NB. Keep in mind dection lag)](#growth-and-size-of-individual-lineages)
 
-## Geographical mapping of the lineages
+## Geographical mapping of omicron lineages
 
-The analyses take a dated phylogeny exported from [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-01-17/omicron-BA-one) as a starting point for quantifying imports and local transmission of SARS-CoV-2 Omicron variant in Norway. 
-Each isolate is assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is based on maximum likelihood ancestral character estimation performed on the dated phylogeny and presented in Fig.1. 
+The analyses take a dated phylogeny exported from [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-01-17/omicron-BA-one) as a starting point for quantifying imports and local transmission of SARS-CoV-2 Omicron variant in Norway.The current set of sequences includes 678 Norwegian genome sequences, and 1345 from the "Rest of the world (RoW)"
+Each isolate is assigned to one of two binary categories: "Norway" or RoW. The output is based on maximum likelihood ancestral character estimation performed on the dated phylogeny and presented in Fig.1.  
 
 ```{r remedy001, include=FALSE}
 ### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
@@ -322,7 +327,7 @@ plot_importation_local_transmission2(tree = tree,
 ##### Fig. 5. Absolute quantification of imports and local transmission events. Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 
-## Growth and size of individual lineages 
+## Growth and size of individual lineages
 
 Perhaps the most interesting aspect of quantifying introductions, is to investigate the fate of the introduced viruses. Mandatory testing at the border and/or mandatory quaranteens etc will obviously have a bearing on the fate of new introductions from abroad. The plot below visualizes the number of infections in Norway resulting from each
 identified virus import event over time, stratified by inferred TMRCA of each introduced lineage.
