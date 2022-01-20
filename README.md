@@ -12,8 +12,8 @@
 ## Bakgrunn & metoder
 
 Utgangspunktet for alle analysene er daterte trær eksportert fra
-NextStrain, offentlig tilgjengelig her:
-<https://nextstrain.org/groups/niph/ncov/>
+NextStrain, offentlig tilgjengelig
+[her](https://nextstrain.org/groups/niph/ncov/).
 
 For hver av virusvariantene inkluderer disse analysene til en hver tid
 alle norske sekvenserte genomer som har blitt lastet opp til GISAID,

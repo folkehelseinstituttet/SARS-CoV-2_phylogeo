@@ -16,7 +16,7 @@ output:
 
 ## Bakgrunn & metoder
 
-Utgangspunktet for alle analysene er daterte trær eksportert fra NextStrain, offentlig tilgjengelig her: https://nextstrain.org/groups/niph/ncov/
+Utgangspunktet for alle analysene er daterte trær eksportert fra NextStrain, offentlig tilgjengelig [her](https://nextstrain.org/groups/niph/ncov/). 
 
 For hver av virusvariantene inkluderer disse analysene til en hver tid alle norske sekvenserte genomer som har blitt lastet opp til GISAID, samt et større antall sekvenser fra resten av verden for å kontekstualisere de norske sekvensene. I praksis tar det et par uker fra en prøve flagger positivt til den er sekvensert og ligger på [GISAID](https://www.gisaid.org/), så det vil alltid være en viss forsinkelse i analysene i forhold til øyeblikksbildet akkurat nå. 
 
