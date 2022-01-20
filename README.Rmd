@@ -8,9 +8,9 @@ output:
 
 ## Innhold
 -   [Om analysene](#bakgrunn-&-metoder)
--   [Ytterligere kontekst](#ytterligere-kontekst)
 -   [Analyse av Omicron variant](#analyse-av-omicron-variant)
 -   [Analyse av Delta variant](#analyse-av-delta-variant)
+-   [Ytterligere kontekst](#ytterligere-kontekst)
 -   [Eldre analyser](#eldre-analyser)
 
 
