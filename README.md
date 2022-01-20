@@ -111,6 +111,6 @@ variant) er transisjonsrate estimert direkte fra dataene.
 
 ## [Analyse av B.1.351 Beta variant - 27.04.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/Southafrican_results.md)
 
-## [Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant) - 08.08.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/alpha_vs_delta.md)
+### [Komparativ analyse av B.1.1.7 (Alpha variant) og B.1.617.2 (Delta variant) - 08.08.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/alpha_vs_delta.md)
 
-## [Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md)
+### [Delta analyser der importrate er satt til å være 5x høyere enn eksportrate ligger her](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta_5x_in_vs_out.md)
