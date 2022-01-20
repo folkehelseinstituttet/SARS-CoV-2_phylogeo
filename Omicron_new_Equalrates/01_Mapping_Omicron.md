@@ -4,11 +4,13 @@ SARS-CoV-2 Omicron variant - 2022-01-22
 ## Disclaimer: These analyses must be interpreted with caution and estimates times of events may not be reliable
 
 Phylogeographic analyses are only as good as the data we input. For
-these analyses we have assumed that there is a signal in the genetic
-data and that the time scaling of the phylogenetic tree is Most of the
-first samples of Omicron in Norway came from a super-spreading event at
-Aker Brygge. There is a substantial overrepresentation of the outbreak
-in the genetic data, which could influence.
+these analyses we have assumed that the temporal scaling of the
+phylogenetic tree reliable and that the genetic diversity of the
+sequences is representative of the Omicron epidemic in Norway. Most of
+the early samples of Omicron in Norway came from a super-spreading event
+at Aker Brygge. Thus, there is a substantial overrepresentation of the
+Aker Brygge outbreak in the genetic data, which could influence the
+results.
 
 ### Table of content
 

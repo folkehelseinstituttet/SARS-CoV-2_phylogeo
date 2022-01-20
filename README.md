@@ -6,8 +6,6 @@
 -   [Om analysene](#bakgrunn-&-metoder)
 -   [Ytterligere kontekst](#ytterligere-kontekst)
 -   [Eldre analyser (oppdateres ikke)](#eldre-analyse-(oppdateres-ikke))
--   [Ytterligere kontekst](#ytterligere-kontekst)
--   [Ytterligere kontekst](#ytterligere-kontekst)
 
 ## Bakgrunn & metoder
 
