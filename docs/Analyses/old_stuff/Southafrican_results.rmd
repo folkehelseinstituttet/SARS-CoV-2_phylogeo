@@ -1,10 +1,9 @@
 ---
-title: "Results - B.1.351, “South Africa variant”"
-author: ""
-date: "27/04/2021"
-output: 
-  rmarkdown::github_document
-  #rmarkdown::pdf_document
+knit: (function(input_file, encoding) {
+  out_dir <- '.';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'firstDiscoveredSouthAfrica.html'))})
 ---
 
 ```{r setup, include=FALSE}
