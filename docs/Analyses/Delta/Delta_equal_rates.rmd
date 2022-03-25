@@ -1,16 +1,15 @@
 ---
-title: "SARS-CoV-2 Delta variant: balanced temporal sampling. Equal rates in/out Norway"
-author: ""
-date: "20/12/2021"
-output: 
-  github_document
-#pdf_document 
+knit: (function(input_file, encoding) {
+  out_dir <- '.';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'delta_equal_rates.html'))})
 ---
   
   ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,warning =F)
 ```
-Phylogeographic mapping
+## Phylogeographic mapping
 
 The analyses take a dated phylogeny exported from NextStrain as a starting point for quantifying imports and local transmission of Sars-CoV-2 Delta variant in Norway. 
 Each isolate is assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is presented in Fig.1 and ancestral character estimation performed on the dated phylogeny. 
@@ -222,6 +221,7 @@ g1 = ggplot(data=ggdata, aes(x=dates, y=fraction, fill=group)) +
   theme(legend.position = c(0.55,0.15), legend.title=element_blank())
 g1
 ```
+
 ##### Fig. 3. Relative quantification of infection source (new introduction / import vs local transmission). Grey shading indicates that inferences in this period (last 4 weeks) are uncertain due to detection lag.
 
 The same output is visualized as absolute numbers in Fig. 3 below. It should be noted that absolute estimates will be significantly shaped by sampling density.
@@ -277,13 +277,13 @@ g1
 ```{r,include=F}
 # Create tabular output of TMRCAs and lineage sizes
 
-mrcas <- Result$`MRCA's`
-mrcas <- decimal2Date(cbind(mrcas))
-TMRCA <- as.data.frame(mrcas)
-Lin_sizes <- Result$Lineage_sizes
-Lineage_sizes <- as.data.frame(Lin_sizes)
-mrca_sizes <- cbind(TMRCA, Lineage_sizes)
-write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodelling/SARS-CoV-2_phylogeo/Delta_lineage_sizes_equalRates.txt"))
-write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes_equalRates.csv"))
+# mrcas <- Result$`MRCA's`
+# mrcas <- decimal2Date(cbind(mrcas))
+# TMRCA <- as.data.frame(mrcas)
+# Lin_sizes <- Result$Lineage_sizes
+# Lineage_sizes <- as.data.frame(Lin_sizes)
+# mrca_sizes <- cbind(TMRCA, Lineage_sizes)
+# write.table(mrca_sizes, file=("/home/vehuardo/Documents/rstudio_nextstrainmodelling/SARS-CoV-2_phylogeo/Delta_lineage_sizes_equalRates.txt"))
+# write.csv(mrca_sizes, file=("/home/vehuardo/Dropbox/Covid/Alpha_vs_Delta/Delta_lineage_sizes_equalRates.csv"))
 
 ```
