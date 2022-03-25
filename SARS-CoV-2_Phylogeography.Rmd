@@ -33,7 +33,10 @@ Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner ge
 ## Fra og med 13. desember 2021 oppdateres analyser av Delta og Omicron
  
 
-## [Analyse av Omicron variant](Analyses/Omicron/Omicron.html)
+## Analyse av Omicron variant
+#### [BA.2 focused subsampling 18.03.2022](Analyses/Omicron/Omicron_23.03.2022.html)
+#### [Early analysis of the BA.1 outbreak 20.01.2022](Analyses/Omicron/Omicron.html)
+
 
 ## [Analyse av Delta variant](Analyses/Delta/Delta_equal_rates.html)
 
