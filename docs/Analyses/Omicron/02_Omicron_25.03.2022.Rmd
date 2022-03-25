@@ -22,8 +22,8 @@ Phylogeographic analyses are only as good as the data we input. For these analys
 
 ## Geographical mapping of omicron lineages
 
-The analyses take a dated phylogeny exported from [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-03-18/omicron-BA-two?f_country=Norway) as a starting point for quantifying imports and local transmission of SARS-CoV-2 Omicron variant in Norway.The current set of sequences includes 678 Norwegian genome sequences, and 1345 from the "Rest of the world (RoW)"
-Each isolate is assigned to one of two binary categories: "Norway" or RoW. The output is based on maximum likelihood ancestral character estimation performed on the dated phylogeny and presented in Fig.1.  
+The analyses take a dated phylogeny exported from [NextStrain](https://nextstrain.org/groups/niph/ncov/2022-03-18/omicron-BA-two?f_country=Norway) as a starting point for quantifying imports and local transmission of SARS-CoV-2 Omicron variant in Norway.The current set of sequences includes 2727 Norwegian genome sequences, and 1300 from the "Rest of the world (RoW)"
+Each isolate is assigned to one of two binary categories: Norway or RoW. The output is based on maximum likelihood ancestral character estimation performed on the dated phylogeny and presented in Fig.1.  
 
 ```{r remedy001, include=FALSE}
 ### . . . . . . . . . . . . . . .Notes . . . . . . . . . . . . . . . . . . . . .
