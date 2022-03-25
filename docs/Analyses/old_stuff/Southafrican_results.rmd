@@ -155,7 +155,7 @@ treemap(atreemap,index=("group"),vSize="Value", type="index", palette="Paired")
 tip_list = Norwegian_tips
 dates = decimal_date(metadat$`Collection Data`)
 names(dates)=metadata$Strain
-
+source("~/Dropbox/Github/SARS-CoV-2_phylogeo/docs/Analyses/R_functions/Relative_load_importation_local_transmission.R")
 Result_with_uncertainty = Relative_load_import_multi(tree, multi_counts,dates, start_date,tip_list=Norwegian_tips)
  
 

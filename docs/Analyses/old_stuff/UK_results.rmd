@@ -9,7 +9,7 @@ knit: (function(input_file, encoding) {
   ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,warning =F)
 ```
-Phylogeographic mapping
+## Phylogeographic mapping
 
 The analyses take a dated phylogeny exported from NextStrain as a starting point for quantifying imports and local transmission of Sars-CoV-2 B.1.1.7 in Norway. 
 Each isolate is assigned to one of two binary categories: "Norway" or "Rest of the world (RoW)". The output is presented in Fig.1 and ancestral character estimation performed on the dated phylogeny. 
