@@ -33,7 +33,7 @@ Konseptuelt kan de fylogeografiske metodene best forstås som at man tilegner ge
 ## Fra og med 13. desember 2021 oppdateres analyser av Delta og Omicron
  
 
-## [Analyse av Omicron variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Omicron/01_Mapping_Omicron.md)
+## [Analyse av Omicron variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/docs/Analyses/Omicron/Omicron.html)
 
 ## [Analyse av Delta variant](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/Delta/Delta_equal_rates.md)
 
