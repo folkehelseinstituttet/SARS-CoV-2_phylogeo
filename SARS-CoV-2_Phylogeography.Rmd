@@ -55,7 +55,7 @@ Vi har lagt følgende forenklende antagelse til grunn for disse analysene.
 For B.1.1.7 (Alpha variant) har vi antatt at at raten av import til Norge er 10x høyere enn eksport ut av Norge. Dette er basert på følgende: Europa er den regionen som er tettest knyttet til Norge når det gjelder reisevirksomhet. Europa har hatt ca 10x flere dødsfall per innbygger enn vi har hatt i Norge gjennom pandemien. Vi antar derfor at smittetrykk/insidens har vært 10x høyere i resten av Europa enn i Norge, noe som igjen kan antas å føre til at reisende til Norge fra Europa har hatt 10x høyere sannsynlighet for å være smittet med SARS-CoV-2 enn reisende motsatt vei. For enkelte andre deler av verden er det reelle smittetrykket ukjent. Vi har derfor gjort den forenklede antagelsen at smittetrykket i resten av verden tilsvarer Europa. For B.1.351 (Beta variant) er transisjonsrate estimert direkte fra dataene.
 
 
-## [Analyse av B.1.1.7 Alpha variant - 16.08.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/UK_results.md)
+## [Analyse av B.1.1.7 Alpha variant - 16.08.2021](Analyses/old_stuff/Alpha.html)
 
 ## [Analyse av B.1.351 Beta variant - 27.04.2021](https://github.com/folkehelseinstituttet/SARS-CoV-2_phylogeo/blob/main/old_stuff/Southafrican_results.md)
 
